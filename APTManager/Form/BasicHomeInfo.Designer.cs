@@ -1,0 +1,75 @@
+﻿namespace APTManager
+{
+    partial class frmHomeInfo
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.gridHomeInfo = new System.Windows.Forms.DataGridView();
+            this.btnSave = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.gridHomeInfo)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // gridHomeInfo
+            // 
+            this.gridHomeInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridHomeInfo.Location = new System.Drawing.Point(12, 41);
+            this.gridHomeInfo.Name = "gridHomeInfo";
+            this.gridHomeInfo.RowTemplate.Height = 23;
+            this.gridHomeInfo.Size = new System.Drawing.Size(307, 658);
+            this.gridHomeInfo.TabIndex = 0;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(244, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "저장";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // frmHomeInfo
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(332, 711);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.gridHomeInfo);
+            this.Name = "frmHomeInfo";
+            this.Text = "세대 기본정보";
+            this.Load += new System.EventHandler(this.BasicHomeInfo_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.gridHomeInfo)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.DataGridView gridHomeInfo;
+        private System.Windows.Forms.Button btnSave;
+    }
+}
