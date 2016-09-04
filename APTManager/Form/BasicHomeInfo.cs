@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SQLite;
 using System.Windows.Forms;
 
 namespace APTManager
@@ -19,17 +18,16 @@ namespace APTManager
         /// <param name="e"></param>
         private void BasicHomeInfo_Load(object sender, EventArgs e)
         {
-
+            // 그리드 헤더, 컬럼 설정
             gridHomeInfo.Columns.Clear();
             Util.setColumnHeader(gridHomeInfo, "home", "세대");
             Util.setColumnHeader(gridHomeInfo, "name", "세대주");
 
-            Global.homeInfoDT = DB.getBasicInfo();
-            Global.homeInfoDT.AcceptChanges();
+            // 세대정보 조회
+            gridHomeInfo.DataSource = DB.getHomeInfo();
 
-            gridHomeInfo.DataSource = Global.homeInfoDT;
-
-            gridHomeInfo.AllowUserToAddRows = false;      // Row 자동생성 금지
+            gridHomeInfo.AllowUserToAddRows = false;    // Row 자동생성 금지
+            Util.lockCell(gridHomeInfo, 0);             // 셀 잠금 설정
         }
 
         /// <summary>
@@ -39,44 +37,28 @@ namespace APTManager
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string dbConn;
-            string sql;
-            SQLiteCommand cmd;
+            // 마지막 조회 후 변경된 행만 가져온다.
+            DataTable saveDT = Global.homeInfoDT.GetChanges();
 
-            try
+            // 저장 대상이 없으면 그냥 닫는다.
+            if (saveDT == null || saveDT.Rows.Count == 0)
             {
-                dbConn = @"Data Source=aptmanager.db";
-
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    // 마지막 조회 후 변경된 행만 가져온다.
-                    DataTable saveDT = Global.homeInfoDT.GetChanges();
-
-                    // 저장 대상이 없으면 그냥 닫는다.
-                    if (saveDT == null || saveDT.Rows.Count == 0)
-                    {
-                        MessageBox.Show("변경 된 내용이 없습니다");
-                        return;
-                    }
-
-                    // 저장 대상만큼 반복 수행
-                    for (int i = 0; i < saveDT.Rows.Count; i++)
-                    {
-                        sql = "UPDATE homeinfo SET name='" + saveDT.Rows[i][1].ToString() + "' WHERE home='" + saveDT.Rows[i][0].ToString() + "' ";
-                        cmd = new SQLiteCommand(sql, conn);
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("저장 완료");
-
-                    Close();
-                }
+                MessageBox.Show("변경 된 내용이 없습니다");
+                return;
             }
-            catch (Exception ex)
+
+            switch (DB.saveHomeInfo(saveDT))
             {
-                MessageBox.Show("저장 실패");
+                case 0:
+                    MessageBox.Show("변경 된 내용이 없습니다");
+                    break;
+                case -1:
+                    MessageBox.Show("데이터 저장 중 오류 발생");
+                    break;
+                default:
+                    MessageBox.Show("저장 완료");
+                    Close();
+                    break;
             }
         }
     }
