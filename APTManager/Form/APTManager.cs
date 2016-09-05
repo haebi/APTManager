@@ -52,13 +52,17 @@ namespace APTManager
             Util.setColumnHeader(gridAdmExp, "admexpcost", "관리비");
             Util.setColumnHeader(gridAdmExp, "totalcost", "합계");
             Util.setColumnHeader(gridAdmExp, "remark", "비고");
+            Util.setColumnHeader(gridAdmExp, "ordernum", "정렬순서");
 
-            gridAdmExp.AllowUserToAddRows = false;    // Row 자동생성 금지
-            Util.lockCell(gridAdmExp, 0);
-            Util.lockCell(gridAdmExp, 1);
-            Util.lockCell(gridAdmExp, 2);
-            Util.lockCell(gridAdmExp, 5);
-            Util.lockCell(gridAdmExp, 8);
+            gridAdmExp.AllowUserToAddRows = false;  // Row 자동생성 금지
+
+            Util.lockColumn(gridAdmExp, 0);         // 컬럼 잠금
+            Util.lockColumn(gridAdmExp, 1);
+            Util.lockColumn(gridAdmExp, 2);
+            Util.lockColumn(gridAdmExp, 5);
+            Util.lockColumn(gridAdmExp, 8);
+
+            Util.hideColumn(gridAdmExp, 10);        // 컬럼 숨김
         }
 
         /// <summary>
@@ -89,6 +93,10 @@ namespace APTManager
                 || Global.frmHomeInfo.IsDisposed)
                 Global.frmHomeInfo = new frmHomeInfo();
 
+            // 팝업 위치 설정
+            Global.frmHomeInfo.StartPosition = FormStartPosition.Manual;
+            Global.frmHomeInfo.Location = new Point(this.Left, this.Top);
+
             Global.frmHomeInfo.ShowDialog();
         }
 
@@ -102,7 +110,7 @@ namespace APTManager
             /*
              * 1. 해당 월의 데이터가 있으면 조회한다.
              * 2. 데이터가 없는 경우 새로 양식을 생성한다.
-             * 3. 조회된 세대 정보는 해당 시점에 실제 저장된 것을 가져온다.
+             * 3. 조회 시 세대 정보는 해당 시점에 실제 저장된 것을 가져온다.
              * 4. 전월사용량은 전월데이터를 참고하여 가져온다. (없으면 가져오지 않는다)
              * */
 
@@ -115,13 +123,17 @@ namespace APTManager
             if(Global.admExpDT.Rows.Count == 0)
             {
                 // 더미 데이터 생성
-                DB.getEmptyAdmExpInfo(yyyymm);
-
-                // 더미 데이터 저장
-                DB.createAdmExpInfo(Global.admExpDT);
+                if (DB.createAdmExpInfo(yyyymm) > 0)
+                {
+                    MessageBox.Show("데이터 생성 완료");
+                }
 
                 // 저장된 데이터 불러오기
                 gridAdmExp.DataSource = DB.getAdmExpInfo(yyyymm);
+            }
+            else
+            {
+                MessageBox.Show("조회 완료");
             }
         }
 
@@ -142,18 +154,8 @@ namespace APTManager
                 return;
             }
 
-            switch (DB.saveAdmExpInfo(saveDT))
-            {
-                case 0:
-                    MessageBox.Show("변경 된 내용이 없습니다");
-                    break;
-                case -1:
-                    MessageBox.Show("데이터 저장 중 오류 발생");
-                    break;
-                default:
-                    MessageBox.Show("저장 완료");
-                    break;
-            }
+            // 결과 메시지
+            Util.messageSaveResult(DB.saveAdmExpInfo(saveDT));
         }
     }
 }

@@ -107,7 +107,7 @@ namespace APTManager
             this.Controls.Add(this.btnOpenHomeInfo);
             this.Controls.Add(this.btnGetAdmExp);
             this.Name = "APTManager";
-            this.Text = "APTManager (by haebi) 20160904";
+            this.Text = "APTManager (by haebi) 20160905";
             this.Load += new System.EventHandler(this.APTManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
             this.ResumeLayout(false);

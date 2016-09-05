@@ -15,20 +15,24 @@ namespace APTManager
             DataTable dt = new DataTable();
             dt.Columns.Add("home");
             dt.Columns.Add("name");
+            dt.Columns.Add("ordernum");
 
             string dbConn = @"Data Source=aptmanager.db";
 
             using (SQLiteConnection conn = new SQLiteConnection(dbConn))
             {
                 conn.Open();
-                string sql = "SELECT home, name FROM homeinfo";
+                string sql = "SELECT home"
+                                + ", name"
+                                + ", ordernum"
+                                + " FROM homeinfo ORDER BY ordernum";
 
                 SQLiteCommand cmd = new SQLiteCommand(sql, conn);
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    dt.Rows.Add(new object[] { reader["home"], reader["name"] });
+                    dt.Rows.Add(new object[] { reader["home"], reader["name"], reader["ordernum"] });
                 }
 
                 reader.Close();
@@ -95,13 +99,25 @@ namespace APTManager
             dt.Columns.Add("admexpcost");
             dt.Columns.Add("totalcost");
             dt.Columns.Add("remark");
+            dt.Columns.Add("ordernum");
 
             string dbConn = @"Data Source=aptmanager.db";
 
             using (SQLiteConnection conn = new SQLiteConnection(dbConn))
             {
                 conn.Open();
-                string sql = "SELECT yyyymm, home, name, premonth, nowmonth, useamount, usecost, admexpcost, totalcost, remark FROM admexp where yyyymm = '" + yyyymm + "'";
+                string sql = "SELECT yyyymm"
+                                + ", home"
+                                + ", name"
+                                + ", premonth"
+                                + ", nowmonth"
+                                + ", useamount"
+                                + ", usecost"
+                                + ", admexpcost"
+                                + ", totalcost"
+                                + ", remark"
+                                + ", ordernum"
+                                + " FROM admexp where yyyymm = '" + yyyymm + "' ORDER BY 11";
 
                 SQLiteCommand cmd = new SQLiteCommand(sql, conn);
                 SQLiteDataReader reader = cmd.ExecuteReader();
@@ -117,49 +133,8 @@ namespace APTManager
                                             , reader["usecost"]
                                             , reader["admexpcost"]
                                             , reader["totalcost"]
-                                            , reader["remark"] });
-                }
-
-                reader.Close();
-            }
-
-            Global.admExpDT = dt.Copy();
-            Global.admExpDT.AcceptChanges();
-
-            return Global.admExpDT;
-        }
-
-        /// <summary>
-        /// 관리비 양식 조회
-        /// </summary>
-        /// <returns>세대주 목록</returns>
-        public static DataTable getEmptyAdmExpInfo(string yyyymm)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("yyyymm");
-            dt.Columns.Add("home");
-            dt.Columns.Add("name");
-            dt.Columns.Add("premonth");
-            dt.Columns.Add("nowmonth");
-            dt.Columns.Add("useamount");
-            dt.Columns.Add("usecost");
-            dt.Columns.Add("admexpcost");
-            dt.Columns.Add("totalcost");
-            dt.Columns.Add("remark");
-
-            string dbConn = @"Data Source=aptmanager.db";
-
-            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-            {
-                conn.Open();
-                string sql = "SELECT a.yyyymm, b.home, b.name, a.premonth, a.nowmonth, a.useamount, a.usecost, a.admexpcost, a.totalcost, a.remark from homeinfo b LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '" + yyyymm + "'";
-
-                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    dt.Rows.Add(new object[] { yyyymm, reader["home"], reader["name"] });
+                                            , reader["remark"]
+                                            , reader["ordernum"] });
                 }
 
                 reader.Close();
@@ -174,8 +149,10 @@ namespace APTManager
         /// <summary>
         /// 관리비 양식 생성(신규)
         /// </summary>
-        /// <param name=""></param>
-        public static int createAdmExpInfo(DataTable pDT)
+        /// <param name="pDT"></param>
+        /// <param name="yyyymm"></param>
+        /// <returns></returns>
+        public static int createAdmExpInfo(string yyyymm)
         {
             string dbConn;
             string sql;
@@ -190,39 +167,27 @@ namespace APTManager
                 {
                     conn.Open();
 
-                    // 저장 대상만큼 반복 수행
-                    for (int i = 0; i < pDT.Rows.Count; i++)
-                    {
-                        sql = "INSERT INTO admexp ("
-                            + "  yyyymm"
-                            + ", home"
-                            + ", name"
-                            + ", premonth"
-                            + ", nowmonth"
-                            + ", useamount"
-                            + ", usecost"
-                            + ", admexpcost"
-                            + ", totalcost"
-                            + ", remark) VALUES ("
-                            + " '" + pDT.Rows[i][0].ToString() + "'"
-                            + ",'" + pDT.Rows[i][1].ToString() + "'"
-                            + ",'" + pDT.Rows[i][2].ToString() + "'"
-                            + ",'" + pDT.Rows[i][3].ToString() + "'"
-                            + ",'" + pDT.Rows[i][4].ToString() + "'"
-                            + ",'" + pDT.Rows[i][5].ToString() + "'"
-                            + ",'" + pDT.Rows[i][6].ToString() + "'"
-                            + ",'" + pDT.Rows[i][7].ToString() + "'"
-                            + ",'" + pDT.Rows[i][8].ToString() + "'"
-                            + ",'" + pDT.Rows[i][9].ToString() + "')";
-                        cmd = new SQLiteCommand(sql, conn);
-                        result += cmd.ExecuteNonQuery();
-                    }
+                    sql = "INSERT INTO admexp "
+                        + "SELECT '" + yyyymm + "'"
+                            + ", b.home"
+                            + ", b.name"
+                            + ", ''"
+                            + ", ''"
+                            + ", ''"
+                            + ", ''"
+                            + ", ''"
+                            + ", ''"
+                            + ", ''"
+                            + ", b.ordernum"
+                            + " from homeinfo b LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '" + yyyymm + "'";
+
+                    cmd = new SQLiteCommand(sql, conn);
+                    result += cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
             {
                 //MessageBox.Show("저장 실패");
-                Console.WriteLine(ex.ToString());
                 return -1;
             }
 
@@ -261,6 +226,7 @@ namespace APTManager
                             + ", admexpcost = '" + pDT.Rows[i][7].ToString() + "'"
                             + ", totalcost  = '" + pDT.Rows[i][8].ToString() + "'"
                             + ", remark     = '" + pDT.Rows[i][9].ToString() + "'"
+                            + ", ordernum   = '" + pDT.Rows[i][10].ToString() + "'"
                             + "WHERE yyyymm = '" + pDT.Rows[i][0].ToString() + "'"
                             + "AND home = '" + pDT.Rows[i][1].ToString() + "'";
                         cmd = new SQLiteCommand(sql, conn);
@@ -271,7 +237,6 @@ namespace APTManager
             catch (Exception ex)
             {
                 //MessageBox.Show("저장 실패");
-                string exam = ex.ToString();
                 return -1;
             }
 
