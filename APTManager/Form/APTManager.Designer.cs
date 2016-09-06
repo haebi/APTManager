@@ -84,6 +84,7 @@ namespace APTManager
             this.gridAdmExp.RowTemplate.Height = 23;
             this.gridAdmExp.Size = new System.Drawing.Size(1326, 651);
             this.gridAdmExp.TabIndex = 6;
+            this.gridAdmExp.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAdmExp_CellEndEdit);
             // 
             // btnSaveAdmExp
             // 

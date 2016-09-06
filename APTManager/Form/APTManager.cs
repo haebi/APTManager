@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Data.SQLite;
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
-using ClosedXML.Excel;
-using System.Diagnostics;
-
-using APTManager;
 
 namespace APTManager
 {
@@ -156,6 +151,44 @@ namespace APTManager
 
             // 결과 메시지
             Util.messageSaveResult(DB.saveAdmExpInfo(saveDT));
+        }
+
+        /// <summary>
+        /// 자동계산 처리
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridAdmExp_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // 현재 컬럼 인덱스
+            int curCol = gridAdmExp.CurrentCell.ColumnIndex;
+
+            switch ((Global.AdmExp)curCol)
+            {
+                case Global.AdmExp.premonth:
+                case Global.AdmExp.nowmonth:
+                    // 현재지침 - 전월지침 = 사용량
+                    Util.calcCell(gridAdmExp,
+                        (int)Global.AdmExp.nowmonth,
+                        (int)Global.AdmExp.premonth,
+                        (int)Global.AdmExp.useamount,
+                        Global.Calc.Sub);
+                    break;
+
+                case Global.AdmExp.usecost:
+                case Global.AdmExp.admexpcost:
+                    // 사용금액 + 관리비 = 합계
+                    Util.calcCell(gridAdmExp,
+                        (int)Global.AdmExp.usecost,
+                        (int)Global.AdmExp.admexpcost,
+                        (int)Global.AdmExp.totalcost,
+                        Global.Calc.Add);
+                    break;
+
+                default:
+                    break;
+            }
+
         }
     }
 }

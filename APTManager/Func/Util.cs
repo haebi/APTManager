@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System;
 
 namespace APTManager
 {
@@ -42,6 +43,47 @@ namespace APTManager
         public static void hideColumn(DataGridView grid, int index)
         {
             grid.Columns[index].Visible = false;
+        }
+
+        /// <summary>
+        /// 컬럼 자동계산
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
+        /// <param name="resultIndex"></param>
+        /// <param name="calc"></param>
+        public static void calcCell(DataGridView grid, int index1, int index2, int resultIndex, Global.Calc calc)
+        {
+            int curRow = grid.CurrentCell.RowIndex;
+            int curCol = grid.CurrentCell.ColumnIndex;
+
+            // 오류 회피용 try ~ catch 블록. -> regex 로 변경 예정.
+            try
+            {
+                switch (calc)
+                {
+                    // 셀 뺄셈
+                    case Global.Calc.Sub:
+                        int preMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString());
+                        int nowMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString());
+
+                        grid.Rows[curRow].Cells[resultIndex].Value = nowMonth - preMonth;
+                        break;
+
+                    // 셀 덧셈
+                    case Global.Calc.Add:
+                        int useCost = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString());
+                        int admExpCost = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString());
+
+                        grid.Rows[curRow].Cells[resultIndex].Value = useCost + admExpCost;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex) { }
         }
 
         /// <summary>
