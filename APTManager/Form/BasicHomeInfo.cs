@@ -18,6 +18,11 @@ namespace APTManager
         /// <param name="e"></param>
         private void BasicHomeInfo_Load(object sender, EventArgs e)
         {
+            // 창 스타일 설정
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+
             // 그리드 헤더, 컬럼 설정
             gridHomeInfo.Columns.Clear();
             Util.setColumnHeader(gridHomeInfo, "home", "세대");

@@ -67,7 +67,11 @@ namespace APTManager
                     // 저장 대상만큼 반복 수행
                     for (int i = 0; i < pDT.Rows.Count; i++)
                     {
-                        sql = "UPDATE homeinfo SET name='" + pDT.Rows[i][1].ToString() + "' WHERE home='" + pDT.Rows[i][0].ToString() + "' ";
+                        sql = string.Format("UPDATE homeinfo "
+                                            +"  SET name='{0}' "
+                                            +"WHERE home='{1}' "
+                                            , pDT.Rows[i][(int)Global.HomeInfo.name].ToString()
+                                            , pDT.Rows[i][(int)Global.HomeInfo.home].ToString() );
                         cmd = new SQLiteCommand(sql, conn);
                         result = cmd.ExecuteNonQuery();
                     }
@@ -106,18 +110,20 @@ namespace APTManager
             using (SQLiteConnection conn = new SQLiteConnection(dbConn))
             {
                 conn.Open();
-                string sql = "SELECT yyyymm"
-                                + ", home"
-                                + ", name"
-                                + ", premonth"
-                                + ", nowmonth"
-                                + ", useamount"
-                                + ", usecost"
-                                + ", admexpcost"
-                                + ", totalcost"
-                                + ", remark"
-                                + ", ordernum"
-                                + " FROM admexp where yyyymm = '" + yyyymm + "' ORDER BY 11";
+                string sql = string.Format("SELECT yyyymm"
+                                            + " , home"
+                                            + " , name"
+                                            + " , premonth"
+                                            + " , nowmonth"
+                                            + " , useamount"
+                                            + " , usecost"
+                                            + " , admexpcost"
+                                            + " , totalcost"
+                                            + " , remark"
+                                            + " , ordernum"
+                                            + " FROM admexp where yyyymm = '{0}'"
+                                            + " ORDER BY ordernum"
+                                            , yyyymm );
 
                 SQLiteCommand cmd = new SQLiteCommand(sql, conn);
                 SQLiteDataReader reader = cmd.ExecuteReader();
@@ -167,19 +173,27 @@ namespace APTManager
                 {
                     conn.Open();
 
-                    sql = "INSERT INTO admexp "
-                        + "SELECT '" + yyyymm + "'"
-                            + ", b.home"
-                            + ", b.name"
-                            + ", ''"
-                            + ", ''"
-                            + ", ''"
-                            + ", ''"
-                            + ", ''"
-                            + ", ''"
-                            + ", ''"
-                            + ", b.ordernum"
-                            + " from homeinfo b LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '" + yyyymm + "'";
+                    // Convert Datetime Format for get -1 Month in SQLite
+                    // 2016-10-01 00:00:00
+                    string preDate = string.Format("{0}-{1}-01 {2}", yyyymm.Substring(0, 4), yyyymm.Substring(4, 2), "00:00:00");
+
+                    sql = string.Format("INSERT INTO admexp "
+                        + "SELECT '{0}'"
+                            + " , b.home"
+                            + " , b.name"
+                            + " , IFNULL((SELECT nowmonth from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{1}', '-1 month') AND c.home = b.home), 0)"
+                            + " , ''"
+                            + " , ''"
+                            + " , ''"
+                            + " , ''"
+                            + " , ''"
+                            + " , ''"
+                            + " , b.ordernum"
+                            + " from homeinfo b"
+                            + " LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '{2}'"
+                            , yyyymm
+                            , preDate
+                            , yyyymm );
 
                     cmd = new SQLiteCommand(sql, conn);
                     result += cmd.ExecuteNonQuery();
@@ -217,18 +231,30 @@ namespace APTManager
                     // 저장 대상만큼 반복 수행
                     for (int i = 0; i < pDT.Rows.Count; i++)
                     {
-                        sql = "UPDATE admexp SET"
-                            + "  name       = '" + pDT.Rows[i][2].ToString() + "'"
-                            + ", premonth   = '" + pDT.Rows[i][3].ToString() + "'"
-                            + ", nowmonth   = '" + pDT.Rows[i][4].ToString() + "'"
-                            + ", useamount  = '" + pDT.Rows[i][5].ToString() + "'"
-                            + ", usecost    = '" + pDT.Rows[i][6].ToString() + "'"
-                            + ", admexpcost = '" + pDT.Rows[i][7].ToString() + "'"
-                            + ", totalcost  = '" + pDT.Rows[i][8].ToString() + "'"
-                            + ", remark     = '" + pDT.Rows[i][9].ToString() + "'"
-                            + ", ordernum   = '" + pDT.Rows[i][10].ToString() + "'"
-                            + "WHERE yyyymm = '" + pDT.Rows[i][0].ToString() + "'"
-                            + "AND home = '" + pDT.Rows[i][1].ToString() + "'";
+                        sql = string.Format("UPDATE admexp SET"
+                                            + "  name       = '{0}'"
+                                            + ", premonth   = '{1}'"
+                                            + ", nowmonth   = '{2}'"
+                                            + ", useamount  = '{3}'"
+                                            + ", usecost    = '{4}'"
+                                            + ", admexpcost = '{5}'"
+                                            + ", totalcost  = '{6}'"
+                                            + ", remark     = '{7}'"
+                                            + ", ordernum   = '{8}'"
+                                            + " WHERE yyyymm = '{9}'"
+                                            + " AND home = '{10}'"
+                                            , pDT.Rows[i][(int)Global.AdmExp.name].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.premonth].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.nowmonth].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.useamount].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.usecost].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.admexpcost].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.totalcost].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.remark].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.ordernum].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.yyyymm].ToString()
+                                            , pDT.Rows[i][(int)Global.AdmExp.home].ToString() );
+
                         cmd = new SQLiteCommand(sql, conn);
                         result += cmd.ExecuteNonQuery();
                     }

@@ -10,6 +10,14 @@ namespace APTManager
 
         public static frmHomeInfo   frmHomeInfo     = null;     // 세대 기본정보 창
 
+        // 세대 기본정보 컬럼 인덱스
+        public enum HomeInfo
+        {
+            [intValue(0)] home,         // "세대"
+            [intValue(1)] name,         // "세대주"
+            [intValue(2)] ordernum      // "정렬순서"
+        }
+
         // 관리비(Administrative expenses) 컬럼 인덱스
         public enum AdmExp
         {

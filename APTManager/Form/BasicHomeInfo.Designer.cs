@@ -36,17 +36,17 @@
             // gridHomeInfo
             // 
             this.gridHomeInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridHomeInfo.Location = new System.Drawing.Point(12, 41);
+            this.gridHomeInfo.Location = new System.Drawing.Point(8, 39);
             this.gridHomeInfo.Name = "gridHomeInfo";
             this.gridHomeInfo.RowTemplate.Height = 23;
-            this.gridHomeInfo.Size = new System.Drawing.Size(307, 658);
+            this.gridHomeInfo.Size = new System.Drawing.Size(317, 665);
             this.gridHomeInfo.TabIndex = 0;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(244, 12);
+            this.btnSave.Location = new System.Drawing.Point(225, 9);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(100, 24);
             this.btnSave.TabIndex = 1;
             this.btnSave.Text = "저장";
             this.btnSave.UseVisualStyleBackColor = true;
