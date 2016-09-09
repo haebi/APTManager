@@ -53,7 +53,7 @@ namespace APTManager
         /// <param name="index2"></param>
         /// <param name="resultIndex"></param>
         /// <param name="calc"></param>
-        public static void calcCell(DataGridView grid, int index1, int index2, int resultIndex, Global.Calc calc)
+        public static void calcCell(DataGridView grid, int index1, int index2, int resultIndex, Common.Calc calc)
         {
             int curRow = grid.CurrentCell.RowIndex;
             int curCol = grid.CurrentCell.ColumnIndex;
@@ -64,7 +64,7 @@ namespace APTManager
                 switch (calc)
                 {
                     // 셀 뺄셈
-                    case Global.Calc.Sub:
+                    case Common.Calc.Sub:
                         int preMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString());
                         int nowMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString());
 
@@ -72,7 +72,7 @@ namespace APTManager
                         break;
 
                     // 셀 덧셈
-                    case Global.Calc.Add:
+                    case Common.Calc.Add:
                         int useCost = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString());
                         int admExpCost = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString());
 

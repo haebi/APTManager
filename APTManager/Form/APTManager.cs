@@ -58,6 +58,13 @@ namespace APTManager
             Util.lockColumn(gridAdmExp, 8);
 
             Util.hideColumn(gridAdmExp, 10);        // 컬럼 숨김
+
+            // Split Container 설정
+            splitContainer1.FixedPanel = FixedPanel.Panel1;
+            splitContainer1.IsSplitterFixed = true;
+
+            // 가로 고정 상태로 최대화 할 경우, 시작표시줄 아래로 창이 확장되는 문제 있음(win 10, 다른버젼 미확인)
+            //this.MaximumSize = new Size(1137, 9999);
         }
 
         /// <summary>
@@ -90,7 +97,7 @@ namespace APTManager
 
             // 팝업 위치 설정
             Global.frmHomeInfo.StartPosition = FormStartPosition.Manual;
-            Global.frmHomeInfo.Location = new Point(this.Left, this.Top);
+            Global.frmHomeInfo.Location = new Point(this.Left +20, this.Top +20);
 
             Global.frmHomeInfo.ShowDialog();
         }
@@ -163,26 +170,26 @@ namespace APTManager
             // 현재 컬럼 인덱스
             int curCol = gridAdmExp.CurrentCell.ColumnIndex;
 
-            switch ((Global.AdmExp)curCol)
+            switch ((Common.AdmExp)curCol)
             {
-                case Global.AdmExp.premonth:
-                case Global.AdmExp.nowmonth:
+                case Common.AdmExp.premonth:
+                case Common.AdmExp.nowmonth:
                     // 현재지침 - 전월지침 = 사용량
                     Util.calcCell(gridAdmExp,
-                        (int)Global.AdmExp.nowmonth,
-                        (int)Global.AdmExp.premonth,
-                        (int)Global.AdmExp.useamount,
-                        Global.Calc.Sub);
+                        (int)Common.AdmExp.nowmonth,
+                        (int)Common.AdmExp.premonth,
+                        (int)Common.AdmExp.useamount,
+                        Common.Calc.Sub);
                     break;
 
-                case Global.AdmExp.usecost:
-                case Global.AdmExp.admexpcost:
+                case Common.AdmExp.usecost:
+                case Common.AdmExp.admexpcost:
                     // 사용금액 + 관리비 = 합계
                     Util.calcCell(gridAdmExp,
-                        (int)Global.AdmExp.usecost,
-                        (int)Global.AdmExp.admexpcost,
-                        (int)Global.AdmExp.totalcost,
-                        Global.Calc.Add);
+                        (int)Common.AdmExp.usecost,
+                        (int)Common.AdmExp.admexpcost,
+                        (int)Common.AdmExp.totalcost,
+                        Common.Calc.Add);
                     break;
 
                 default:

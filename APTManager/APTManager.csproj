@@ -104,6 +104,7 @@
     <Compile Include="Form\BasicHomeInfo.Designer.cs">
       <DependentUpon>BasicHomeInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Func\Common.cs" />
     <Compile Include="Model\BillModel.cs" />
     <Compile Include="Func\DB.cs" />
     <Compile Include="Func\Global.cs" />

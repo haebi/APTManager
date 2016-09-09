@@ -70,8 +70,8 @@ namespace APTManager
                         sql = string.Format("UPDATE homeinfo "
                                             +"  SET name='{0}' "
                                             +"WHERE home='{1}' "
-                                            , pDT.Rows[i][(int)Global.HomeInfo.name].ToString()
-                                            , pDT.Rows[i][(int)Global.HomeInfo.home].ToString() );
+                                            , pDT.Rows[i][(int)Common.HomeInfo.name].ToString()
+                                            , pDT.Rows[i][(int)Common.HomeInfo.home].ToString() );
                         cmd = new SQLiteCommand(sql, conn);
                         result = cmd.ExecuteNonQuery();
                     }
@@ -243,17 +243,17 @@ namespace APTManager
                                             + ", ordernum   = '{8}'"
                                             + " WHERE yyyymm = '{9}'"
                                             + " AND home = '{10}'"
-                                            , pDT.Rows[i][(int)Global.AdmExp.name].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.premonth].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.nowmonth].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.useamount].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.usecost].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.admexpcost].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.totalcost].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.remark].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.ordernum].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.yyyymm].ToString()
-                                            , pDT.Rows[i][(int)Global.AdmExp.home].ToString() );
+                                            , pDT.Rows[i][(int)Common.AdmExp.name].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.premonth].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.nowmonth].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.useamount].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.usecost].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.admexpcost].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.totalcost].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.remark].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.ordernum].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.yyyymm].ToString()
+                                            , pDT.Rows[i][(int)Common.AdmExp.home].ToString() );
 
                         cmd = new SQLiteCommand(sql, conn);
                         result += cmd.ExecuteNonQuery();
