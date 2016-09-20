@@ -197,5 +197,22 @@ namespace APTManager
             }
 
         }
+
+        /// <summary>
+        /// 현재 조회된 항목의 세대정보를 갱신
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnApplyHomeInfo_Click(object sender, EventArgs e)
+        {
+            string yyyymm = dtpAdmExp.Value.ToString("yyyyMM");
+
+            // 결과 메시지
+            Util.messageSaveResult(DB.updateAdmExpHomeInfo(yyyymm));
+
+            // 재조회
+            btnGetAdmExp.PerformClick();
+        }
+
     }
 }

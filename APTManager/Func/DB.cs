@@ -6,6 +6,9 @@ namespace APTManager
 {
     public static class DB
     {
+        // 데이터베이스 파일
+        private const string dbConn = @"Data Source=aptmanager.db";
+
         /// <summary>
         /// 세대주 정보 조회
         /// </summary>
@@ -16,8 +19,6 @@ namespace APTManager
             dt.Columns.Add("home");
             dt.Columns.Add("name");
             dt.Columns.Add("ordernum");
-
-            string dbConn = @"Data Source=aptmanager.db";
 
             using (SQLiteConnection conn = new SQLiteConnection(dbConn))
             {
@@ -51,15 +52,12 @@ namespace APTManager
         /// <returns></returns>
         public static int saveHomeInfo(DataTable pDT)
         {
-            string dbConn;
             string sql;
             SQLiteCommand cmd;
             int result = 0;
 
             try
             {
-                dbConn = @"Data Source=aptmanager.db";
-
                 using (SQLiteConnection conn = new SQLiteConnection(dbConn))
                 {
                     conn.Open();
@@ -104,8 +102,6 @@ namespace APTManager
             dt.Columns.Add("totalcost");
             dt.Columns.Add("remark");
             dt.Columns.Add("ordernum");
-
-            string dbConn = @"Data Source=aptmanager.db";
 
             using (SQLiteConnection conn = new SQLiteConnection(dbConn))
             {
@@ -160,15 +156,12 @@ namespace APTManager
         /// <returns></returns>
         public static int createAdmExpInfo(string yyyymm)
         {
-            string dbConn;
             string sql;
             SQLiteCommand cmd;
             int result = 0;
 
             try
             {
-                dbConn = @"Data Source=aptmanager.db";
-
                 using (SQLiteConnection conn = new SQLiteConnection(dbConn))
                 {
                     conn.Open();
@@ -215,15 +208,12 @@ namespace APTManager
         /// <returns></returns>
         public static int saveAdmExpInfo(DataTable pDT)
         {
-            string dbConn;
             string sql;
             SQLiteCommand cmd;
             int result = 0;
 
             try
             {
-                dbConn = @"Data Source=aptmanager.db";
-
                 using (SQLiteConnection conn = new SQLiteConnection(dbConn))
                 {
                     conn.Open();
@@ -268,6 +258,40 @@ namespace APTManager
 
             return result;
         }
+
+        /// <summary>
+        /// 현재 세대주 정보를 반영
+        /// </summary>
+        /// <returns></returns>
+        public static int updateAdmExpHomeInfo(string yyyymm)
+        {
+            string sql;
+            SQLiteCommand cmd;
+            int result = 0;
+
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
+                {
+                    conn.Open();
+
+                    sql = string.Format(" UPDATE admexp "
+                                        + " SET name = (SELECT homeinfo.name FROM homeinfo WHERE homeinfo.home = admexp.home) "
+                                        + " WHERE yyyymm = '{0}' "
+                                        , yyyymm);
+                    cmd = new SQLiteCommand(sql, conn);
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                // 저장 실패
+                return -1;
+            }
+
+            return result;
+        }
+
     }
 }
 

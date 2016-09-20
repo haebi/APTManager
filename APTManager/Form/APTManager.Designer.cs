@@ -37,6 +37,7 @@ namespace APTManager
             this.gridAdmExp = new System.Windows.Forms.DataGridView();
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnApplyHomeInfo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -73,7 +74,7 @@ namespace APTManager
             // 
             // btnExcel
             // 
-            this.btnExcel.Location = new System.Drawing.Point(125, 69);
+            this.btnExcel.Location = new System.Drawing.Point(233, 69);
             this.btnExcel.Name = "btnExcel";
             this.btnExcel.Size = new System.Drawing.Size(102, 23);
             this.btnExcel.TabIndex = 5;
@@ -94,7 +95,7 @@ namespace APTManager
             // 
             // btnSaveAdmExp
             // 
-            this.btnSaveAdmExp.Location = new System.Drawing.Point(233, 69);
+            this.btnSaveAdmExp.Location = new System.Drawing.Point(341, 69);
             this.btnSaveAdmExp.Name = "btnSaveAdmExp";
             this.btnSaveAdmExp.Size = new System.Drawing.Size(102, 23);
             this.btnSaveAdmExp.TabIndex = 7;
@@ -111,6 +112,7 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnApplyHomeInfo);
             this.splitContainer1.Panel1.Controls.Add(this.btnGetAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnSaveAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnExcel);
@@ -123,6 +125,16 @@ namespace APTManager
             this.splitContainer1.Size = new System.Drawing.Size(1121, 781);
             this.splitContainer1.SplitterDistance = 114;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // btnApplyHomeInfo
+            // 
+            this.btnApplyHomeInfo.Location = new System.Drawing.Point(125, 69);
+            this.btnApplyHomeInfo.Name = "btnApplyHomeInfo";
+            this.btnApplyHomeInfo.Size = new System.Drawing.Size(102, 23);
+            this.btnApplyHomeInfo.TabIndex = 8;
+            this.btnApplyHomeInfo.Text = "세대정보 반영";
+            this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
+            this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
             // APTManager
             // 
@@ -151,6 +163,7 @@ namespace APTManager
         private DataGridView gridAdmExp;
         private Button btnSaveAdmExp;
         private SplitContainer splitContainer1;
+        private Button btnApplyHomeInfo;
     }
 }
 
