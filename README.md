@@ -6,6 +6,7 @@ Tool for APT Management.
 
 ####Required Tools
 - VisualStudio (worked 2015 Community)
+  + option sql server data tools (report viewer)
 
   
 ####Build

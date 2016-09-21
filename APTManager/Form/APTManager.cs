@@ -214,5 +214,22 @@ namespace APTManager
             btnGetAdmExp.PerformClick();
         }
 
+        /// <summary>
+        /// 인쇄
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrintAdmExp_Click(object sender, EventArgs e)
+        {
+            if (Global.frmPrintAdmExp == null
+                || Global.frmPrintAdmExp.IsDisposed)
+                Global.frmPrintAdmExp = new frmPrintAdmExp();
+
+            // 팝업 위치 설정
+            Global.frmPrintAdmExp.StartPosition = FormStartPosition.Manual;
+            Global.frmPrintAdmExp.Location = new Point(this.Left + 20, this.Top + 20);
+
+            Global.frmPrintAdmExp.ShowDialog();
+        }
     }
 }

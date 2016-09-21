@@ -38,6 +38,7 @@ namespace APTManager
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
+            this.btnPrintAdmExp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -112,6 +113,7 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnPrintAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnApplyHomeInfo);
             this.splitContainer1.Panel1.Controls.Add(this.btnGetAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnSaveAdmExp);
@@ -136,6 +138,16 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
+            // btnPrintAdmExp
+            // 
+            this.btnPrintAdmExp.Location = new System.Drawing.Point(449, 69);
+            this.btnPrintAdmExp.Name = "btnPrintAdmExp";
+            this.btnPrintAdmExp.Size = new System.Drawing.Size(102, 23);
+            this.btnPrintAdmExp.TabIndex = 10;
+            this.btnPrintAdmExp.Text = "인쇄";
+            this.btnPrintAdmExp.UseVisualStyleBackColor = true;
+            this.btnPrintAdmExp.Click += new System.EventHandler(this.btnPrintAdmExp_Click);
+            // 
             // APTManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -143,7 +155,7 @@ namespace APTManager
             this.ClientSize = new System.Drawing.Size(1121, 781);
             this.Controls.Add(this.splitContainer1);
             this.Name = "APTManager";
-            this.Text = "APTManager (by haebi) 20160905";
+            this.Text = "APTManager (by haebi) ver. 20160921";
             this.Load += new System.EventHandler(this.APTManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -164,6 +176,7 @@ namespace APTManager
         private Button btnSaveAdmExp;
         private SplitContainer splitContainer1;
         private Button btnApplyHomeInfo;
+        private Button btnPrintAdmExp;
     }
 }
 
