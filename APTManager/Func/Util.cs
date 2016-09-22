@@ -36,6 +36,32 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 로우를 읽기전용으로 설정합니다.
+        /// </summary>
+        /// <param name="index"></param>
+        public static void lockRow(DataGridView grid, int index)
+        {
+            grid.Rows[index].ReadOnly = true;
+
+            DataGridViewCellStyle style = new DataGridViewCellStyle();
+            style.BackColor = System.Drawing.Color.FromArgb(200, 200, 200);
+            grid.Rows[index].DefaultCellStyle = style;
+        }
+
+        /// <summary>
+        /// 셀을 읽기전용으로 설정합니다.
+        /// </summary>
+        /// <param name="index"></param>
+        public static void lockCell(DataGridView grid, int row, int col)
+        {
+            grid.Rows[row].Cells[col].ReadOnly = true;
+
+            DataGridViewCellStyle style = new DataGridViewCellStyle();
+            style.BackColor = System.Drawing.Color.FromArgb(200, 200, 200);
+            grid.Rows[row].Cells[col].Style = style;
+        }
+
+        /// <summary>
         /// 컬럼을 숨깁니다.
         /// </summary>
         /// <param name="grid"></param>

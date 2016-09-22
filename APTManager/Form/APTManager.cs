@@ -137,6 +137,12 @@ namespace APTManager
             {
                 MessageBox.Show("조회 완료");
             }
+
+            // 합계 부분 추가
+            Global.admExpDT.Rows.Add(new object[] { "", "합계", "", "", "", "", "", "", "", "", "9999"});
+
+            // 합계 계산
+            calcAdmExpSum();
         }
 
         /// <summary>
@@ -196,6 +202,8 @@ namespace APTManager
                     break;
             }
 
+            // 합계 계산
+            calcAdmExpSum();
         }
 
         /// <summary>
@@ -231,5 +239,40 @@ namespace APTManager
 
             Global.frmPrintAdmExp.ShowDialog();
         }
+
+        /// <summary>
+        /// 합계를 계산
+        /// </summary>
+        private void calcAdmExpSum()
+        {
+            int[] sum = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            for (int i = 0; i < Global.admExpDT.Rows.Count; i++)
+            {
+                // 합계는 제외한다.
+                if (Global.admExpDT.Rows[i][(int)Common.AdmExp.home].Equals("합계"))
+                    continue;
+
+                // 각 항목별로 합계를 구한다
+                sum[(int)Common.AdmExp.premonth]    += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.premonth]);   // 전월지침
+                sum[(int)Common.AdmExp.nowmonth]    += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.nowmonth]);   // 당월지침
+                sum[(int)Common.AdmExp.useamount]   += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.useamount]);  // 사용량
+                sum[(int)Common.AdmExp.usecost]     += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.usecost]);    // 사용금액
+                sum[(int)Common.AdmExp.admexpcost]  += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.admexpcost]); // 관리비
+                sum[(int)Common.AdmExp.totalcost]   += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.totalcost]);  // 합계
+            }
+
+            // 구한 합계를 테이블에 반영
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count -1][(int)Common.AdmExp.premonth]   = sum[(int)Common.AdmExp.premonth];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count -1][(int)Common.AdmExp.nowmonth]   = sum[(int)Common.AdmExp.nowmonth];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count -1][(int)Common.AdmExp.useamount]  = sum[(int)Common.AdmExp.useamount];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count -1][(int)Common.AdmExp.usecost]    = sum[(int)Common.AdmExp.usecost];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count -1][(int)Common.AdmExp.admexpcost] = sum[(int)Common.AdmExp.admexpcost];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count -1][(int)Common.AdmExp.totalcost]  = sum[(int)Common.AdmExp.totalcost];
+
+            // 합계 셀 잠금
+            Util.lockRow(gridAdmExp, Global.admExpDT.Rows.Count - 1);
+        }
+
     }
 }

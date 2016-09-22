@@ -221,6 +221,10 @@ namespace APTManager
                     // 저장 대상만큼 반복 수행
                     for (int i = 0; i < pDT.Rows.Count; i++)
                     {
+                        // 합계는 제외한다.
+                        if (pDT.Rows[i][(int)Common.AdmExp.home].Equals("합계"))
+                            continue;
+
                         sql = string.Format("UPDATE admexp SET"
                                             + "  name       = '{0}'"
                                             + ", premonth   = '{1}'"

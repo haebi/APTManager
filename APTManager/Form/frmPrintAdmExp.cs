@@ -1,12 +1,5 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace APTManager
@@ -30,7 +23,7 @@ namespace APTManager
 
             // 마진 설정
             System.Drawing.Printing.PageSettings ps = ReportViewer_AdmExp.GetPageSettings();
-            ps.Margins = new System.Drawing.Printing.Margins(50, 50, 50, 50);
+            ps.Margins = new System.Drawing.Printing.Margins(25, 25, 100, 50);
             this.ReportViewer_AdmExp.SetPageSettings(ps);
 
             // 타이틀에 사용할 년월 정보를 조회된 데이터로 부터 가져온다.
