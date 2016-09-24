@@ -178,8 +178,8 @@ namespace APTManager
                             + " , ''"
                             + " , ''"
                             + " , ''"
-                            + " , ''"
-                            + " , ''"
+                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1)"
+                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1)"
                             + " , ''"
                             + " , b.ordernum"
                             + " from homeinfo b"
@@ -285,6 +285,83 @@ namespace APTManager
                                         , yyyymm);
                     cmd = new SQLiteCommand(sql, conn);
                     result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                // 저장 실패
+                return -1;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 공통코드 정보 조회
+        /// </summary>
+        /// <returns>세대주 목록</returns>
+        public static DataTable getComCode()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("comgroup");
+            dt.Columns.Add("comcode");
+            dt.Columns.Add("comvalue");
+            dt.Columns.Add("comremark");
+
+            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
+            {
+                conn.Open();
+                string sql = "SELECT comgroup"
+                                + ", comcode"
+                                + ", comvalue"
+                                + ", comremark"
+                                + " FROM comcode ORDER BY comgroup, comcode";
+
+                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    dt.Rows.Add(new object[] { reader["comgroup"], reader["comcode"], reader["comvalue"], reader["comremark"] });
+                }
+
+                reader.Close();
+            }
+
+            Global.comcodeDT = dt.Copy();
+            Global.comcodeDT.AcceptChanges();
+
+            return Global.comcodeDT;
+        }
+
+        /// <summary>
+        /// 공통코드 저장
+        /// </summary>
+        /// <param name="pDT"></param>
+        /// <returns></returns>
+        public static int saveComCode(DataTable pDT)
+        {
+            string sql;
+            SQLiteCommand cmd;
+            int result = 0;
+
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
+                {
+                    conn.Open();
+
+                    // 저장 대상만큼 반복 수행
+                    for (int i = 0; i < pDT.Rows.Count; i++)
+                    {
+                        sql = string.Format("UPDATE comcode "
+                                            + "  SET comvalue='{0}' "
+                                            + "WHERE comremark='{1}' "
+                                            , pDT.Rows[i][(int)Common.ComCode.comvalue].ToString()
+                                            , pDT.Rows[i][(int)Common.ComCode.comremark].ToString());
+                        cmd = new SQLiteCommand(sql, conn);
+                        result = cmd.ExecuteNonQuery();
+                    }
                 }
             }
             catch (Exception ex)

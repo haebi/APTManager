@@ -16,7 +16,7 @@ namespace APTManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new APTManager());
+            Application.Run(new APTManager_Main());
         }
     }
 }

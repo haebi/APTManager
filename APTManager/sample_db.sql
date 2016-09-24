@@ -92,3 +92,14 @@ CREATE TABLE admexp (
 , remark string
 , ordernum int NOT NULL
 , PRIMARY KEY (yyyymm, home));
+
+CREATE TABLE comcode (
+comgroup int NOT NULL
+, comcode int NOT NULL
+, comvalue string NOT NULL
+, comremark string
+, PRIMARY KEY (comgroup, comcode)
+);
+
+INSERT INTO comcode VALUES
+(0001,001,'25000','°ü¸®ºñ');

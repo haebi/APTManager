@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace APTManager
 {
-    public partial class frmPrintAdmExp : Form
+    public partial class APTManager_PrintAdmExp : Form
     {
-        public frmPrintAdmExp()
+        public APTManager_PrintAdmExp()
         {
             InitializeComponent();
         }

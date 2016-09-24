@@ -2,7 +2,7 @@
 
 namespace APTManager
 {
-    partial class APTManager
+    partial class APTManager_Main
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -37,6 +37,7 @@ namespace APTManager
             this.gridAdmExp = new System.Windows.Forms.DataGridView();
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
@@ -113,6 +114,7 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnSetings);
             this.splitContainer1.Panel1.Controls.Add(this.btnPrintAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnApplyHomeInfo);
             this.splitContainer1.Panel1.Controls.Add(this.btnGetAdmExp);
@@ -127,6 +129,16 @@ namespace APTManager
             this.splitContainer1.Size = new System.Drawing.Size(1121, 781);
             this.splitContainer1.SplitterDistance = 114;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // btnSetings
+            // 
+            this.btnSetings.Location = new System.Drawing.Point(557, 69);
+            this.btnSetings.Name = "btnSetings";
+            this.btnSetings.Size = new System.Drawing.Size(102, 23);
+            this.btnSetings.TabIndex = 11;
+            this.btnSetings.Text = "설정";
+            this.btnSetings.UseVisualStyleBackColor = true;
+            this.btnSetings.Click += new System.EventHandler(this.btnSetings_Click);
             // 
             // btnPrintAdmExp
             // 
@@ -148,13 +160,13 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
-            // APTManager
+            // APTManager_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1121, 781);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "APTManager";
+            this.Name = "APTManager_Main";
             this.Text = "APTManager (by haebi) ver. 20160922";
             this.Load += new System.EventHandler(this.APTManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
@@ -177,6 +189,7 @@ namespace APTManager
         private SplitContainer splitContainer1;
         private Button btnApplyHomeInfo;
         private Button btnPrintAdmExp;
+        private Button btnSetings;
     }
 }
 

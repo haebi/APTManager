@@ -1,6 +1,6 @@
 ﻿namespace APTManager
 {
-    partial class frmHomeInfo
+    partial class APTManager_HomeInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -52,14 +52,14 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // frmHomeInfo
+            // APTManager_HomeInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(332, 711);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gridHomeInfo);
-            this.Name = "frmHomeInfo";
+            this.Name = "APTManager_HomeInfo";
             this.Text = "세대 기본정보";
             this.Load += new System.EventHandler(this.BasicHomeInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridHomeInfo)).EndInit();

@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace APTManager
 {
-    public partial class frmHomeInfo : Form
+    public partial class APTManager_HomeInfo : Form
     {
-        public frmHomeInfo()
+        public APTManager_HomeInfo()
         {
             InitializeComponent();
         }

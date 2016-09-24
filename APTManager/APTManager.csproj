@@ -95,28 +95,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataSet\dsAPTManager.Designer.cs">
+    <Compile Include="Form\APTManager_Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\APTManager_Settings.Designer.cs">
+      <DependentUpon>APTManager_Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\APTManagerDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>dsAPTManager.xsd</DependentUpon>
+      <DependentUpon>APTManagerDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Form\APTManager.cs">
+    <Compile Include="Form\APTManager_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\APTManager.Designer.cs">
-      <DependentUpon>APTManager.cs</DependentUpon>
+    <Compile Include="Form\APTManager_Main.Designer.cs">
+      <DependentUpon>APTManager_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\BasicHomeInfo.cs">
+    <Compile Include="Form\APTManager_HomeInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\BasicHomeInfo.Designer.cs">
-      <DependentUpon>BasicHomeInfo.cs</DependentUpon>
+    <Compile Include="Form\APTManager_HomeInfo.Designer.cs">
+      <DependentUpon>APTManager_HomeInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\frmPrintAdmExp.cs">
+    <Compile Include="Form\APTManager_PrintAdmExp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\frmPrintAdmExp.Designer.cs">
-      <DependentUpon>frmPrintAdmExp.cs</DependentUpon>
+    <Compile Include="Form\APTManager_PrintAdmExp.Designer.cs">
+      <DependentUpon>APTManager_PrintAdmExp.cs</DependentUpon>
     </Compile>
     <Compile Include="Func\Common.cs" />
     <Compile Include="Func\DB.cs" />
@@ -124,14 +130,17 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Func\Util.cs" />
-    <EmbeddedResource Include="Form\APTManager.resx">
-      <DependentUpon>APTManager.cs</DependentUpon>
+    <EmbeddedResource Include="Form\APTManager_Main.resx">
+      <DependentUpon>APTManager_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\BasicHomeInfo.resx">
-      <DependentUpon>BasicHomeInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Form\APTManager_Settings.resx">
+      <DependentUpon>APTManager_Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\frmPrintAdmExp.resx">
-      <DependentUpon>frmPrintAdmExp.cs</DependentUpon>
+    <EmbeddedResource Include="Form\APTManager_HomeInfo.resx">
+      <DependentUpon>APTManager_HomeInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\APTManager_PrintAdmExp.resx">
+      <DependentUpon>APTManager_PrintAdmExp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -144,16 +153,16 @@
     </Compile>
     <EmbeddedResource Include="Report\rptAdmExp.rdlc" />
     <None Include="aptmanager.db" />
-    <None Include="DataSet\dsAPTManager.xsc">
-      <DependentUpon>dsAPTManager.xsd</DependentUpon>
+    <None Include="DataSet\APTManagerDS.xsc">
+      <DependentUpon>APTManagerDS.xsd</DependentUpon>
     </None>
-    <None Include="DataSet\dsAPTManager.xsd">
+    <None Include="DataSet\APTManagerDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsAPTManager.Designer.cs</LastGenOutput>
+      <LastGenOutput>APTManagerDS.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DataSet\dsAPTManager.xss">
-      <DependentUpon>dsAPTManager.xsd</DependentUpon>
+    <None Include="DataSet\APTManagerDS.xss">
+      <DependentUpon>APTManagerDS.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BillModel.datasource" />

@@ -27,6 +27,15 @@ namespace APTManager
             [intValue(10)] ordernum      // "정렬순서"
         }
 
+        // 공통코드 컬럼 인덱스
+        public enum ComCode
+        {
+            [intValue(0)] comgroup,     // "공통코드종류"
+            [intValue(1)] comcode,      // "공통코드"
+            [intValue(2)] comvalue,     // "값"
+            [intValue(3)] comremark     // "비고"
+        }
+
         // 열거형에 int값 설정... (근데 열거형에 원래 속성이 int 잖아? 필요 없을거 같기도 한데...)
         private class intValue : System.Attribute
         {

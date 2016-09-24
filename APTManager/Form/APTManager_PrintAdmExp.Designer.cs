@@ -1,6 +1,6 @@
 ﻿namespace APTManager
 {
-    partial class frmPrintAdmExp
+    partial class APTManager_PrintAdmExp
     {
         /// <summary>
         /// Required designer variable.
@@ -40,13 +40,13 @@
             this.ReportViewer_AdmExp.Size = new System.Drawing.Size(897, 995);
             this.ReportViewer_AdmExp.TabIndex = 0;
             // 
-            // frmPrintAdmExp
+            // APTManager_PrintAdmExp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(897, 995);
             this.Controls.Add(this.ReportViewer_AdmExp);
-            this.Name = "frmPrintAdmExp";
+            this.Name = "APTManager_PrintAdmExp";
             this.Text = "인쇄";
             this.Load += new System.EventHandler(this.frmPrintAdmExp_Load);
             this.ResumeLayout(false);
