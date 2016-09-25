@@ -297,6 +297,40 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 현재 관리비 정보를 반영
+        /// </summary>
+        /// <returns></returns>
+        public static int updateAdmExpCost(string yyyymm)
+        {
+            string sql;
+            SQLiteCommand cmd;
+            int result = 0;
+
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
+                {
+                    conn.Open();
+
+                    sql = string.Format(" UPDATE admexp "
+                                        + " SET admexpcost = (SELECT comcode.comvalue FROM comcode WHERE comcode.comgroup = 1 AND comcode.comcode = 1) "
+                                        + "    , totalcost = usecost + (SELECT comcode.comvalue FROM comcode WHERE comcode.comgroup = 1 AND comcode.comcode = 1)"
+                                        + " WHERE yyyymm = '{0}' "
+                                        , yyyymm);
+                    cmd = new SQLiteCommand(sql, conn);
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                // 저장 실패
+                return -1;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 공통코드 정보 조회
         /// </summary>
         /// <returns>세대주 목록</returns>
@@ -355,10 +389,14 @@ namespace APTManager
                     for (int i = 0; i < pDT.Rows.Count; i++)
                     {
                         sql = string.Format("UPDATE comcode "
-                                            + "  SET comvalue='{0}' "
-                                            + "WHERE comremark='{1}' "
+                                            + "  SET comvalue  = '{0}' "
+                                            + "    , comremark = '{1}' "
+                                            + " WHERE comgroup = '{2}' "
+                                            + "   AND comcode  = '{3}' "
                                             , pDT.Rows[i][(int)Common.ComCode.comvalue].ToString()
-                                            , pDT.Rows[i][(int)Common.ComCode.comremark].ToString());
+                                            , pDT.Rows[i][(int)Common.ComCode.comremark].ToString()
+                                            , pDT.Rows[i][(int)Common.ComCode.comgroup].ToString()
+                                            , pDT.Rows[i][(int)Common.ComCode.comcode].ToString());
                         cmd = new SQLiteCommand(sql, conn);
                         result = cmd.ExecuteNonQuery();
                     }

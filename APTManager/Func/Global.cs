@@ -12,6 +12,6 @@ namespace APTManager
         // 전역 폼 인스턴스
         public static APTManager_HomeInfo           frmHomeInfo         = null;     // 세대 기본정보 창
         public static APTManager_PrintAdmExp        frmPrintAdmExp      = null;     // 관리비 출력 창
-        public static APTManager_Settings   APTManager_Settings = null;     // 환경설정 창
+        public static APTManager_Settings           APTManager_Settings = null;     // 환경설정 창
     }
 }

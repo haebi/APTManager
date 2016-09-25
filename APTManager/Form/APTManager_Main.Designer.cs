@@ -40,6 +40,7 @@ namespace APTManager
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
+            this.btnApplyAdmExp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -49,11 +50,11 @@ namespace APTManager
             // 
             // btnGetAdmExp
             // 
-            this.btnGetAdmExp.Location = new System.Drawing.Point(125, 15);
+            this.btnGetAdmExp.Location = new System.Drawing.Point(125, 17);
             this.btnGetAdmExp.Name = "btnGetAdmExp";
-            this.btnGetAdmExp.Size = new System.Drawing.Size(102, 23);
+            this.btnGetAdmExp.Size = new System.Drawing.Size(102, 24);
             this.btnGetAdmExp.TabIndex = 0;
-            this.btnGetAdmExp.Text = "관리비";
+            this.btnGetAdmExp.Text = "조회";
             this.btnGetAdmExp.UseVisualStyleBackColor = true;
             this.btnGetAdmExp.Click += new System.EventHandler(this.btnGetAdmExp_Click);
             // 
@@ -61,7 +62,7 @@ namespace APTManager
             // 
             this.btnOpenHomeInfo.Location = new System.Drawing.Point(17, 69);
             this.btnOpenHomeInfo.Name = "btnOpenHomeInfo";
-            this.btnOpenHomeInfo.Size = new System.Drawing.Size(102, 23);
+            this.btnOpenHomeInfo.Size = new System.Drawing.Size(102, 24);
             this.btnOpenHomeInfo.TabIndex = 2;
             this.btnOpenHomeInfo.Text = "세대정보";
             this.btnOpenHomeInfo.UseVisualStyleBackColor = true;
@@ -76,9 +77,9 @@ namespace APTManager
             // 
             // btnExcel
             // 
-            this.btnExcel.Location = new System.Drawing.Point(233, 69);
+            this.btnExcel.Location = new System.Drawing.Point(341, 69);
             this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(102, 23);
+            this.btnExcel.Size = new System.Drawing.Size(102, 24);
             this.btnExcel.TabIndex = 5;
             this.btnExcel.Text = "Excel";
             this.btnExcel.UseVisualStyleBackColor = true;
@@ -97,9 +98,9 @@ namespace APTManager
             // 
             // btnSaveAdmExp
             // 
-            this.btnSaveAdmExp.Location = new System.Drawing.Point(341, 69);
+            this.btnSaveAdmExp.Location = new System.Drawing.Point(557, 69);
             this.btnSaveAdmExp.Name = "btnSaveAdmExp";
-            this.btnSaveAdmExp.Size = new System.Drawing.Size(102, 23);
+            this.btnSaveAdmExp.Size = new System.Drawing.Size(102, 24);
             this.btnSaveAdmExp.TabIndex = 7;
             this.btnSaveAdmExp.Text = "저장";
             this.btnSaveAdmExp.UseVisualStyleBackColor = true;
@@ -114,6 +115,7 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnApplyAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnSetings);
             this.splitContainer1.Panel1.Controls.Add(this.btnPrintAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnApplyHomeInfo);
@@ -132,9 +134,9 @@ namespace APTManager
             // 
             // btnSetings
             // 
-            this.btnSetings.Location = new System.Drawing.Point(557, 69);
+            this.btnSetings.Location = new System.Drawing.Point(233, 17);
             this.btnSetings.Name = "btnSetings";
-            this.btnSetings.Size = new System.Drawing.Size(102, 23);
+            this.btnSetings.Size = new System.Drawing.Size(102, 24);
             this.btnSetings.TabIndex = 11;
             this.btnSetings.Text = "설정";
             this.btnSetings.UseVisualStyleBackColor = true;
@@ -144,7 +146,7 @@ namespace APTManager
             // 
             this.btnPrintAdmExp.Location = new System.Drawing.Point(449, 69);
             this.btnPrintAdmExp.Name = "btnPrintAdmExp";
-            this.btnPrintAdmExp.Size = new System.Drawing.Size(102, 23);
+            this.btnPrintAdmExp.Size = new System.Drawing.Size(102, 24);
             this.btnPrintAdmExp.TabIndex = 10;
             this.btnPrintAdmExp.Text = "인쇄";
             this.btnPrintAdmExp.UseVisualStyleBackColor = true;
@@ -154,11 +156,21 @@ namespace APTManager
             // 
             this.btnApplyHomeInfo.Location = new System.Drawing.Point(125, 69);
             this.btnApplyHomeInfo.Name = "btnApplyHomeInfo";
-            this.btnApplyHomeInfo.Size = new System.Drawing.Size(102, 23);
+            this.btnApplyHomeInfo.Size = new System.Drawing.Size(102, 24);
             this.btnApplyHomeInfo.TabIndex = 8;
             this.btnApplyHomeInfo.Text = "세대정보 반영";
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
+            // 
+            // btnApplyAdmExp
+            // 
+            this.btnApplyAdmExp.Location = new System.Drawing.Point(233, 69);
+            this.btnApplyAdmExp.Name = "btnApplyAdmExp";
+            this.btnApplyAdmExp.Size = new System.Drawing.Size(102, 24);
+            this.btnApplyAdmExp.TabIndex = 12;
+            this.btnApplyAdmExp.Text = "관리비 반영";
+            this.btnApplyAdmExp.UseVisualStyleBackColor = true;
+            this.btnApplyAdmExp.Click += new System.EventHandler(this.btnApplyAdmExp_Click);
             // 
             // APTManager_Main
             // 
@@ -190,6 +202,7 @@ namespace APTManager
         private Button btnApplyHomeInfo;
         private Button btnPrintAdmExp;
         private Button btnSetings;
+        private Button btnApplyAdmExp;
     }
 }
 

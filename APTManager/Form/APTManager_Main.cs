@@ -65,12 +65,23 @@ namespace APTManager
 
             // 가로 고정 상태로 최대화 할 경우, 시작표시줄 아래로 창이 확장되는 문제 있음(win 10, 다른버젼 미확인)
             //this.MaximumSize = new Size(1137, 9999);
+
+            // 컬럼 정렬기능 비활성화
+            for(int i = 0; i < gridAdmExp.Columns.Count; i++)
+            {
+                Util.sortColumn(gridAdmExp, i, false);
+            }
+
+            // 시작 시 비활성화 처리(오류방지 -> 조회 후 활성화 처리)
+            btnExcel.Enabled        = false;
+            btnPrintAdmExp.Enabled  = false;
+            btnSaveAdmExp.Enabled   = false;
         }
 
-        /// <summary>
-        /// 합계를 계산
-        /// </summary>
-        private void calcAdmExpSum()
+    /// <summary>
+    /// 합계를 계산
+    /// </summary>
+    private void calcAdmExpSum()
         {
             int[] sum = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -217,6 +228,11 @@ namespace APTManager
 
             // 합계 계산
             calcAdmExpSum();
+
+            // 버튼 활성화
+            btnExcel.Enabled        = true;    // 엑셀
+            btnPrintAdmExp.Enabled  = true;    // 인쇄
+            btnSaveAdmExp.Enabled   = true;    // 저장
         }
 
         /// <summary>
@@ -290,6 +306,22 @@ namespace APTManager
             Global.APTManager_Settings.Location = new Point(this.Left + 20, this.Top + 20);
 
             Global.APTManager_Settings.ShowDialog();
+        }
+
+        /// <summary>
+        /// 현재 조회된 항목의 관리비 갱신
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnApplyAdmExp_Click(object sender, EventArgs e)
+        {
+            string yyyymm = dtpAdmExp.Value.ToString("yyyyMM");
+
+            // 결과 메시지
+            Util.messageSaveResult(DB.updateAdmExpCost(yyyymm));
+
+            // 재조회
+            btnGetAdmExp.PerformClick();
         }
     }
 }

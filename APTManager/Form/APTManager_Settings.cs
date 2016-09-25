@@ -24,7 +24,7 @@ namespace APTManager
             Util.setColumnHeader(gridCommonCode, "comgroup" , "코드그룹");
             Util.setColumnHeader(gridCommonCode, "comcode"  , "코드");
             Util.setColumnHeader(gridCommonCode, "comvalue" , "값");
-            Util.setColumnHeader(gridCommonCode, "comremark", "비고"); // <-- 이놈 변경을 GetChanges() 에서 잡지 못한다. 대체 왜...???
+            Util.setColumnHeader(gridCommonCode, "comremark", "비고");
 
             // 공통코드 조회
             gridCommonCode.DataSource = DB.getComCode();

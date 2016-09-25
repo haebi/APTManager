@@ -72,6 +72,17 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 컬럼 정렬기능을 설정합니다.
+        /// </summary>
+        /// <param name="grid"></param>
+        public static void sortColumn(DataGridView grid, int index, bool flag)
+        {
+            grid.Columns[index].SortMode = flag ? 
+                DataGridViewColumnSortMode.Automatic : // true - sortable
+                DataGridViewColumnSortMode.NotSortable;  // false
+        }
+
+        /// <summary>
         /// 컬럼 자동계산
         /// </summary>
         /// <param name="grid"></param>
