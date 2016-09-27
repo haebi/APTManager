@@ -36,29 +36,29 @@ namespace APTManager
             dtpAdmExp.CustomFormat = "yyyy-MM";
 
             // 그리드 헤더, 컬럼 설정
-            gridAdmExp.Columns.Clear();
-            Util.setColumnHeader(gridAdmExp, "yyyymm", "년월");
-            Util.setColumnHeader(gridAdmExp, "home", "세대");
-            Util.setColumnHeader(gridAdmExp, "name", "세대주");
-            Util.setColumnHeader(gridAdmExp, "premonth", "전월지침");
-            Util.setColumnHeader(gridAdmExp, "nowmonth", "당월지침");
-            Util.setColumnHeader(gridAdmExp, "useamount", "사용량");
-            Util.setColumnHeader(gridAdmExp, "usecost", "사용금액");
-            Util.setColumnHeader(gridAdmExp, "admexpcost", "관리비");
-            Util.setColumnHeader(gridAdmExp, "totalcost", "합계");
-            Util.setColumnHeader(gridAdmExp, "remark", "비고");
-            Util.setColumnHeader(gridAdmExp, "ordernum", "정렬순서");
-
             gridAdmExp.AllowUserToAddRows = false;  // Row 자동생성 금지
+            gridAdmExp.Columns.Clear();
 
-            Util.lockColumn(gridAdmExp, 0);         // 컬럼 잠금
-            Util.lockColumn(gridAdmExp, 1);
-            Util.lockColumn(gridAdmExp, 2);
-            Util.lockColumn(gridAdmExp, 5);
-            Util.lockColumn(gridAdmExp, 8);
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.yyyymm    ), "년월"    );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.home      ), "세대"    );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.name      ), "세대주"  );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.premonth  ), "전월지침");
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.nowmonth  ), "당월지침");
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.useamount ), "사용량"  );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.usecost   ), "사용금액");
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.admexpcost), "관리비"  );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.totalcost ), "합계"    );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.remark    ), "비고"    );
+            Util.SetColumnHeader(gridAdmExp, Common.GetName(Common.AdmExp.ordernum  ), "정렬순서");
+            
+            Util.LockColumn(gridAdmExp, (int)Common.AdmExp.yyyymm   );  // 컬럼 잠금
+            Util.LockColumn(gridAdmExp, (int)Common.AdmExp.home     );
+            Util.LockColumn(gridAdmExp, (int)Common.AdmExp.name     );
+            Util.LockColumn(gridAdmExp, (int)Common.AdmExp.useamount);
+            Util.LockColumn(gridAdmExp, (int)Common.AdmExp.totalcost);
 
-            Util.hideColumn(gridAdmExp, 10);        // 컬럼 숨김
-
+            Util.HideColumn(gridAdmExp, 10);        // 컬럼 숨김
+            
             // Split Container 설정
             splitContainer1.FixedPanel = FixedPanel.Panel1;
             splitContainer1.IsSplitterFixed = true;
@@ -69,7 +69,7 @@ namespace APTManager
             // 컬럼 정렬기능 비활성화
             for(int i = 0; i < gridAdmExp.Columns.Count; i++)
             {
-                Util.sortColumn(gridAdmExp, i, false);
+                Util.SortColumn(gridAdmExp, i, false);
             }
 
             // 시작 시 비활성화 처리(오류방지 -> 조회 후 활성화 처리)
@@ -81,7 +81,7 @@ namespace APTManager
     /// <summary>
     /// 합계를 계산
     /// </summary>
-    private void calcAdmExpSum()
+    private void CalcAdmExpSum()
         {
             int[] sum = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -92,24 +92,24 @@ namespace APTManager
                     continue;
 
                 // 각 항목별로 합계를 구한다
-                sum[(int)Common.AdmExp.premonth] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.premonth]);   // 전월지침
-                sum[(int)Common.AdmExp.nowmonth] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.nowmonth]);   // 당월지침
-                sum[(int)Common.AdmExp.useamount] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.useamount]);  // 사용량
-                sum[(int)Common.AdmExp.usecost] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.usecost]);    // 사용금액
+                sum[(int)Common.AdmExp.premonth  ] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.premonth  ]); // 전월지침
+                sum[(int)Common.AdmExp.nowmonth  ] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.nowmonth  ]); // 당월지침
+                sum[(int)Common.AdmExp.useamount ] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.useamount ]); // 사용량
+                sum[(int)Common.AdmExp.usecost   ] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.usecost   ]); // 사용금액
                 sum[(int)Common.AdmExp.admexpcost] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.admexpcost]); // 관리비
-                sum[(int)Common.AdmExp.totalcost] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.totalcost]);  // 합계
+                sum[(int)Common.AdmExp.totalcost ] += Convert.ToInt32(Global.admExpDT.Rows[i][(int)Common.AdmExp.totalcost ]); // 합계
             }
 
             // 구한 합계를 테이블에 반영
-            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.premonth] = sum[(int)Common.AdmExp.premonth];
-            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.nowmonth] = sum[(int)Common.AdmExp.nowmonth];
-            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.useamount] = sum[(int)Common.AdmExp.useamount];
-            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.usecost] = sum[(int)Common.AdmExp.usecost];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.premonth  ] = sum[(int)Common.AdmExp.premonth  ];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.nowmonth  ] = sum[(int)Common.AdmExp.nowmonth  ];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.useamount ] = sum[(int)Common.AdmExp.useamount ];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.usecost   ] = sum[(int)Common.AdmExp.usecost   ];
             Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.admexpcost] = sum[(int)Common.AdmExp.admexpcost];
-            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.totalcost] = sum[(int)Common.AdmExp.totalcost];
+            Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.totalcost ] = sum[(int)Common.AdmExp.totalcost ];
 
             // 합계 셀 잠금
-            Util.lockRow(gridAdmExp, Global.admExpDT.Rows.Count - 1);
+            Util.LockRow(gridAdmExp, Global.admExpDT.Rows.Count - 1);
         }
 
         /// <summary>
@@ -121,23 +121,35 @@ namespace APTManager
         {
             // 현재 컬럼 인덱스
             int curCol = gridAdmExp.CurrentCell.ColumnIndex;
+            int curRow = gridAdmExp.CurrentCell.RowIndex;
 
             switch ((Common.AdmExp)curCol)
             {
                 case Common.AdmExp.premonth:
                 case Common.AdmExp.nowmonth:
                     // 현재지침 - 전월지침 = 사용량
-                    Util.calcCell(gridAdmExp,
+                    Util.CalcCell(gridAdmExp,
                         (int)Common.AdmExp.nowmonth,
                         (int)Common.AdmExp.premonth,
                         (int)Common.AdmExp.useamount,
                         Common.Calc.Sub);
+
+                    // 사용량 자동반영
+                    gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.usecost].Value 
+                        = Util.GetUseCost(Convert.ToInt32(gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.useamount].Value));
+
+                    // 사용금액 + 관리비 = 합계
+                    Util.CalcCell(gridAdmExp,
+                        (int)Common.AdmExp.usecost,
+                        (int)Common.AdmExp.admexpcost,
+                        (int)Common.AdmExp.totalcost,
+                        Common.Calc.Add);
                     break;
 
                 case Common.AdmExp.usecost:
                 case Common.AdmExp.admexpcost:
                     // 사용금액 + 관리비 = 합계
-                    Util.calcCell(gridAdmExp,
+                    Util.CalcCell(gridAdmExp,
                         (int)Common.AdmExp.usecost,
                         (int)Common.AdmExp.admexpcost,
                         (int)Common.AdmExp.totalcost,
@@ -149,7 +161,7 @@ namespace APTManager
             }
 
             // 합계 계산
-            calcAdmExpSum();
+            CalcAdmExpSum();
         }
 
         /// <summary>
@@ -166,7 +178,7 @@ namespace APTManager
                 return;
             }
 
-            Util.callExcel(Global.admExpDT);
+            Util.CallExcel(Global.admExpDT);
         }
 
         /// <summary>
@@ -194,6 +206,9 @@ namespace APTManager
         /// <param name="e"></param>
         private void btnGetAdmExp_Click(object sender, EventArgs e)
         {
+            // 공통코드 데이터 로드 Global.comcodeDT
+            DB.GetComCode();
+
             /*
              * 1. 해당 월의 데이터가 있으면 조회한다.
              * 2. 데이터가 없는 경우 새로 양식을 생성한다.
@@ -204,19 +219,19 @@ namespace APTManager
             string yyyymm = dtpAdmExp.Value.ToString("yyyyMM");
 
             // 현재년월 데이터 조회
-            gridAdmExp.DataSource = DB.getAdmExpInfo(yyyymm);
+            gridAdmExp.DataSource = DB.GetAdmExpInfo(yyyymm);
 
             // 저장된 내용이 없으면 빈 셀 출력
             if(Global.admExpDT.Rows.Count == 0)
             {
                 // 더미 데이터 생성
-                if (DB.createAdmExpInfo(yyyymm) > 0)
+                if (DB.CreateAdmExpInfo(yyyymm) > 0)
                 {
                     MessageBox.Show("데이터 생성 완료");
                 }
 
                 // 저장된 데이터 불러오기
-                gridAdmExp.DataSource = DB.getAdmExpInfo(yyyymm);
+                gridAdmExp.DataSource = DB.GetAdmExpInfo(yyyymm);
             }
             else
             {
@@ -227,7 +242,7 @@ namespace APTManager
             Global.admExpDT.Rows.Add(new object[] { "", "합계", "", "", "", "", "", "", "", "", "9999"});
 
             // 합계 계산
-            calcAdmExpSum();
+            CalcAdmExpSum();
 
             // 버튼 활성화
             btnExcel.Enabled        = true;    // 엑셀
@@ -253,7 +268,7 @@ namespace APTManager
             }
 
             // 결과 메시지
-            Util.messageSaveResult(DB.saveAdmExpInfo(saveDT));
+            Util.MessageSaveResult(DB.SaveAdmExpInfo(saveDT));
         }
 
         /// <summary>
@@ -266,7 +281,7 @@ namespace APTManager
             string yyyymm = dtpAdmExp.Value.ToString("yyyyMM");
 
             // 결과 메시지
-            Util.messageSaveResult(DB.updateAdmExpHomeInfo(yyyymm));
+            Util.MessageSaveResult(DB.UpdateAdmExpHomeInfo(yyyymm));
 
             // 재조회
             btnGetAdmExp.PerformClick();
@@ -318,7 +333,7 @@ namespace APTManager
             string yyyymm = dtpAdmExp.Value.ToString("yyyyMM");
 
             // 결과 메시지
-            Util.messageSaveResult(DB.updateAdmExpCost(yyyymm));
+            Util.MessageSaveResult(DB.UpdateAdmExpCost(yyyymm));
 
             // 재조회
             btnGetAdmExp.PerformClick();

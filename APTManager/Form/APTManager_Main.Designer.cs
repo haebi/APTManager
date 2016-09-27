@@ -37,10 +37,10 @@ namespace APTManager
             this.gridAdmExp = new System.Windows.Forms.DataGridView();
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnApplyAdmExp = new System.Windows.Forms.Button();
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
-            this.btnApplyAdmExp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -132,6 +132,16 @@ namespace APTManager
             this.splitContainer1.SplitterDistance = 114;
             this.splitContainer1.TabIndex = 9;
             // 
+            // btnApplyAdmExp
+            // 
+            this.btnApplyAdmExp.Location = new System.Drawing.Point(233, 69);
+            this.btnApplyAdmExp.Name = "btnApplyAdmExp";
+            this.btnApplyAdmExp.Size = new System.Drawing.Size(102, 24);
+            this.btnApplyAdmExp.TabIndex = 12;
+            this.btnApplyAdmExp.Text = "관리비 반영";
+            this.btnApplyAdmExp.UseVisualStyleBackColor = true;
+            this.btnApplyAdmExp.Click += new System.EventHandler(this.btnApplyAdmExp_Click);
+            // 
             // btnSetings
             // 
             this.btnSetings.Location = new System.Drawing.Point(233, 17);
@@ -162,16 +172,6 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
-            // btnApplyAdmExp
-            // 
-            this.btnApplyAdmExp.Location = new System.Drawing.Point(233, 69);
-            this.btnApplyAdmExp.Name = "btnApplyAdmExp";
-            this.btnApplyAdmExp.Size = new System.Drawing.Size(102, 24);
-            this.btnApplyAdmExp.TabIndex = 12;
-            this.btnApplyAdmExp.Text = "관리비 반영";
-            this.btnApplyAdmExp.UseVisualStyleBackColor = true;
-            this.btnApplyAdmExp.Click += new System.EventHandler(this.btnApplyAdmExp_Click);
-            // 
             // APTManager_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -179,7 +179,7 @@ namespace APTManager
             this.ClientSize = new System.Drawing.Size(1121, 781);
             this.Controls.Add(this.splitContainer1);
             this.Name = "APTManager_Main";
-            this.Text = "APTManager (by haebi) ver. 20160922";
+            this.Text = "APTManager (by haebi) ver. 20160927";
             this.Load += new System.EventHandler(this.APTManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);

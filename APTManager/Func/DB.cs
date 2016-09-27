@@ -13,7 +13,7 @@ namespace APTManager
         /// 세대주 정보 조회
         /// </summary>
         /// <returns>세대주 목록</returns>
-        public static DataTable getHomeInfo()
+        public static DataTable GetHomeInfo()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("home");
@@ -50,7 +50,7 @@ namespace APTManager
         /// </summary>
         /// <param name="pDT"></param>
         /// <returns></returns>
-        public static int saveHomeInfo(DataTable pDT)
+        public static int SaveHomeInfo(DataTable pDT)
         {
             string sql;
             SQLiteCommand cmd;
@@ -88,7 +88,7 @@ namespace APTManager
         /// 관리비 조회
         /// </summary>
         /// <returns>세대주 목록</returns>
-        public static DataTable getAdmExpInfo(string yyyymm)
+        public static DataTable GetAdmExpInfo(string yyyymm)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("yyyymm");
@@ -154,7 +154,7 @@ namespace APTManager
         /// <param name="pDT"></param>
         /// <param name="yyyymm"></param>
         /// <returns></returns>
-        public static int createAdmExpInfo(string yyyymm)
+        public static int CreateAdmExpInfo(string yyyymm)
         {
             string sql;
             SQLiteCommand cmd;
@@ -206,7 +206,7 @@ namespace APTManager
         /// </summary>
         /// <param name="pDT"></param>
         /// <returns></returns>
-        public static int saveAdmExpInfo(DataTable pDT)
+        public static int SaveAdmExpInfo(DataTable pDT)
         {
             string sql;
             SQLiteCommand cmd;
@@ -267,7 +267,7 @@ namespace APTManager
         /// 현재 세대주 정보를 반영
         /// </summary>
         /// <returns></returns>
-        public static int updateAdmExpHomeInfo(string yyyymm)
+        public static int UpdateAdmExpHomeInfo(string yyyymm)
         {
             string sql;
             SQLiteCommand cmd;
@@ -300,7 +300,7 @@ namespace APTManager
         /// 현재 관리비 정보를 반영
         /// </summary>
         /// <returns></returns>
-        public static int updateAdmExpCost(string yyyymm)
+        public static int UpdateAdmExpCost(string yyyymm)
         {
             string sql;
             SQLiteCommand cmd;
@@ -334,7 +334,7 @@ namespace APTManager
         /// 공통코드 정보 조회
         /// </summary>
         /// <returns>세대주 목록</returns>
-        public static DataTable getComCode()
+        public static DataTable GetComCode()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("comgroup");
@@ -373,7 +373,7 @@ namespace APTManager
         /// </summary>
         /// <param name="pDT"></param>
         /// <returns></returns>
-        public static int saveComCode(DataTable pDT)
+        public static int SaveComCode(DataTable pDT)
         {
             string sql;
             SQLiteCommand cmd;

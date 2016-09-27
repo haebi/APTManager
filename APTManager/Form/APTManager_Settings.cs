@@ -21,17 +21,18 @@ namespace APTManager
         {
             // 그리드 헤더, 컬럼 설정
             gridCommonCode.Columns.Clear();
-            Util.setColumnHeader(gridCommonCode, "comgroup" , "코드그룹");
-            Util.setColumnHeader(gridCommonCode, "comcode"  , "코드");
-            Util.setColumnHeader(gridCommonCode, "comvalue" , "값");
-            Util.setColumnHeader(gridCommonCode, "comremark", "비고");
+
+            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comgroup ), "코드그룹");
+            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comcode  ), "코드"    );
+            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comvalue ), "값"      );
+            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comremark), "비고"    );
 
             // 공통코드 조회
-            gridCommonCode.DataSource = DB.getComCode();
+            gridCommonCode.DataSource = DB.GetComCode();
 
             gridCommonCode.AllowUserToAddRows = false;    // Row 자동생성 금지
-            Util.lockColumn(gridCommonCode, 0);           // 컬럼 잠금 설정
-            Util.lockColumn(gridCommonCode, 1);           // 컬럼 잠금 설정
+            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comgroup);  // 컬럼 잠금 설정
+            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comcode );  // 컬럼 잠금 설정
         }
 
         /// <summary>
@@ -52,10 +53,10 @@ namespace APTManager
             }
 
             // 저장
-            int result = DB.saveComCode(saveDT);
+            int result = DB.SaveComCode(saveDT);
 
             // 결과 메시지
-            Util.messageSaveResult(result);
+            Util.MessageSaveResult(result);
 
             // 성공 시 창을 닫는다
             if (result > 0)

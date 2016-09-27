@@ -14,7 +14,7 @@ namespace APTManager
         /// <param name="grid"></param>
         /// <param name="ColumnName"></param>
         /// <param name="HeaderText"></param>
-        public static void setColumnHeader(DataGridView grid, string ColumnName, string HeaderText)
+        public static void SetColumnHeader(DataGridView grid, string ColumnName, string HeaderText)
         {
             DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
             col.DataPropertyName = ColumnName;
@@ -26,7 +26,7 @@ namespace APTManager
         /// 컬럼을 읽기전용으로 설정합니다.
         /// </summary>
         /// <param name="index"></param>
-        public static void lockColumn(DataGridView grid, int index)
+        public static void LockColumn(DataGridView grid, int index)
         {
             grid.Columns[index].ReadOnly = true;
 
@@ -39,7 +39,7 @@ namespace APTManager
         /// 로우를 읽기전용으로 설정합니다.
         /// </summary>
         /// <param name="index"></param>
-        public static void lockRow(DataGridView grid, int index)
+        public static void LockRow(DataGridView grid, int index)
         {
             grid.Rows[index].ReadOnly = true;
 
@@ -52,7 +52,7 @@ namespace APTManager
         /// 셀을 읽기전용으로 설정합니다.
         /// </summary>
         /// <param name="index"></param>
-        public static void lockCell(DataGridView grid, int row, int col)
+        public static void LockCell(DataGridView grid, int row, int col)
         {
             grid.Rows[row].Cells[col].ReadOnly = true;
 
@@ -66,7 +66,7 @@ namespace APTManager
         /// </summary>
         /// <param name="grid"></param>
         /// <param name="index"></param>
-        public static void hideColumn(DataGridView grid, int index)
+        public static void HideColumn(DataGridView grid, int index)
         {
             grid.Columns[index].Visible = false;
         }
@@ -75,7 +75,7 @@ namespace APTManager
         /// 컬럼 정렬기능을 설정합니다.
         /// </summary>
         /// <param name="grid"></param>
-        public static void sortColumn(DataGridView grid, int index, bool flag)
+        public static void SortColumn(DataGridView grid, int index, bool flag)
         {
             grid.Columns[index].SortMode = flag ? 
                 DataGridViewColumnSortMode.Automatic : // true - sortable
@@ -90,7 +90,7 @@ namespace APTManager
         /// <param name="index2"></param>
         /// <param name="resultIndex"></param>
         /// <param name="calc"></param>
-        public static void calcCell(DataGridView grid, int index1, int index2, int resultIndex, Common.Calc calc)
+        public static void CalcCell(DataGridView grid, int index1, int index2, int resultIndex, Common.Calc calc)
         {
             int curRow = grid.CurrentCell.RowIndex;
             int curCol = grid.CurrentCell.ColumnIndex;
@@ -124,9 +124,24 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 사용량 금액 자동계산
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static int GetUseCost(int value)
+        {
+            DataRow[] rows = Global.comcodeDT.Select(string.Format("comgroup = '2' AND comcode = '{0}'", value));
+
+            if (rows.Length == 0)
+                return 0;
+
+            return Convert.ToInt32(rows[0]["comvalue"]);
+        }
+
+        /// <summary>
         /// 엑셀 출력
         /// </summary>
-        public static void callExcel(DataTable pDT)
+        public static void CallExcel(DataTable pDT)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -141,7 +156,7 @@ namespace APTManager
         /// 저장 결과 메시지 팝업
         /// </summary>
         /// <param name="result"></param>
-        public static void messageSaveResult(int result)
+        public static void MessageSaveResult(int result)
         {
             switch (result)
             {

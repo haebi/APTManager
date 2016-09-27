@@ -25,16 +25,17 @@ namespace APTManager
 
             // 그리드 헤더, 컬럼 설정
             gridHomeInfo.Columns.Clear();
-            Util.setColumnHeader(gridHomeInfo, "home", "세대");
-            Util.setColumnHeader(gridHomeInfo, "name", "세대주");
-            Util.setColumnHeader(gridHomeInfo, "ordernum", "정렬순서");
+
+            Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.home    ), "세대"    );
+            Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.name    ), "세대주"  );
+            Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.ordernum), "정렬순서");
 
             // 세대정보 조회
-            gridHomeInfo.DataSource = DB.getHomeInfo();
+            gridHomeInfo.DataSource = DB.GetHomeInfo();
 
             gridHomeInfo.AllowUserToAddRows = false;    // Row 자동생성 금지
-            Util.lockColumn(gridHomeInfo, 0);           // 컬럼 잠금 설정
-            Util.hideColumn(gridHomeInfo, 2);           // 컬럼 숨김
+            Util.LockColumn(gridHomeInfo, 0);           // 컬럼 잠금 설정
+            Util.HideColumn(gridHomeInfo, 2);           // 컬럼 숨김
         }
 
         /// <summary>
@@ -55,10 +56,10 @@ namespace APTManager
             }
 
             // 저장
-            int result = DB.saveHomeInfo(saveDT);
+            int result = DB.SaveHomeInfo(saveDT);
 
             // 결과 메시지
-            Util.messageSaveResult(result);
+            Util.MessageSaveResult(result);
 
             // 성공 시 창을 닫는다
             if (result > 0)

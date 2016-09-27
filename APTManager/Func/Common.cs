@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+using System.Reflection;
+
 namespace APTManager
 {
     public static class Common
@@ -6,50 +8,34 @@ namespace APTManager
         // 세대 기본정보 컬럼 인덱스
         public enum HomeInfo
         {
-            [intValue(0)] home,         // "세대"
-            [intValue(1)] name,         // "세대주"
-            [intValue(2)] ordernum      // "정렬순서"
+            [ColumnInfo(0, "home"    )] home,         // "세대"
+            [ColumnInfo(1, "name"    )] name,         // "세대주"
+            [ColumnInfo(2, "ordernum")] ordernum      // "정렬순서"
         }
 
         // 관리비(Administrative expenses) 컬럼 인덱스
         public enum AdmExp
         {
-            [intValue(0)]  yyyymm,       // "년월"
-            [intValue(1)]  home,         // "세대"
-            [intValue(2)]  name,         // "세대주"
-            [intValue(3)]  premonth,     // "전월지침"
-            [intValue(4)]  nowmonth,     // "당월지침"
-            [intValue(5)]  useamount,    // "사용량"
-            [intValue(6)]  usecost,      // "사용금액"
-            [intValue(7)]  admexpcost,   // "관리비"
-            [intValue(8)]  totalcost,    // "합계"
-            [intValue(9)]  remark,       // "비고"
-            [intValue(10)] ordernum      // "정렬순서"
+            [ColumnInfo(0 , "yyyymm"    )] yyyymm,       // "년월"
+            [ColumnInfo(1 , "home"      )] home,         // "세대"
+            [ColumnInfo(2 , "name"      )] name,         // "세대주"
+            [ColumnInfo(3 , "premonth"  )] premonth,     // "전월지침"
+            [ColumnInfo(4 , "nowmonth"  )] nowmonth,     // "당월지침"
+            [ColumnInfo(5 , "useamount" )] useamount,    // "사용량"
+            [ColumnInfo(6 , "usecost"   )] usecost,      // "사용금액"
+            [ColumnInfo(7 , "admexpcost")] admexpcost,   // "관리비"
+            [ColumnInfo(8 , "totalcost" )] totalcost,    // "합계"
+            [ColumnInfo(9 , "remark"    )] remark,       // "비고"
+            [ColumnInfo(10, "ordernum"  )] ordernum      // "정렬순서"
         }
 
         // 공통코드 컬럼 인덱스
         public enum ComCode
         {
-            [intValue(0)] comgroup,     // "공통코드종류"
-            [intValue(1)] comcode,      // "공통코드"
-            [intValue(2)] comvalue,     // "값"
-            [intValue(3)] comremark     // "비고"
-        }
-
-        // 열거형에 int값 설정... (근데 열거형에 원래 속성이 int 잖아? 필요 없을거 같기도 한데...)
-        private class intValue : System.Attribute
-        {
-            private static int _value;
-
-            public intValue(int value)
-            {
-                _value = value;
-            }
-
-            public int Value
-            {
-                get { return _value; }
-            }
+            [ColumnInfo(0, "comgroup" )] comgroup,     // "공통코드종류"
+            [ColumnInfo(1, "comcode"  )] comcode,      // "공통코드"
+            [ColumnInfo(2, "comvalue" )] comvalue,     // "값"
+            [ColumnInfo(3, "comremark")] comremark     // "비고"
         }
 
         // 계산 항목
@@ -58,5 +44,71 @@ namespace APTManager
             Sub = 0x00000001,
             Add = 0x00000002
         }
+
+        // 컬럼 정보를 담을 객체 설정
+        private class ColumnInfo : System.Attribute
+        {
+            private static int _index;
+            private static string _name;
+
+            public ColumnInfo(int index, string name)
+            {
+                _index = index;
+                _name = name;
+            }
+
+            public int Index
+            {
+                get { return _index; }
+            }
+
+            public string Name
+            {
+                get { return _name; }
+            }
+        }
+
+        // enum 타입의 인덱스는 (int)로 가져올 수 있기에 별 의미는 없다. 일단 형식상 만들어 두자.
+        public static int GetIndex(object value)
+        {
+            int output = -1;
+
+            ColumnInfo[] attrs = _ToAttributeArray(value);
+
+            if (attrs.Length > 0)
+            {
+                output = attrs[0].Index;
+            }
+
+            return output;
+        }
+
+        // 문자열 값을 꺼내기 위해서 만듬.
+        public static string GetName(object value)
+        {
+            string output = null;
+
+            ColumnInfo[] attrs = _ToAttributeArray(value);
+
+            if (attrs.Length > 0)
+            {
+                output = attrs[0].Name;
+            }
+
+            return output;
+        }
+
+        // 음... 이걸 어떻게 설명하지...
+        // 참~ 좋은데, 정말 좋은데, 어떻게 글로 표현을 못하겠네... -_-;;
+        private static ColumnInfo[] _ToAttributeArray(object value)
+        {
+            Type type = value.GetType();
+
+            FieldInfo fi = type.GetField(value.ToString());
+            ColumnInfo[] attrs = fi.GetCustomAttributes(typeof(ColumnInfo), false) as ColumnInfo[];
+
+            return attrs;
+        }
+
     }
 }
