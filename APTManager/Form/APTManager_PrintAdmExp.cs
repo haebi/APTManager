@@ -32,7 +32,7 @@ namespace APTManager
 
             // 타이틀 설정
             ReportParameter[] rp = new ReportParameter[1];
-            rp[0] = new ReportParameter("TITLE", string.Format("XX아파트 관리비({0}년 {1}월)", YYYY, MM ));
+            rp[0] = new ReportParameter("TITLE", string.Format("{0}아파트 관리비({1}년 {2}월)", Util.GetAptName(), YYYY, MM));
             this.ReportViewer_AdmExp.LocalReport.SetParameters(rp);
 
             // 미리보기 설정

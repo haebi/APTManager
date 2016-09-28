@@ -34,8 +34,9 @@ namespace APTManager
         {
             [ColumnInfo(0, "comgroup" )] comgroup,     // "공통코드종류"
             [ColumnInfo(1, "comcode"  )] comcode,      // "공통코드"
-            [ColumnInfo(2, "comvalue" )] comvalue,     // "값"
-            [ColumnInfo(3, "comremark")] comremark     // "비고"
+            [ColumnInfo(2, "comname"  )] comname,      // "공통이름"
+            [ColumnInfo(3, "comvalue" )] comvalue,     // "값"
+            [ColumnInfo(4, "comremark")] comremark     // "비고"
         }
 
         // 계산 항목

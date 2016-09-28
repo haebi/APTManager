@@ -339,6 +339,7 @@ namespace APTManager
             DataTable dt = new DataTable();
             dt.Columns.Add("comgroup");
             dt.Columns.Add("comcode");
+            dt.Columns.Add("comname");
             dt.Columns.Add("comvalue");
             dt.Columns.Add("comremark");
 
@@ -347,6 +348,7 @@ namespace APTManager
                 conn.Open();
                 string sql = "SELECT comgroup"
                                 + ", comcode"
+                                + ", comname"
                                 + ", comvalue"
                                 + ", comremark"
                                 + " FROM comcode ORDER BY comgroup, comcode";
@@ -356,7 +358,7 @@ namespace APTManager
 
                 while (reader.Read())
                 {
-                    dt.Rows.Add(new object[] { reader["comgroup"], reader["comcode"], reader["comvalue"], reader["comremark"] });
+                    dt.Rows.Add(new object[] { reader["comgroup"], reader["comcode"], reader["comname"], reader["comvalue"], reader["comremark"] });
                 }
 
                 reader.Close();
@@ -409,6 +411,37 @@ namespace APTManager
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// 공통코드 그룹 조회
+        /// </summary>
+        /// <returns>세대주 목록</returns>
+        public static DataTable GetComCodeGroup()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("comname");
+            dt.Columns.Add("comcount");
+
+            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
+            {
+                conn.Open();
+                string sql = "SELECT comname"
+                                + ", count(*) as comcount"
+                                + " FROM comcode GROUP BY comname";
+
+                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    dt.Rows.Add(new object[] { reader["comname"], reader["comcount"] });
+                }
+
+                reader.Close();
+            }
+
+            return dt;
         }
 
     }

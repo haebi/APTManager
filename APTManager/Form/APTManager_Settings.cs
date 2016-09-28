@@ -20,19 +20,44 @@ namespace APTManager
         private void APTManager_Settings_Load(object sender, EventArgs e)
         {
             // 그리드 헤더, 컬럼 설정
+            gridCommonCodeGroup.Columns.Clear();
             gridCommonCode.Columns.Clear();
+            
+            Util.SetColumnHeader(gridCommonCodeGroup, Common.GetName(Common.ComCode.comname), "코드명칭");
+            Util.SetColumnHeader(gridCommonCodeGroup, "comcount", "코드갯수");
+            gridCommonCodeGroup.Columns[0].Width = 110;
+            gridCommonCodeGroup.Columns[1].Width = 80;
 
             Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comgroup ), "코드그룹");
             Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comcode  ), "코드"    );
+            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comname  ), "코드명칭");
             Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comvalue ), "값"      );
             Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comremark), "비고"    );
 
-            // 공통코드 조회
-            gridCommonCode.DataSource = DB.GetComCode();
+            
+            gridCommonCode.DataSource       = DB.GetComCode();      // 공통코드 조회
+            gridCommonCodeGroup.DataSource  = DB.GetComCodeGroup(); // 코드 그룹 조회
 
-            gridCommonCode.AllowUserToAddRows = false;    // Row 자동생성 금지
-            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comgroup);  // 컬럼 잠금 설정
-            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comcode );  // 컬럼 잠금 설정
+            // Row 자동생성 금지
+            gridCommonCodeGroup.AllowUserToAddRows  = false;
+            gridCommonCode.AllowUserToAddRows       = false;
+
+            // 컬럼 잠금 설정
+            Util.LockColumn(gridCommonCodeGroup, 0);
+            Util.LockColumn(gridCommonCodeGroup, 1);
+
+            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comgroup);
+            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comcode );
+            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comname );
+
+            // 로우 헤더 숨김 설정
+            gridCommonCode.RowHeadersVisible        = false;
+            gridCommonCodeGroup.RowHeadersVisible   = false;
+
+            // 로우 선택모드로 설정
+            gridCommonCodeGroup.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+
         }
 
         /// <summary>
@@ -61,6 +86,41 @@ namespace APTManager
             // 성공 시 창을 닫는다
             if (result > 0)
                 Close();
+        }
+
+        /// <summary>
+        /// 공통코드 그룹 선택 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridCommonCodeGroup_MouseUp(object sender, MouseEventArgs e)
+        {
+            int iCurRow = gridCommonCodeGroup.CurrentCell.RowIndex;
+
+            CommonCodeFilter(gridCommonCodeGroup.Rows[iCurRow].Cells[0].Value.ToString());
+        }
+
+        /// <summary>
+        /// 공통코드 필터
+        /// </summary>
+        /// <param name="CodeName"></param>
+        private void CommonCodeFilter(string CodeName)
+        {
+            gridCommonCode.CurrentCell = null;
+
+            for (int i = 0; i < Global.comcodeDT.Rows.Count; i++)
+            {
+                gridCommonCode.Rows[i].Visible = true;
+            }
+
+            for (int i = 0; i < Global.comcodeDT.Rows.Count; i++)
+            {
+                if (!gridCommonCode.Rows[i].Cells[2].Value.ToString().Equals(CodeName))
+                {
+                    gridCommonCode.Rows[i].Visible = false;
+                }
+            }
+
         }
     }
 }

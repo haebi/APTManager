@@ -139,6 +139,20 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 아파트 명칭 가져온다
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAptName()
+        {
+            DataRow[] rows = Global.comcodeDT.Select("comgroup = '3' AND comcode = '1'");
+
+            if (rows.Length == 0)
+                return "XX";
+
+            return rows[0]["comvalue"].ToString();
+        }
+
+        /// <summary>
         /// 엑셀 출력
         /// </summary>
         public static void CallExcel(DataTable pDT)
