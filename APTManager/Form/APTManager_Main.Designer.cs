@@ -41,6 +41,7 @@ namespace APTManager
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
+            this.chkRowHighlight = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -95,6 +96,7 @@ namespace APTManager
             this.gridAdmExp.Size = new System.Drawing.Size(1121, 663);
             this.gridAdmExp.TabIndex = 6;
             this.gridAdmExp.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAdmExp_CellEndEdit);
+            this.gridAdmExp.SelectionChanged += new System.EventHandler(this.gridAdmExp_SelectionChanged);
             // 
             // btnSaveAdmExp
             // 
@@ -115,6 +117,7 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.chkRowHighlight);
             this.splitContainer1.Panel1.Controls.Add(this.btnApplyAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnSetings);
             this.splitContainer1.Panel1.Controls.Add(this.btnPrintAdmExp);
@@ -172,6 +175,17 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
+            // chkRowHighlight
+            // 
+            this.chkRowHighlight.AutoSize = true;
+            this.chkRowHighlight.Location = new System.Drawing.Point(991, 89);
+            this.chkRowHighlight.Name = "chkRowHighlight";
+            this.chkRowHighlight.Size = new System.Drawing.Size(120, 16);
+            this.chkRowHighlight.TabIndex = 13;
+            this.chkRowHighlight.Text = "선택 줄 표시 강조";
+            this.chkRowHighlight.UseVisualStyleBackColor = true;
+            this.chkRowHighlight.CheckedChanged += new System.EventHandler(this.chkRowHighlight_CheckedChanged);
+            // 
             // APTManager_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -179,10 +193,11 @@ namespace APTManager
             this.ClientSize = new System.Drawing.Size(1121, 781);
             this.Controls.Add(this.splitContainer1);
             this.Name = "APTManager_Main";
-            this.Text = "APTManager (by haebi) ver. 20160927";
+            this.Text = "APTManager (by haebi) ver. 20160930";
             this.Load += new System.EventHandler(this.APTManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -203,6 +218,7 @@ namespace APTManager
         private Button btnPrintAdmExp;
         private Button btnSetings;
         private Button btnApplyAdmExp;
+        private CheckBox chkRowHighlight;
     }
 }
 

@@ -56,8 +56,6 @@ namespace APTManager
 
             // 로우 선택모드로 설정
             gridCommonCodeGroup.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-
         }
 
         /// <summary>

@@ -24,6 +24,9 @@ namespace APTManager
             this.MinimizeBox = false;
 
             // 그리드 헤더, 컬럼 설정
+            gridHomeInfo.AllowUserToAddRows = false;    // Row 자동생성 금지
+            gridHomeInfo.RowHeadersVisible = false;     // 로우 헤더 숨김
+
             gridHomeInfo.Columns.Clear();
 
             Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.home    ), "세대"    );
@@ -32,9 +35,9 @@ namespace APTManager
 
             // 세대정보 조회
             gridHomeInfo.DataSource = DB.GetHomeInfo();
-
-            gridHomeInfo.AllowUserToAddRows = false;    // Row 자동생성 금지
+            
             Util.LockColumn(gridHomeInfo, 0);           // 컬럼 잠금 설정
+
             Util.HideColumn(gridHomeInfo, 2);           // 컬럼 숨김
         }
 
