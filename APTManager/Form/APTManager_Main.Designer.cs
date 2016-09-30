@@ -37,11 +37,11 @@ namespace APTManager
             this.gridAdmExp = new System.Windows.Forms.DataGridView();
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.chkRowHighlight = new System.Windows.Forms.CheckBox();
             this.btnApplyAdmExp = new System.Windows.Forms.Button();
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
-            this.chkRowHighlight = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -135,6 +135,17 @@ namespace APTManager
             this.splitContainer1.SplitterDistance = 114;
             this.splitContainer1.TabIndex = 9;
             // 
+            // chkRowHighlight
+            // 
+            this.chkRowHighlight.AutoSize = true;
+            this.chkRowHighlight.Location = new System.Drawing.Point(939, 77);
+            this.chkRowHighlight.Name = "chkRowHighlight";
+            this.chkRowHighlight.Size = new System.Drawing.Size(170, 16);
+            this.chkRowHighlight.TabIndex = 13;
+            this.chkRowHighlight.Text = "선택 줄 표시 (약간 느려짐)";
+            this.chkRowHighlight.UseVisualStyleBackColor = true;
+            this.chkRowHighlight.CheckedChanged += new System.EventHandler(this.chkRowHighlight_CheckedChanged);
+            // 
             // btnApplyAdmExp
             // 
             this.btnApplyAdmExp.Location = new System.Drawing.Point(233, 69);
@@ -174,17 +185,6 @@ namespace APTManager
             this.btnApplyHomeInfo.Text = "세대정보 반영";
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
-            // 
-            // chkRowHighlight
-            // 
-            this.chkRowHighlight.AutoSize = true;
-            this.chkRowHighlight.Location = new System.Drawing.Point(991, 89);
-            this.chkRowHighlight.Name = "chkRowHighlight";
-            this.chkRowHighlight.Size = new System.Drawing.Size(120, 16);
-            this.chkRowHighlight.TabIndex = 13;
-            this.chkRowHighlight.Text = "선택 줄 표시 강조";
-            this.chkRowHighlight.UseVisualStyleBackColor = true;
-            this.chkRowHighlight.CheckedChanged += new System.EventHandler(this.chkRowHighlight_CheckedChanged);
             // 
             // APTManager_Main
             // 

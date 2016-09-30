@@ -2,13 +2,12 @@
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
-using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace APTManager
 {
     public partial class APTManager_Main : Form
     {
-        private bool gridReady = false;
         private int gridPreviousRowIndex = 0;
 
         /// <summary>
@@ -86,6 +85,10 @@ namespace APTManager
             // 그리드 선택 줄 표시강조 기능 ON/OFF
             // 이 기능 사용시 Enter 로 다음 줄 넘어가는데 시간이 조금 더 걸린다. (미 사용과 비교시)
             chkRowHighlight.Checked = true;
+
+            // 더블 버퍼링 설정 (로우 하이라이트 표시하는데 너무 오래 걸리는 관계로 설정)
+            //DoubleBuffered = true; // 현재 폼 더블버퍼링 유뮤 설정인데... 폼 자체가 갱신되는게 아니기에 별 의미 없다.
+            typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, gridAdmExp, new object[] { true });
         }
 
         /// <summary>
@@ -190,7 +193,7 @@ namespace APTManager
         {
             int curRow = gridAdmExp.CurrentCell.RowIndex;
 
-            if (chkRowHighlight.Checked && gridReady)
+            if (chkRowHighlight.Checked)
             {
                 // 현재로우 = 이전로우 인 경우, 아무 작업도 하지 않는다. (옆 셀로 이동 한 경우 ?)
                 // 합계로우는 건들지 않는다.
@@ -301,8 +304,6 @@ namespace APTManager
         /// <param name="e"></param>
         private void btnGetAdmExp_Click(object sender, EventArgs e)
         {
-            gridReady = false;
-
             // 공통코드 데이터 로드 Global.comcodeDT
             DB.GetComCode();
 
@@ -324,7 +325,7 @@ namespace APTManager
                 // 더미 데이터 생성
                 if (DB.CreateAdmExpInfo(yyyymm) > 0)
                 {
-                    MessageBox.Show("데이터 생성 완료");
+                    Haebi.Util.HBMessageBox.Show("데이터 생성 완료", "관리비 조회");
                 }
 
                 // 저장된 데이터 불러오기
@@ -332,7 +333,7 @@ namespace APTManager
             }
             else
             {
-                MessageBox.Show("조회 완료");
+                Haebi.Util.HBMessageBox.Show("조회 완료", "관리비 조회");
             }
 
             // 합계 부분 추가
@@ -353,9 +354,6 @@ namespace APTManager
             // 조회 된 직후 이므로, 아직 이전 Row 값은 없음
             gridPreviousRowIndex = -1;
 
-            // gridAdmExp_SelectionChanged 이벤트가 동작하도록 설정
-            gridReady = true;
-
             // 첫 번째 데이터가 자동 선택 되도록 강제 이벤트 실행
             gridAdmExp_SelectionChanged(null, null);
         }
@@ -373,7 +371,7 @@ namespace APTManager
             // 저장 대상이 없으면 그냥 닫는다.
             if (saveDT == null || saveDT.Rows.Count == 0)
             {
-                MessageBox.Show("변경 된 내용이 없습니다");
+                Haebi.Util.HBMessageBox.Show("변경 된 내용이 없습니다");
                 return;
             }
 
@@ -477,3 +475,4 @@ namespace APTManager
 
     }
 }
+

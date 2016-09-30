@@ -175,13 +175,13 @@ namespace APTManager
             switch (result)
             {
                 case 0:
-                    MessageBox.Show("변경 된 내용이 없습니다");
+                    Haebi.Util.HBMessageBox.Show("변경 된 내용이 없습니다");
                     break;
                 case -1:
-                    MessageBox.Show("데이터 저장 중 오류 발생");
+                    Haebi.Util.HBMessageBox.Show("데이터 저장 중 오류 발생");
                     break;
                 default:
-                    MessageBox.Show("저장 완료");
+                    Haebi.Util.HBMessageBox.Show("저장 완료");
                     break;
             }
         }

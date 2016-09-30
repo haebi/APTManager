@@ -54,7 +54,7 @@ namespace APTManager
             // 저장 대상이 없으면 그냥 닫는다
             if (saveDT == null || saveDT.Rows.Count == 0)
             {
-                MessageBox.Show("변경 된 내용이 없습니다");
+                Haebi.Util.HBMessageBox.Show("변경 된 내용이 없습니다");
                 return;
             }
 
