@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HBMessageBox.Properties {
+namespace Haebi.Util.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

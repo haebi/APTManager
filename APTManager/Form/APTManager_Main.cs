@@ -4,6 +4,8 @@ using System.Data;
 using System.Drawing;
 using System.Reflection;
 
+using Haebi.Util;
+
 namespace APTManager
 {
     public partial class APTManager_Main : Form
@@ -325,7 +327,7 @@ namespace APTManager
                 // 더미 데이터 생성
                 if (DB.CreateAdmExpInfo(yyyymm) > 0)
                 {
-                    Haebi.Util.HBMessageBox.Show("데이터 생성 완료", "관리비 조회");
+                    HBMessageBox.Show("데이터 생성 완료", "관리비 조회");
                 }
 
                 // 저장된 데이터 불러오기
@@ -333,7 +335,7 @@ namespace APTManager
             }
             else
             {
-                Haebi.Util.HBMessageBox.Show("조회 완료", "관리비 조회");
+                HBMessageBox.Show("조회 완료", "관리비 조회");
             }
 
             // 합계 부분 추가
@@ -371,7 +373,7 @@ namespace APTManager
             // 저장 대상이 없으면 그냥 닫는다.
             if (saveDT == null || saveDT.Rows.Count == 0)
             {
-                Haebi.Util.HBMessageBox.Show("변경 된 내용이 없습니다");
+                HBMessageBox.Show("변경 된 내용이 없습니다");
                 return;
             }
 

@@ -2,6 +2,8 @@
 using System.Data;
 using System.Windows.Forms;
 
+using Haebi.Util;
+
 namespace APTManager
 {
     public partial class APTManager_HomeInfo : Form
@@ -54,7 +56,7 @@ namespace APTManager
             // 저장 대상이 없으면 그냥 닫는다
             if (saveDT == null || saveDT.Rows.Count == 0)
             {
-                Haebi.Util.HBMessageBox.Show("변경 된 내용이 없습니다");
+                HBMessageBox.Show("변경 된 내용이 없습니다");
                 return;
             }
 
