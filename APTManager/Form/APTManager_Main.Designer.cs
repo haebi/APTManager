@@ -37,11 +37,13 @@ namespace APTManager
             this.gridAdmExp = new System.Windows.Forms.DataGridView();
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.grpQuick = new System.Windows.Forms.GroupBox();
             this.chkRowHighlight = new System.Windows.Forms.CheckBox();
             this.btnApplyAdmExp = new System.Windows.Forms.Button();
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
+            this.btnApplyPreMonth = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -53,7 +55,7 @@ namespace APTManager
             // 
             this.btnGetAdmExp.Location = new System.Drawing.Point(125, 17);
             this.btnGetAdmExp.Name = "btnGetAdmExp";
-            this.btnGetAdmExp.Size = new System.Drawing.Size(102, 24);
+            this.btnGetAdmExp.Size = new System.Drawing.Size(80, 24);
             this.btnGetAdmExp.TabIndex = 0;
             this.btnGetAdmExp.Text = "조회";
             this.btnGetAdmExp.UseVisualStyleBackColor = true;
@@ -78,9 +80,9 @@ namespace APTManager
             // 
             // btnExcel
             // 
-            this.btnExcel.Location = new System.Drawing.Point(341, 69);
+            this.btnExcel.Location = new System.Drawing.Point(383, 17);
             this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(102, 24);
+            this.btnExcel.Size = new System.Drawing.Size(80, 24);
             this.btnExcel.TabIndex = 5;
             this.btnExcel.Text = "Excel";
             this.btnExcel.UseVisualStyleBackColor = true;
@@ -100,9 +102,9 @@ namespace APTManager
             // 
             // btnSaveAdmExp
             // 
-            this.btnSaveAdmExp.Location = new System.Drawing.Point(557, 69);
+            this.btnSaveAdmExp.Location = new System.Drawing.Point(211, 17);
             this.btnSaveAdmExp.Name = "btnSaveAdmExp";
-            this.btnSaveAdmExp.Size = new System.Drawing.Size(102, 24);
+            this.btnSaveAdmExp.Size = new System.Drawing.Size(80, 24);
             this.btnSaveAdmExp.TabIndex = 7;
             this.btnSaveAdmExp.Text = "저장";
             this.btnSaveAdmExp.UseVisualStyleBackColor = true;
@@ -117,6 +119,8 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnApplyPreMonth);
+            this.splitContainer1.Panel1.Controls.Add(this.grpQuick);
             this.splitContainer1.Panel1.Controls.Add(this.chkRowHighlight);
             this.splitContainer1.Panel1.Controls.Add(this.btnApplyAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnSetings);
@@ -134,6 +138,14 @@ namespace APTManager
             this.splitContainer1.Size = new System.Drawing.Size(1121, 781);
             this.splitContainer1.SplitterDistance = 114;
             this.splitContainer1.TabIndex = 9;
+            // 
+            // grpQuick
+            // 
+            this.grpQuick.Location = new System.Drawing.Point(671, 3);
+            this.grpQuick.Name = "grpQuick";
+            this.grpQuick.Size = new System.Drawing.Size(438, 54);
+            this.grpQuick.TabIndex = 15;
+            this.grpQuick.TabStop = false;
             // 
             // chkRowHighlight
             // 
@@ -158,9 +170,9 @@ namespace APTManager
             // 
             // btnSetings
             // 
-            this.btnSetings.Location = new System.Drawing.Point(233, 17);
+            this.btnSetings.Location = new System.Drawing.Point(297, 17);
             this.btnSetings.Name = "btnSetings";
-            this.btnSetings.Size = new System.Drawing.Size(102, 24);
+            this.btnSetings.Size = new System.Drawing.Size(80, 24);
             this.btnSetings.TabIndex = 11;
             this.btnSetings.Text = "설정";
             this.btnSetings.UseVisualStyleBackColor = true;
@@ -168,9 +180,9 @@ namespace APTManager
             // 
             // btnPrintAdmExp
             // 
-            this.btnPrintAdmExp.Location = new System.Drawing.Point(449, 69);
+            this.btnPrintAdmExp.Location = new System.Drawing.Point(469, 17);
             this.btnPrintAdmExp.Name = "btnPrintAdmExp";
-            this.btnPrintAdmExp.Size = new System.Drawing.Size(102, 24);
+            this.btnPrintAdmExp.Size = new System.Drawing.Size(80, 24);
             this.btnPrintAdmExp.TabIndex = 10;
             this.btnPrintAdmExp.Text = "인쇄";
             this.btnPrintAdmExp.UseVisualStyleBackColor = true;
@@ -186,6 +198,16 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
+            // btnApplyPreMonth
+            // 
+            this.btnApplyPreMonth.Location = new System.Drawing.Point(341, 69);
+            this.btnApplyPreMonth.Name = "btnApplyPreMonth";
+            this.btnApplyPreMonth.Size = new System.Drawing.Size(102, 24);
+            this.btnApplyPreMonth.TabIndex = 16;
+            this.btnApplyPreMonth.Text = "전월사용량 반영";
+            this.btnApplyPreMonth.UseVisualStyleBackColor = true;
+            this.btnApplyPreMonth.Click += new System.EventHandler(this.btnApplyPreMonth_Click);
+            // 
             // APTManager_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -193,7 +215,8 @@ namespace APTManager
             this.ClientSize = new System.Drawing.Size(1121, 781);
             this.Controls.Add(this.splitContainer1);
             this.Name = "APTManager_Main";
-            this.Text = "APTManager (by haebi) ver. 20160930";
+            this.Text = "APTManager (by haebi) ver. 20161002";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.APTManager_Main_FormClosing);
             this.Load += new System.EventHandler(this.APTManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -219,6 +242,8 @@ namespace APTManager
         private Button btnSetings;
         private Button btnApplyAdmExp;
         private CheckBox chkRowHighlight;
+        private GroupBox grpQuick;
+        private Button btnApplyPreMonth;
     }
 }
 

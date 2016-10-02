@@ -46,6 +46,14 @@ namespace APTManager
             Add = 0x00000002
         }
 
+        // 그리드 정렬
+        public enum GridAlign
+        {
+            Center  = 0x00000020,   // 32
+            Left    = 0x00000010,   // 16
+            Right   = 0x00000040    // 64
+        }
+
         // 컬럼 정보를 담을 객체 설정
         private class ColumnInfo : System.Attribute
         {

@@ -58,12 +58,58 @@ namespace Haebi.Util
         }
 
         /// <summary>
+        /// 버튼 설정
+        /// </summary>
+        public void SetButtons(MessageBoxButtons buttons)
+        {
+            btnOK.Visible   = false;
+            btnYES.Visible  = false;
+            btnNO.Visible   = false;
+
+            switch (buttons) { 
+                case MessageBoxButtons.OK:
+                    btnOK.Visible = true;
+                    break;
+
+                case MessageBoxButtons.YesNo:
+                    btnYES.Visible  = true;
+                    btnNO.Visible   = true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// 확인 버튼
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnOK_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+
+        /// <summary>
+        /// 예 버튼
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnYES_Click(object sender, EventArgs e)
+        {
+            HBMessageBox.dr = DialogResult.Yes;
+            this.Close();
+        }
+
+        /// <summary>
+        /// 아니오 버튼
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNO_Click(object sender, EventArgs e)
+        {
+            HBMessageBox.dr = DialogResult.No;
             this.Close();
         }
     }

@@ -102,16 +102,16 @@ namespace APTManager
                 {
                     // 셀 뺄셈
                     case Common.Calc.Sub:
-                        int preMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString());
-                        int nowMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString());
+                        int preMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString().Replace(",", ""));
+                        int nowMonth = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString().Replace(",", ""));
 
                         grid.Rows[curRow].Cells[resultIndex].Value = nowMonth - preMonth;
                         break;
 
                     // 셀 덧셈
                     case Common.Calc.Add:
-                        int useCost = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString());
-                        int admExpCost = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString());
+                        int useCost     = Convert.ToInt32(grid.Rows[curRow].Cells[index1].Value.ToString().Replace(",", ""));
+                        int admExpCost  = Convert.ToInt32(grid.Rows[curRow].Cells[index2].Value.ToString().Replace(",", ""));
 
                         grid.Rows[curRow].Cells[resultIndex].Value = useCost + admExpCost;
                         break;
@@ -120,7 +120,64 @@ namespace APTManager
                         break;
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 그리드 텍스트 정렬 방향
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="index"></param>
+        /// <param name="align"></param>
+        public static void AlignCell(DataGridView grid, int index,  Common.GridAlign align)
+        {
+            switch (align)
+            {
+                case Common.GridAlign.Center:
+                    grid.Columns[index].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    break;
+
+                case Common.GridAlign.Left:
+                    grid.Columns[index].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                    break;
+
+                case Common.GridAlign.Right:
+                    grid.Columns[index].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 그리드 헤더 텍스트 정렬 방향
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="index"></param>
+        /// <param name="align"></param>
+        public static void AlignCellHeader(DataGridView grid, int index, Common.GridAlign align)
+        {
+            switch (align)
+            {
+                case Common.GridAlign.Center:
+                    grid.Columns[index].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    break;
+
+                case Common.GridAlign.Left:
+                    grid.Columns[index].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                    break;
+
+                case Common.GridAlign.Right:
+                    grid.Columns[index].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         /// <summary>
@@ -184,6 +241,31 @@ namespace APTManager
                     Haebi.Util.HBMessageBox.Show("저장 완료");
                     break;
             }
+        }
+
+        /// <summary>
+        /// 3 자릿 수 마다 콤마를 추가합니다.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="iRow"></param>
+        /// <param name="iCol"></param>
+        public static void AddNumComma(DataTable dt, int iRow, int iCol)
+        {
+            //Global.admExpDT.Rows[i][7] = Convert.ToUInt32(Global.admExpDT.Rows[i][7]).ToString("N0");
+            //Global.admExpDT.Rows[i][7] = string.Format("{0:n0}", Convert.ToUInt64(Global.admExpDT.Rows[i][7]));
+
+            dt.Rows[iRow][iCol] = string.Format("{0:n0}", Convert.ToUInt64(dt.Rows[iRow][iCol].ToString().Replace(",", "")));
+        }
+
+        /// <summary>
+        /// 콤마를 제거합니다.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="iRow"></param>
+        /// <param name="iCol"></param>
+        public static void DelNumComma(DataTable dt, int iRow, int iCol)
+        {
+            dt.Rows[iRow][iCol] = dt.Rows[iRow][iCol].ToString().Replace(",", "");
         }
 
     }

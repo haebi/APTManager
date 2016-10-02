@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Haebi.Util
 {
@@ -15,6 +16,9 @@ namespace Haebi.Util
             dr = DialogResult.None;
             messageBox.StartPosition = FormStartPosition.CenterParent;
 
+            // 버튼 설정
+            messageBox.SetButtons(MessageBoxButtons.OK);
+
             // 다이얼로그 공통 처리
             return common_process(Message, "");
         }
@@ -23,6 +27,21 @@ namespace Haebi.Util
         {
             dr = DialogResult.None;
             messageBox.StartPosition = FormStartPosition.CenterParent;
+
+            // 버튼 설정
+            messageBox.SetButtons(MessageBoxButtons.OK);
+
+            // 다이얼로그 공통 처리
+            return common_process(Message, Title);
+        }
+
+        public static DialogResult Show(string Message, string Title, MessageBoxButtons buttons)
+        {
+            dr = DialogResult.None;
+            messageBox.StartPosition = FormStartPosition.CenterParent;
+
+            // 버튼 설정
+            messageBox.SetButtons(buttons);
 
             // 다이얼로그 공통 처리
             return common_process(Message, Title);
@@ -61,10 +80,17 @@ namespace Haebi.Util
             // 내용 설정
             messageBox.SetMessage(Message);
 
+            // 포커스 설정
+            //messageBox.WindowState = FormWindowState.Minimized;
+            //messageBox.Shown += delegate (Object sender, EventArgs e) {
+            //    ((Form)sender).WindowState = FormWindowState.Normal;
+            //};
+
             // 다이얼로그 출력
             messageBox.ShowDialog();
-
+            
             return dr;
         }
+
     }
 }

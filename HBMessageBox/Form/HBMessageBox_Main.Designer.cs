@@ -31,6 +31,8 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.pnlMessage = new System.Windows.Forms.Panel();
             this.lblMessage = new System.Windows.Forms.Label();
+            this.btnNO = new System.Windows.Forms.Button();
+            this.btnYES = new System.Windows.Forms.Button();
             this.pnlMessage.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,7 +42,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(83, 31);
             this.btnOK.TabIndex = 0;
-            this.btnOK.Text = "확인";
+            this.btnOK.Text = "확인(&O)";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -61,13 +63,35 @@
             this.lblMessage.TabIndex = 0;
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnNO
+            // 
+            this.btnNO.Location = new System.Drawing.Point(168, 113);
+            this.btnNO.Name = "btnNO";
+            this.btnNO.Size = new System.Drawing.Size(83, 31);
+            this.btnNO.TabIndex = 0;
+            this.btnNO.Text = "아니오(&N)";
+            this.btnNO.UseVisualStyleBackColor = true;
+            this.btnNO.Click += new System.EventHandler(this.btnNO_Click);
+            // 
+            // btnYES
+            // 
+            this.btnYES.Location = new System.Drawing.Point(79, 113);
+            this.btnYES.Name = "btnYES";
+            this.btnYES.Size = new System.Drawing.Size(83, 31);
+            this.btnYES.TabIndex = 0;
+            this.btnYES.Text = "예(&Y)";
+            this.btnYES.UseVisualStyleBackColor = true;
+            this.btnYES.Click += new System.EventHandler(this.btnYES_Click);
+            // 
             // HBMessageBox_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(263, 156);
-            this.Controls.Add(this.pnlMessage);
+            this.Controls.Add(this.btnYES);
+            this.Controls.Add(this.btnNO);
             this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.pnlMessage);
             this.Name = "HBMessageBox_Main";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.HBMessageBox_Main_Load);
@@ -80,6 +104,8 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Panel pnlMessage;
         private System.Windows.Forms.Label lblMessage;
+        private System.Windows.Forms.Button btnNO;
+        private System.Windows.Forms.Button btnYES;
     }
 }
 

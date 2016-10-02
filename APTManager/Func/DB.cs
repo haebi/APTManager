@@ -331,6 +331,45 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 전월 사용량 정보를 반영
+        /// </summary>
+        /// <returns></returns>
+        public static int UpdateAdmExpPreMonth(string yyyymm)
+        {
+            string sql;
+            SQLiteCommand cmd;
+            int result = 0;
+
+            // Convert Datetime Format for get -1 Month in SQLite
+            // 2016-10-01 00:00:00
+            string preDate = string.Format("{0}-{1}-01 {2}", yyyymm.Substring(0, 4), yyyymm.Substring(4, 2), "00:00:00");
+
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
+                {
+                    conn.Open();
+
+                    sql = string.Format(" UPDATE admexp "
+                                        + " SET premonth = IFNULL((SELECT nowmonth from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{0}', '-1 month') AND c.home = admexp.home), 0) "
+                                        + " WHERE yyyymm = '{2}' "
+                                        , preDate
+                                        , preDate
+                                        , yyyymm);
+                    cmd = new SQLiteCommand(sql, conn);
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                // 저장 실패
+                return -1;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 공통코드 정보 조회
         /// </summary>
         /// <returns>세대주 목록</returns>
