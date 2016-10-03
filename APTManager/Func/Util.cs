@@ -330,5 +330,29 @@ namespace APTManager
             dt.Rows[iRow][iCol] = dt.Rows[iRow][iCol].ToString().Replace(",", "");
         }
 
+        /// <summary>
+        /// 그리드 컬럼 설정
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="ColIndex"></param>
+        /// <param name="ColName"></param>
+        /// <param name="ColText"></param>
+        /// <param name="ColumnHeader"></param>
+        /// <param name="Column"></param>
+        /// <param name="Lock"></param>
+        /// <param name="Hide"></param>
+        public static void SetGridColumn(DataGridView grid, int ColIndex, string ColName, string ColText, Common.GridAlign ColumnHeader, Common.GridAlign Column, bool Lock, bool Hide)
+        {
+            Util.SetColumnHeader(grid, ColName, ColText);
+            
+            if (Lock) Util.LockColumn(grid, ColIndex);
+
+            if (Hide) Util.HideColumn(grid, ColIndex);
+
+            // 정렬은 맨 마지막에 해야만 한다... Lock 속성 먹으면 정렬이 틀어지는 문제가 있음.
+            Util.AlignCellHeader(grid, ColIndex, ColumnHeader);
+            Util.AlignCell(grid, ColIndex, Column);
+        }
+
     }
 }

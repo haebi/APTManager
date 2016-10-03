@@ -34,21 +34,21 @@ namespace APTManager
             this.btnOpenHomeInfo = new System.Windows.Forms.Button();
             this.dtpAdmExp = new System.Windows.Forms.DateTimePicker();
             this.btnExcel = new System.Windows.Forms.Button();
-            this.gridAdmExp = new System.Windows.Forms.DataGridView();
             this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.grpQuick = new System.Windows.Forms.GroupBox();
-            this.chkRowHighlight = new System.Windows.Forms.CheckBox();
-            this.btnApplyAdmExp = new System.Windows.Forms.Button();
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
-            this.btnApplyPreMonth = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).BeginInit();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.aptManager_AdmExp1 = new APTManager.SubForm.APTManager_AdmExp();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGetAdmExp
@@ -63,7 +63,7 @@ namespace APTManager
             // 
             // btnOpenHomeInfo
             // 
-            this.btnOpenHomeInfo.Location = new System.Drawing.Point(17, 69);
+            this.btnOpenHomeInfo.Location = new System.Drawing.Point(125, 47);
             this.btnOpenHomeInfo.Name = "btnOpenHomeInfo";
             this.btnOpenHomeInfo.Size = new System.Drawing.Size(102, 24);
             this.btnOpenHomeInfo.TabIndex = 2;
@@ -88,18 +88,6 @@ namespace APTManager
             this.btnExcel.UseVisualStyleBackColor = true;
             this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
-            // gridAdmExp
-            // 
-            this.gridAdmExp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridAdmExp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridAdmExp.Location = new System.Drawing.Point(0, 0);
-            this.gridAdmExp.Name = "gridAdmExp";
-            this.gridAdmExp.RowTemplate.Height = 23;
-            this.gridAdmExp.Size = new System.Drawing.Size(1121, 663);
-            this.gridAdmExp.TabIndex = 6;
-            this.gridAdmExp.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAdmExp_CellEndEdit);
-            this.gridAdmExp.SelectionChanged += new System.EventHandler(this.gridAdmExp_SelectionChanged);
-            // 
             // btnSaveAdmExp
             // 
             this.btnSaveAdmExp.Location = new System.Drawing.Point(211, 17);
@@ -119,10 +107,7 @@ namespace APTManager
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnApplyPreMonth);
             this.splitContainer1.Panel1.Controls.Add(this.grpQuick);
-            this.splitContainer1.Panel1.Controls.Add(this.chkRowHighlight);
-            this.splitContainer1.Panel1.Controls.Add(this.btnApplyAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnSetings);
             this.splitContainer1.Panel1.Controls.Add(this.btnPrintAdmExp);
             this.splitContainer1.Panel1.Controls.Add(this.btnApplyHomeInfo);
@@ -134,9 +119,9 @@ namespace APTManager
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.gridAdmExp);
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Size = new System.Drawing.Size(1121, 781);
-            this.splitContainer1.SplitterDistance = 114;
+            this.splitContainer1.SplitterDistance = 84;
             this.splitContainer1.TabIndex = 9;
             // 
             // grpQuick
@@ -146,27 +131,6 @@ namespace APTManager
             this.grpQuick.Size = new System.Drawing.Size(438, 54);
             this.grpQuick.TabIndex = 15;
             this.grpQuick.TabStop = false;
-            // 
-            // chkRowHighlight
-            // 
-            this.chkRowHighlight.AutoSize = true;
-            this.chkRowHighlight.Location = new System.Drawing.Point(939, 77);
-            this.chkRowHighlight.Name = "chkRowHighlight";
-            this.chkRowHighlight.Size = new System.Drawing.Size(170, 16);
-            this.chkRowHighlight.TabIndex = 13;
-            this.chkRowHighlight.Text = "선택 줄 표시 (약간 느려짐)";
-            this.chkRowHighlight.UseVisualStyleBackColor = true;
-            this.chkRowHighlight.CheckedChanged += new System.EventHandler(this.chkRowHighlight_CheckedChanged);
-            // 
-            // btnApplyAdmExp
-            // 
-            this.btnApplyAdmExp.Location = new System.Drawing.Point(233, 69);
-            this.btnApplyAdmExp.Name = "btnApplyAdmExp";
-            this.btnApplyAdmExp.Size = new System.Drawing.Size(102, 24);
-            this.btnApplyAdmExp.TabIndex = 12;
-            this.btnApplyAdmExp.Text = "관리비 반영";
-            this.btnApplyAdmExp.UseVisualStyleBackColor = true;
-            this.btnApplyAdmExp.Click += new System.EventHandler(this.btnApplyAdmExp_Click);
             // 
             // btnSetings
             // 
@@ -190,7 +154,7 @@ namespace APTManager
             // 
             // btnApplyHomeInfo
             // 
-            this.btnApplyHomeInfo.Location = new System.Drawing.Point(125, 69);
+            this.btnApplyHomeInfo.Location = new System.Drawing.Point(233, 47);
             this.btnApplyHomeInfo.Name = "btnApplyHomeInfo";
             this.btnApplyHomeInfo.Size = new System.Drawing.Size(102, 24);
             this.btnApplyHomeInfo.TabIndex = 8;
@@ -198,15 +162,34 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
-            // btnApplyPreMonth
+            // tabControl1
             // 
-            this.btnApplyPreMonth.Location = new System.Drawing.Point(341, 69);
-            this.btnApplyPreMonth.Name = "btnApplyPreMonth";
-            this.btnApplyPreMonth.Size = new System.Drawing.Size(102, 24);
-            this.btnApplyPreMonth.TabIndex = 16;
-            this.btnApplyPreMonth.Text = "전월사용량 반영";
-            this.btnApplyPreMonth.UseVisualStyleBackColor = true;
-            this.btnApplyPreMonth.Click += new System.EventHandler(this.btnApplyPreMonth_Click);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1121, 693);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.aptManager_AdmExp1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1113, 667);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "관리비";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // aptManager_AdmExp1
+            // 
+            this.aptManager_AdmExp1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aptManager_AdmExp1.Location = new System.Drawing.Point(3, 3);
+            this.aptManager_AdmExp1.Name = "aptManager_AdmExp1";
+            this.aptManager_AdmExp1.Size = new System.Drawing.Size(1107, 661);
+            this.aptManager_AdmExp1.TabIndex = 0;
             // 
             // APTManager_Main
             // 
@@ -218,12 +201,12 @@ namespace APTManager
             this.Text = "APTManager (by haebi) ver. 20161002";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.APTManager_Main_FormClosing);
             this.Load += new System.EventHandler(this.APTManager_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gridAdmExp)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -234,16 +217,15 @@ namespace APTManager
         private System.Windows.Forms.Button btnOpenHomeInfo;
         private System.Windows.Forms.DateTimePicker dtpAdmExp;
         private System.Windows.Forms.Button btnExcel;
-        private DataGridView gridAdmExp;
         private Button btnSaveAdmExp;
         private SplitContainer splitContainer1;
         private Button btnApplyHomeInfo;
         private Button btnPrintAdmExp;
         private Button btnSetings;
-        private Button btnApplyAdmExp;
-        private CheckBox chkRowHighlight;
         private GroupBox grpQuick;
-        private Button btnApplyPreMonth;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private SubForm.APTManager_AdmExp aptManager_AdmExp1;
     }
 }
 
