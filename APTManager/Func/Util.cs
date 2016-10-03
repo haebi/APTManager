@@ -181,6 +181,68 @@ namespace APTManager
         }
 
         /// <summary>
+        /// 그리드 로우 색상 표시
+        /// </summary>
+        /// <param name="CurRowIndex"></param>
+        public static void SetHighlightStyle(DataGridView grid, int CurRowIndex)
+        {
+            // 선택 라인 색상 표시
+            DataGridViewCellStyle HighlightStyle = new DataGridViewCellStyle();
+            HighlightStyle.BackColor = System.Drawing.Color.LightYellow;
+
+            try
+            {
+                for (int i = 0; i < grid.Columns.Count; i++)
+                {
+                    grid.Rows[CurRowIndex].Cells[i].Style.ApplyStyle(HighlightStyle);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : [Util.SetHighlightStyle]" 
+                    + Environment.NewLine + ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 그리드 로우 기본 스타일로 되돌린다
+        /// </summary>
+        /// <param name="PrevRowIndex"></param>
+        public static void SetDefaultStyle(DataGridView grid, int PrevRowIndex)
+        {
+            // 스타일 색상 설정
+            DataGridViewCellStyle LockStyle = new DataGridViewCellStyle();
+            LockStyle.BackColor = System.Drawing.Color.FromArgb(200, 200, 200);
+
+            DataGridViewCellStyle NormalStyle = new DataGridViewCellStyle();
+            NormalStyle.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+
+            try
+            {
+                // 원상복귀
+                for (int i = 0; i < grid.Columns.Count; i++)
+                {
+                    // 읽기전용 셀의 경우 색상이 다르기 때문에 복원을 위해 셀 특성을 구분해야 한다.
+                    if (!grid.Columns[i].ReadOnly)
+                    {
+                        // 읽기전용 이 아닌 경우
+                        grid.Rows[PrevRowIndex].Cells[i].Style.ApplyStyle(NormalStyle);
+                    }
+                    else
+                    {
+                        // 읽기전용 속성인 경우
+                        grid.Rows[PrevRowIndex].Cells[i].Style.ApplyStyle(LockStyle);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : [Util.SetDefaultStyle]"
+                    + Environment.NewLine + ex.ToString());
+            }
+        }
+
+        /// <summary>
         /// 사용량 금액 자동계산
         /// </summary>
         /// <param name="value"></param>

@@ -319,48 +319,6 @@ namespace APTManager
         }
 
         /// <summary>
-        /// 그리드 로우 색상 표시
-        /// </summary>
-        /// <param name="CurRowIndex"></param>
-        private void SetHighlightStyle(int CurRowIndex)
-        {
-            // 선택 라인 색상 표시
-            DataGridViewCellStyle HighlightStyle = new DataGridViewCellStyle();
-            HighlightStyle.BackColor = System.Drawing.Color.LightYellow;
-
-            for (int i = 0; i < gridAdmExp.Columns.Count; i++)
-            {
-                this.gridAdmExp.Rows[CurRowIndex].Cells[i].Style.ApplyStyle(HighlightStyle);
-            }
-        }
-
-        /// <summary>
-        /// 그리드 로우 기본 스타일로 되돌린다
-        /// </summary>
-        /// <param name="PrevRowIndex"></param>
-        private void SetDefaultStyle(int PrevRowIndex)
-        {
-            // 스타일 색상 설정
-            DataGridViewCellStyle LockStyle = new DataGridViewCellStyle();
-            LockStyle.BackColor = System.Drawing.Color.FromArgb(200, 200, 200);
-
-            DataGridViewCellStyle NormalStyle = new DataGridViewCellStyle();
-            NormalStyle.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-
-            // 원상복귀
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.yyyymm    ].Style.ApplyStyle(LockStyle  );
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.home      ].Style.ApplyStyle(LockStyle  );
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.name      ].Style.ApplyStyle(LockStyle  );
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.premonth  ].Style.ApplyStyle(NormalStyle);
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.nowmonth  ].Style.ApplyStyle(NormalStyle);
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.useamount ].Style.ApplyStyle(LockStyle  );
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.usecost   ].Style.ApplyStyle(NormalStyle);
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.admexpcost].Style.ApplyStyle(NormalStyle);
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.totalcost ].Style.ApplyStyle(LockStyle  );
-            this.gridAdmExp.Rows[PrevRowIndex].Cells[(int)Common.AdmExp.remark    ].Style.ApplyStyle(NormalStyle);
-        }
-
-        /// <summary>
         /// 관리비 조회
         /// </summary>
         /// <param name="yyyymm"></param>
@@ -651,11 +609,11 @@ namespace APTManager
 
             if (!chkRowHighlight.Checked)
             {
-                SetDefaultStyle(curRow);
+                Util.SetDefaultStyle(this.gridAdmExp, curRow);
             }
             else
             {
-                SetHighlightStyle(gridPreviousRowIndex);
+                Util.SetHighlightStyle(this.gridAdmExp, gridPreviousRowIndex);
             }
 
             // 당월 사용량 입력 가능하도록 준비
@@ -692,7 +650,7 @@ namespace APTManager
                     return;
 
                 // 선택 라인 색상 표시
-                SetHighlightStyle(curRow);
+                Util.SetHighlightStyle(this.gridAdmExp, curRow);
 
                 // 이전로우가 0 보다 작으면 조회된 직후 이므로 아직 이전 로우가 없다. 따라서 이전 로우를 현재로우로 설정하고, 이전 로우 처리는 하지 않는다.
                 // 처음 부터 0을 세팅 하면, 0번 로우의 색상 처리에 문제가 생긴다.
@@ -703,7 +661,7 @@ namespace APTManager
                 }
 
                 // 이전 라인 기본색상 표시
-                SetDefaultStyle(gridPreviousRowIndex);
+                Util.SetDefaultStyle(this.gridAdmExp, gridPreviousRowIndex);
             }
 
             // 현재 줄 번호 기억
