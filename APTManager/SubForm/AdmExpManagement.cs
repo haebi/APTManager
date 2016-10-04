@@ -12,11 +12,11 @@ using Haebi.Util;
 
 namespace APTManager.SubForm
 {
-    public partial class APTManager_AdmExp : UserControl
+    public partial class AdmExpManagement : UserControl
     {
         private int gridPreviousRowIndex = 0;
 
-        public APTManager_AdmExp()
+        public AdmExpManagement()
         {
             InitializeComponent();
         }
@@ -88,7 +88,7 @@ namespace APTManager.SubForm
 
             // 더블 버퍼링 설정 (로우 하이라이트 표시하는데 너무 오래 걸리는 관계로 설정)
             //DoubleBuffered = true; // 현재 폼 더블버퍼링 유뮤 설정인데... 폼 자체가 갱신되는게 아니기에 별 의미 없다.
-            typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, gridAdmExp, new object[] { true });
+            Util.SetDoubleBuffer(gridAdmExp);
         }
 
         /// <summary>

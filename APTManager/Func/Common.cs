@@ -39,6 +39,21 @@ namespace APTManager
             [ColumnInfo(4, "comremark")] comremark     // "비고"
         }
 
+        // 지불 컬럼 인덱스
+        public enum Payment
+        {
+            [ColumnInfo(0, "yyyymm"    )] yyyymm,      // "년월"
+            [ColumnInfo(1, "home"      )] home,        // "세대"
+            [ColumnInfo(2, "name"      )] name,        // "세대주"
+            [ColumnInfo(3, "ordernum"  )] ordernum,    // "정렬순서"
+            [ColumnInfo(4, "pay"       )] pay,         // "납입금"
+            [ColumnInfo(5, "admexpcost")] admexpcost,  // "관리비"
+            [ColumnInfo(6, "prepay"    )] prepay,      // "선납금"
+            [ColumnInfo(7, "nonpay"    )] nonpay,      // "미납금"
+            [ColumnInfo(8, "totalcost" )] totalcost,   // "차액"
+            [ColumnInfo(9, "remark"    )] remark       // "비고"
+        }
+
         // 계산 항목
         public enum Calc
         {

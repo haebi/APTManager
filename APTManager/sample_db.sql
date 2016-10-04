@@ -172,3 +172,16 @@ INSERT INTO comcode VALUES
 (2, 66,'수도요금','57000','수도요금'),
 (2, 67,'수도요금','58000','수도요금'),
 (3, 1 ,'아파트명칭','XX','아파트명칭');
+
+CREATE TABLE payment (
+  yyyymm string NOT NULL
+, home string
+, name string NOT NULL
+, ordernum int NOT NULL
+, pay int
+, admexpcost int NOT NULL
+, prepay int
+, nonpay int
+, totalcost int NOT NULL
+, remark string
+);

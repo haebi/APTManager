@@ -1,6 +1,6 @@
 ﻿namespace APTManager.SubForm
 {
-    partial class APTManager_AdmExp
+    partial class AdmExpManagement
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.

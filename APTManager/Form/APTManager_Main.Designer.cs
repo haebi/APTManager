@@ -30,73 +30,29 @@ namespace APTManager
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnGetAdmExp = new System.Windows.Forms.Button();
-            this.btnOpenHomeInfo = new System.Windows.Forms.Button();
-            this.dtpAdmExp = new System.Windows.Forms.DateTimePicker();
-            this.btnExcel = new System.Windows.Forms.Button();
-            this.btnSaveAdmExp = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.grpQuick = new System.Windows.Forms.GroupBox();
             this.btnSetings = new System.Windows.Forms.Button();
             this.btnPrintAdmExp = new System.Windows.Forms.Button();
             this.btnApplyHomeInfo = new System.Windows.Forms.Button();
+            this.btnGetAdmExp = new System.Windows.Forms.Button();
+            this.btnSaveAdmExp = new System.Windows.Forms.Button();
+            this.btnExcel = new System.Windows.Forms.Button();
+            this.dtpAdmExp = new System.Windows.Forms.DateTimePicker();
+            this.btnOpenHomeInfo = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.aptManager_AdmExp1 = new APTManager.SubForm.APTManager_AdmExp();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.aptManager_AdmExp1 = new APTManager.SubForm.AdmExpManagement();
+            this.payManagement1 = new APTManager.SubForm.PayManagement();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnGetAdmExp
-            // 
-            this.btnGetAdmExp.Location = new System.Drawing.Point(125, 17);
-            this.btnGetAdmExp.Name = "btnGetAdmExp";
-            this.btnGetAdmExp.Size = new System.Drawing.Size(80, 24);
-            this.btnGetAdmExp.TabIndex = 0;
-            this.btnGetAdmExp.Text = "조회";
-            this.btnGetAdmExp.UseVisualStyleBackColor = true;
-            this.btnGetAdmExp.Click += new System.EventHandler(this.btnGetAdmExp_Click);
-            // 
-            // btnOpenHomeInfo
-            // 
-            this.btnOpenHomeInfo.Location = new System.Drawing.Point(125, 47);
-            this.btnOpenHomeInfo.Name = "btnOpenHomeInfo";
-            this.btnOpenHomeInfo.Size = new System.Drawing.Size(102, 24);
-            this.btnOpenHomeInfo.TabIndex = 2;
-            this.btnOpenHomeInfo.Text = "세대정보";
-            this.btnOpenHomeInfo.UseVisualStyleBackColor = true;
-            this.btnOpenHomeInfo.Click += new System.EventHandler(this.btnMember_Click);
-            // 
-            // dtpAdmExp
-            // 
-            this.dtpAdmExp.Location = new System.Drawing.Point(17, 17);
-            this.dtpAdmExp.Name = "dtpAdmExp";
-            this.dtpAdmExp.Size = new System.Drawing.Size(102, 21);
-            this.dtpAdmExp.TabIndex = 4;
-            // 
-            // btnExcel
-            // 
-            this.btnExcel.Location = new System.Drawing.Point(383, 17);
-            this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(80, 24);
-            this.btnExcel.TabIndex = 5;
-            this.btnExcel.Text = "Excel";
-            this.btnExcel.UseVisualStyleBackColor = true;
-            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
-            // 
-            // btnSaveAdmExp
-            // 
-            this.btnSaveAdmExp.Location = new System.Drawing.Point(211, 17);
-            this.btnSaveAdmExp.Name = "btnSaveAdmExp";
-            this.btnSaveAdmExp.Size = new System.Drawing.Size(80, 24);
-            this.btnSaveAdmExp.TabIndex = 7;
-            this.btnSaveAdmExp.Text = "저장";
-            this.btnSaveAdmExp.UseVisualStyleBackColor = true;
-            this.btnSaveAdmExp.Click += new System.EventHandler(this.btnSaveAdmExp_Click);
             // 
             // splitContainer1
             // 
@@ -162,9 +118,57 @@ namespace APTManager
             this.btnApplyHomeInfo.UseVisualStyleBackColor = true;
             this.btnApplyHomeInfo.Click += new System.EventHandler(this.btnApplyHomeInfo_Click);
             // 
+            // btnGetAdmExp
+            // 
+            this.btnGetAdmExp.Location = new System.Drawing.Point(125, 17);
+            this.btnGetAdmExp.Name = "btnGetAdmExp";
+            this.btnGetAdmExp.Size = new System.Drawing.Size(80, 24);
+            this.btnGetAdmExp.TabIndex = 0;
+            this.btnGetAdmExp.Text = "조회";
+            this.btnGetAdmExp.UseVisualStyleBackColor = true;
+            this.btnGetAdmExp.Click += new System.EventHandler(this.btnGetAdmExp_Click);
+            // 
+            // btnSaveAdmExp
+            // 
+            this.btnSaveAdmExp.Location = new System.Drawing.Point(211, 17);
+            this.btnSaveAdmExp.Name = "btnSaveAdmExp";
+            this.btnSaveAdmExp.Size = new System.Drawing.Size(80, 24);
+            this.btnSaveAdmExp.TabIndex = 7;
+            this.btnSaveAdmExp.Text = "저장";
+            this.btnSaveAdmExp.UseVisualStyleBackColor = true;
+            this.btnSaveAdmExp.Click += new System.EventHandler(this.btnSaveAdmExp_Click);
+            // 
+            // btnExcel
+            // 
+            this.btnExcel.Location = new System.Drawing.Point(383, 17);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Size = new System.Drawing.Size(80, 24);
+            this.btnExcel.TabIndex = 5;
+            this.btnExcel.Text = "Excel";
+            this.btnExcel.UseVisualStyleBackColor = true;
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
+            // 
+            // dtpAdmExp
+            // 
+            this.dtpAdmExp.Location = new System.Drawing.Point(17, 17);
+            this.dtpAdmExp.Name = "dtpAdmExp";
+            this.dtpAdmExp.Size = new System.Drawing.Size(102, 21);
+            this.dtpAdmExp.TabIndex = 4;
+            // 
+            // btnOpenHomeInfo
+            // 
+            this.btnOpenHomeInfo.Location = new System.Drawing.Point(125, 47);
+            this.btnOpenHomeInfo.Name = "btnOpenHomeInfo";
+            this.btnOpenHomeInfo.Size = new System.Drawing.Size(102, 24);
+            this.btnOpenHomeInfo.TabIndex = 2;
+            this.btnOpenHomeInfo.Text = "세대정보";
+            this.btnOpenHomeInfo.UseVisualStyleBackColor = true;
+            this.btnOpenHomeInfo.Click += new System.EventHandler(this.btnMember_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -183,6 +187,17 @@ namespace APTManager
             this.tabPage1.Text = "관리비";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.payManagement1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1113, 667);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "납입금";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // aptManager_AdmExp1
             // 
             this.aptManager_AdmExp1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -190,6 +205,14 @@ namespace APTManager
             this.aptManager_AdmExp1.Name = "aptManager_AdmExp1";
             this.aptManager_AdmExp1.Size = new System.Drawing.Size(1107, 661);
             this.aptManager_AdmExp1.TabIndex = 0;
+            // 
+            // payManagement1
+            // 
+            this.payManagement1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.payManagement1.Location = new System.Drawing.Point(3, 3);
+            this.payManagement1.Name = "payManagement1";
+            this.payManagement1.Size = new System.Drawing.Size(1107, 661);
+            this.payManagement1.TabIndex = 0;
             // 
             // APTManager_Main
             // 
@@ -207,6 +230,7 @@ namespace APTManager
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -225,7 +249,9 @@ namespace APTManager
         private GroupBox grpQuick;
         private TabControl tabControl1;
         private TabPage tabPage1;
-        private SubForm.APTManager_AdmExp aptManager_AdmExp1;
+        private SubForm.AdmExpManagement aptManager_AdmExp1;
+        private TabPage tabPage2;
+        private SubForm.PayManagement payManagement1;
     }
 }
 

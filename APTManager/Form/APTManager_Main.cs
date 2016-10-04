@@ -154,13 +154,28 @@ namespace APTManager
 
             Global.YYYYMM = yyyymm;
 
-            // 조회
-            aptManager_AdmExp1.SelectAdmExp(true);
+            int TabNum = tabControl1.SelectedIndex;
 
-            // 버튼 활성화
-            btnExcel.Enabled        = true;
-            btnPrintAdmExp.Enabled  = true;
-            btnSaveAdmExp.Enabled   = true;
+            switch (TabNum)
+            {
+                case 0:
+                    // 조회
+                    aptManager_AdmExp1.SelectAdmExp(true);
+
+                    // 버튼 활성화
+                    btnExcel.Enabled = true;
+                    btnPrintAdmExp.Enabled = true;
+                    btnSaveAdmExp.Enabled = true;
+                    break;
+
+                case 1:
+                    HBMessageBox.Show("개발 중...");
+                    break;
+
+                default:
+                    break;
+            }
+           
         }
         
         /// <summary>

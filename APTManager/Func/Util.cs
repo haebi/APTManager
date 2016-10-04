@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System;
+using System.Reflection;
 
 namespace APTManager
 {
@@ -352,6 +353,15 @@ namespace APTManager
             // 정렬은 맨 마지막에 해야만 한다... Lock 속성 먹으면 정렬이 틀어지는 문제가 있음.
             Util.AlignCellHeader(grid, ColIndex, ColumnHeader);
             Util.AlignCell(grid, ColIndex, Column);
+        }
+
+        /// <summary>
+        /// 컨트롤에 더블 버퍼링 설정 한다
+        /// </summary>
+        /// <param name="control"></param>
+        public static void SetDoubleBuffer(Control control)
+        {
+            typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, control, new object[] { true });
         }
 
     }
