@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using Haebi.Util;
+using APTManager.Query;
 
 namespace APTManager.SubForm
 {
@@ -216,7 +217,7 @@ namespace APTManager.SubForm
             }
 
             // 결과 메시지
-            Util.MessageSaveResult(DB.SaveAdmExpInfo(saveDT));
+            Util.MessageSaveResult(AdmExpQuery.SaveAdmExpInfo(saveDT));
 
             // 변경사항 커밋
             Global.admExpDT.AcceptChanges();
@@ -235,7 +236,7 @@ namespace APTManager.SubForm
             CheckUnsavedData();
 
             // 공통코드 데이터 로드 Global.comcodeDT
-            DB.GetComCode();
+            ComCodeQuery.GetComCode();
 
             /*
              * 1. 해당 월의 데이터가 있으면 조회한다.
@@ -245,19 +246,19 @@ namespace APTManager.SubForm
              * */
 
             // 현재년월 데이터 조회
-            gridAdmExp.DataSource = DB.GetAdmExpInfo(Global.YYYYMM);
+            gridAdmExp.DataSource = AdmExpQuery.GetAdmExpInfo(Global.YYYYMM);
 
             // 저장된 내용이 없으면 빈 셀 출력
             if (Global.admExpDT.Rows.Count == 0)
             {
                 // 더미 데이터 생성
-                if (DB.CreateAdmExpInfo(Global.YYYYMM) > 0)
+                if (AdmExpQuery.CreateAdmExpInfo(Global.YYYYMM) > 0)
                 {
                     HBMessageBox.Show("데이터 생성 완료", "관리비 조회");
                 }
 
                 // 저장된 데이터 불러오기
-                gridAdmExp.DataSource = DB.GetAdmExpInfo(Global.YYYYMM);
+                gridAdmExp.DataSource = AdmExpQuery.GetAdmExpInfo(Global.YYYYMM);
             }
             else
             {
@@ -399,7 +400,7 @@ namespace APTManager.SubForm
                 return;
 
             // 결과 메시지
-            Util.MessageSaveResult(DB.UpdateAdmExpCost(Global.YYYYMM));
+            Util.MessageSaveResult(AdmExpQuery.UpdateAdmExpCost(Global.YYYYMM));
 
             // 재조회
             SelectAdmExp(false);
@@ -426,7 +427,7 @@ namespace APTManager.SubForm
                 return;
 
             // 결과 메시지
-            Util.MessageSaveResult(DB.UpdateAdmExpPreMonth(Global.YYYYMM));
+            Util.MessageSaveResult(AdmExpQuery.UpdateAdmExpPreMonth(Global.YYYYMM));
 
             // 재조회
             SelectAdmExp(false);

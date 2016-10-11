@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 
 using Haebi.Util;
+using APTManager.Query;
 
 namespace APTManager
 {
@@ -31,8 +32,8 @@ namespace APTManager
             Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comremark), "비고"    );
 
             
-            gridCommonCode.DataSource       = DB.GetComCode();      // 공통코드 조회
-            gridCommonCodeGroup.DataSource  = DB.GetComCodeGroup(); // 코드 그룹 조회
+            gridCommonCode.DataSource       = ComCodeQuery.GetComCode();      // 공통코드 조회
+            gridCommonCodeGroup.DataSource  = ComCodeQuery.GetComCodeGroup(); // 코드 그룹 조회
 
             // Row 자동생성 금지
             gridCommonCodeGroup.AllowUserToAddRows  = false;
@@ -72,7 +73,7 @@ namespace APTManager
             }
 
             // 저장
-            int result = DB.SaveComCode(saveDT);
+            int result = ComCodeQuery.SaveComCode(saveDT);
 
             // 결과 메시지
             Util.MessageSaveResult(result);

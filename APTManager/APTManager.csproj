@@ -130,6 +130,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Func\Util.cs" />
+    <Compile Include="Query\AdmExp_Query.cs" />
+    <Compile Include="Query\ComCode_Query.cs" />
+    <Compile Include="Query\HomeInfo_Query.cs" />
+    <Compile Include="Query\Payment_Query.cs" />
     <Compile Include="SubForm\AdmExpManagement.cs">
       <SubType>UserControl</SubType>
     </Compile>

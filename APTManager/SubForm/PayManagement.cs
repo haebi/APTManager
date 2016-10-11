@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using Haebi.Util;
+using APTManager.Query;
 
 namespace APTManager.SubForm
 {
@@ -64,8 +66,8 @@ namespace APTManager.SubForm
             Util.SetGridColumn(gridPayment, (int)home       , Common.GetName(home      ), "세대"     , Align_Center, Align_Center, true , false);
             Util.SetGridColumn(gridPayment, (int)name       , Common.GetName(name      ), "세대주"   , Align_Center, Align_Center, true , false);
             Util.SetGridColumn(gridPayment, (int)ordernum   , Common.GetName(ordernum  ), "정렬순서" , Align_Center, Align_Right , true , true );
-            Util.SetGridColumn(gridPayment, (int)pay        , Common.GetName(pay       ), "납입금"   , Align_Center, Align_Right , false, false);
             Util.SetGridColumn(gridPayment, (int)admexpcost , Common.GetName(admexpcost), "관리비"   , Align_Center, Align_Right , false, false);
+            Util.SetGridColumn(gridPayment, (int)pay        , Common.GetName(pay       ), "납입금"   , Align_Center, Align_Right , false, false);
             Util.SetGridColumn(gridPayment, (int)prepay     , Common.GetName(prepay    ), "선납금"   , Align_Center, Align_Right , false, false);
             Util.SetGridColumn(gridPayment, (int)nonpay     , Common.GetName(nonpay    ), "미납금"   , Align_Center, Align_Right , false, false);
             Util.SetGridColumn(gridPayment, (int)totalcost  , Common.GetName(totalcost ), "차액"     , Align_Center, Align_Right , true , false);
@@ -84,6 +86,48 @@ namespace APTManager.SubForm
             // 더블 버퍼링 설정 (로우 하이라이트 표시하는데 너무 오래 걸리는 관계로 설정)
             //DoubleBuffered = true; // 현재 폼 더블버퍼링 유뮤 설정인데... 폼 자체가 갱신되는게 아니기에 별 의미 없다.
             Util.SetDoubleBuffer(gridPayment);
+        }
+
+        /// <summary>
+        /// 관리비 조회
+        /// </summary>
+        /// <param name="yyyymm"></param>
+        public void SelectPayment(bool msgShow)
+        {
+            // 공통코드 데이터 로드 Global.comcodeDT
+            ComCodeQuery.GetComCode();
+
+            /*
+             * 1. 해당 월의 데이터가 있으면 조회한다.
+             * 2. 데이터가 없는 경우 새로 양식을 생성한다.
+             * */
+
+            // 현재년월 데이터 조회
+            gridPayment.DataSource = PaymentQuery.GetPaymentInfo(Global.YYYYMM);
+
+            // 저장된 내용이 없으면 빈 셀 출력
+            if (Global.PaymentDT.Rows.Count == 0)
+            {
+                // 더미 데이터 생성
+                if (PaymentQuery.CreatePaymentInfo(Global.YYYYMM) > 0)
+                {
+                    HBMessageBox.Show("데이터 생성 완료", "납입금 조회");
+                }
+
+                // 저장된 데이터 불러오기
+                gridPayment.DataSource = PaymentQuery.GetPaymentInfo(Global.YYYYMM);
+
+                if(Global.PaymentDT.Rows.Count == 0)
+                {
+                    HBMessageBox.Show("관리비 데이터가 존재하지 않습니다.");
+                    return;
+                }
+            }
+            else
+            {
+                if (msgShow)
+                    HBMessageBox.Show("조회 완료", "납입금 조회");
+            }
         }
 
 

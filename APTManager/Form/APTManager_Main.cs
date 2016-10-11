@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
-using System.Reflection;
 
 using Haebi.Util;
+using APTManager.Query;
 
 namespace APTManager
 {
@@ -169,7 +169,8 @@ namespace APTManager
                     break;
 
                 case 1:
-                    HBMessageBox.Show("개발 중...");
+                    //HBMessageBox.Show("개발 중...");
+                    payManagement1.SelectPayment(true);
                     break;
 
                 default:
@@ -243,7 +244,7 @@ namespace APTManager
             string yyyymm = dtpAdmExp.Value.ToString("yyyyMM");
 
             // 결과 메시지
-            Util.MessageSaveResult(DB.UpdateAdmExpHomeInfo(yyyymm));
+            Util.MessageSaveResult(AdmExpQuery.UpdateAdmExpHomeInfo(yyyymm));
 
             // 재조회
             btnGetAdmExp.PerformClick();
@@ -295,8 +296,6 @@ namespace APTManager
             // 변경 된 데이터 저장 여부 확인
             CheckUnsavedData();
         }
-
-
 
     }
 }

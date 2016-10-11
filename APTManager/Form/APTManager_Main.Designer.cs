@@ -42,8 +42,8 @@ namespace APTManager
             this.btnOpenHomeInfo = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.aptManager_AdmExp1 = new APTManager.SubForm.AdmExpManagement();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.payManagement1 = new APTManager.SubForm.PayManagement();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -187,6 +187,14 @@ namespace APTManager
             this.tabPage1.Text = "관리비";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // aptManager_AdmExp1
+            // 
+            this.aptManager_AdmExp1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aptManager_AdmExp1.Location = new System.Drawing.Point(3, 3);
+            this.aptManager_AdmExp1.Name = "aptManager_AdmExp1";
+            this.aptManager_AdmExp1.Size = new System.Drawing.Size(1107, 661);
+            this.aptManager_AdmExp1.TabIndex = 0;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.payManagement1);
@@ -197,14 +205,6 @@ namespace APTManager
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "납입금";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // aptManager_AdmExp1
-            // 
-            this.aptManager_AdmExp1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aptManager_AdmExp1.Location = new System.Drawing.Point(3, 3);
-            this.aptManager_AdmExp1.Name = "aptManager_AdmExp1";
-            this.aptManager_AdmExp1.Size = new System.Drawing.Size(1107, 661);
-            this.aptManager_AdmExp1.TabIndex = 0;
             // 
             // payManagement1
             // 

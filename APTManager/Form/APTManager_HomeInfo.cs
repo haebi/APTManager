@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 
 using Haebi.Util;
+using APTManager.Query;
 
 namespace APTManager
 {
@@ -36,7 +37,7 @@ namespace APTManager
             Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.ordernum), "정렬순서");
 
             // 세대정보 조회
-            gridHomeInfo.DataSource = DB.GetHomeInfo();
+            gridHomeInfo.DataSource = HomeInfoQuery.GetHomeInfo();
             
             Util.LockColumn(gridHomeInfo, 0);           // 컬럼 잠금 설정
 
@@ -61,7 +62,7 @@ namespace APTManager
             }
 
             // 저장
-            int result = DB.SaveHomeInfo(saveDT);
+            int result = HomeInfoQuery.SaveHomeInfo(saveDT);
 
             // 결과 메시지
             Util.MessageSaveResult(result);

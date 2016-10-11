@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 
@@ -7,477 +8,77 @@ namespace APTManager
     public static class DB
     {
         // 데이터베이스 파일
-        private const string dbConn = @"Data Source=aptmanager.db";
+        public static string dbConn = @"Data Source=aptmanager.db";
 
         /// <summary>
-        /// 세대주 정보 조회
+        /// Insert, Update, Delete 공통 메서드
         /// </summary>
-        /// <returns>세대주 목록</returns>
-        public static DataTable GetHomeInfo()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("home");
-            dt.Columns.Add("name");
-            dt.Columns.Add("ordernum");
-
-            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-            {
-                conn.Open();
-                string sql = "SELECT home"
-                                + ", name"
-                                + ", ordernum"
-                                + " FROM homeinfo ORDER BY ordernum";
-
-                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    dt.Rows.Add(new object[] { reader["home"], reader["name"], reader["ordernum"] });
-                }
-
-                reader.Close();
-            }
-
-            Global.homeInfoDT = dt.Copy();
-            Global.homeInfoDT.AcceptChanges();
-
-            return Global.homeInfoDT;
-        }
-
-        /// <summary>
-        /// 세대주 정보 저장
-        /// </summary>
-        /// <param name="pDT"></param>
+        /// <param name="conn"></param>
+        /// <param name="SQL"></param>
         /// <returns></returns>
-        public static int SaveHomeInfo(DataTable pDT)
+        public static int ExecuteNonQuery(SQLiteConnection conn, string SQL)
         {
-            string sql;
             SQLiteCommand cmd;
             int result = 0;
 
             try
             {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
+                conn.Open();
 
-                    // 저장 대상만큼 반복 수행
-                    for (int i = 0; i < pDT.Rows.Count; i++)
+                cmd = new SQLiteCommand(SQL, conn);
+
+                result += cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Select 공통 메서드
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static DataTable ExecuteQuery(SQLiteConnection conn, string SQL)
+        {
+            SQLiteCommand cmd;
+            SQLiteDataReader reader;
+            DataTable dt = new DataTable();
+            bool addColumn = true;
+
+            try
+            {
+                conn.Open();
+
+                cmd = new SQLiteCommand(SQL, conn);
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    object[] objData = new object[reader.FieldCount];
+
+                    for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        sql = string.Format("UPDATE homeinfo "
-                                            +"  SET name='{0}' "
-                                            +"WHERE home='{1}' "
-                                            , pDT.Rows[i][(int)Common.HomeInfo.name].ToString()
-                                            , pDT.Rows[i][(int)Common.HomeInfo.home].ToString() );
-                        cmd = new SQLiteCommand(sql, conn);
-                        result = cmd.ExecuteNonQuery();
+                        if (addColumn)
+                            dt.Columns.Add(reader.GetName(i));
+
+                        objData[i] = reader[i];
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("저장 실패");
-                return -1;
-            }
 
-            return result;
-        }
+                    dt.Rows.Add(objData);
 
-        /// <summary>
-        /// 관리비 조회
-        /// </summary>
-        /// <returns>세대주 목록</returns>
-        public static DataTable GetAdmExpInfo(string yyyymm)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("yyyymm");
-            dt.Columns.Add("home");
-            dt.Columns.Add("name");
-            dt.Columns.Add("premonth");
-            dt.Columns.Add("nowmonth");
-            dt.Columns.Add("useamount");
-            dt.Columns.Add("usecost");
-            dt.Columns.Add("admexpcost");
-            dt.Columns.Add("totalcost");
-            dt.Columns.Add("remark");
-            dt.Columns.Add("ordernum");
-
-            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-            {
-                conn.Open();
-                string sql = string.Format("SELECT yyyymm"
-                                            + " , home"
-                                            + " , name"
-                                            + " , premonth"
-                                            + " , nowmonth"
-                                            + " , useamount"
-                                            + " , usecost"
-                                            + " , admexpcost"
-                                            + " , totalcost"
-                                            + " , remark"
-                                            + " , ordernum"
-                                            + " FROM admexp where yyyymm = '{0}'"
-                                            + " ORDER BY ordernum"
-                                            , yyyymm );
-
-                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    dt.Rows.Add(new object[] { reader["yyyymm"]
-                                            , reader["home"]
-                                            , reader["name"]
-                                            , reader["premonth"]
-                                            , reader["nowmonth"]
-                                            , reader["useamount"]
-                                            , reader["usecost"]
-                                            , reader["admexpcost"]
-                                            , reader["totalcost"]
-                                            , reader["remark"]
-                                            , reader["ordernum"] });
+                    addColumn = false;
                 }
 
                 reader.Close();
             }
-
-            Global.admExpDT = dt.Copy();
-            Global.admExpDT.AcceptChanges();
-
-            return Global.admExpDT;
-        }
-
-        /// <summary>
-        /// 관리비 양식 생성(신규)
-        /// </summary>
-        /// <param name="pDT"></param>
-        /// <param name="yyyymm"></param>
-        /// <returns></returns>
-        public static int CreateAdmExpInfo(string yyyymm)
-        {
-            string sql;
-            SQLiteCommand cmd;
-            int result = 0;
-
-            try
-            {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    // Convert Datetime Format for get -1 Month in SQLite
-                    // 2016-10-01 00:00:00
-                    string preDate = string.Format("{0}-{1}-01 {2}", yyyymm.Substring(0, 4), yyyymm.Substring(4, 2), "00:00:00");
-
-                    sql = string.Format("INSERT INTO admexp "
-                        + "SELECT '{0}'"
-                            + " , b.home"
-                            + " , b.name"
-                            + " , IFNULL((SELECT nowmonth from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{1}', '-1 month') AND c.home = b.home), 0)"
-                            + " , ''"
-                            + " , ''"
-                            + " , ''"
-                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1)"
-                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1)"
-                            + " , ''"
-                            + " , b.ordernum"
-                            + " from homeinfo b"
-                            + " LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '{2}'"
-                            , yyyymm
-                            , preDate
-                            , yyyymm );
-
-                    cmd = new SQLiteCommand(sql, conn);
-                    result += cmd.ExecuteNonQuery();
-                }
-            }
             catch (Exception ex)
             {
-                //MessageBox.Show("저장 실패");
-                return -1;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 관리비 양식 저장(업데이트)
-        /// </summary>
-        /// <param name="pDT"></param>
-        /// <returns></returns>
-        public static int SaveAdmExpInfo(DataTable pDT)
-        {
-            string sql;
-            SQLiteCommand cmd;
-            int result = 0;
-
-            try
-            {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    // 저장 대상만큼 반복 수행
-                    for (int i = 0; i < pDT.Rows.Count; i++)
-                    {
-                        // 합계는 제외한다.
-                        if (pDT.Rows[i][(int)Common.AdmExp.home].Equals("합계"))
-                            continue;
-
-                        sql = string.Format("UPDATE admexp SET"
-                                            + "  name       = '{0}'"
-                                            + ", premonth   = '{1}'"
-                                            + ", nowmonth   = '{2}'"
-                                            + ", useamount  = '{3}'"
-                                            + ", usecost    = '{4}'"
-                                            + ", admexpcost = '{5}'"
-                                            + ", totalcost  = '{6}'"
-                                            + ", remark     = '{7}'"
-                                            + ", ordernum   = '{8}'"
-                                            + " WHERE yyyymm = '{9}'"
-                                            + " AND home = '{10}'"
-                                            , pDT.Rows[i][(int)Common.AdmExp.name].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.premonth].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.nowmonth].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.useamount].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.usecost].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.admexpcost].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.totalcost].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.remark].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.ordernum].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.yyyymm].ToString()
-                                            , pDT.Rows[i][(int)Common.AdmExp.home].ToString() );
-
-                        cmd = new SQLiteCommand(sql, conn);
-                        result += cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("저장 실패");
-                return -1;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 현재 세대주 정보를 반영
-        /// </summary>
-        /// <returns></returns>
-        public static int UpdateAdmExpHomeInfo(string yyyymm)
-        {
-            string sql;
-            SQLiteCommand cmd;
-            int result = 0;
-
-            try
-            {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    sql = string.Format(" UPDATE admexp "
-                                        + " SET name = (SELECT homeinfo.name FROM homeinfo WHERE homeinfo.home = admexp.home) "
-                                        + " WHERE yyyymm = '{0}' "
-                                        , yyyymm);
-                    cmd = new SQLiteCommand(sql, conn);
-                    result = cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                // 저장 실패
-                return -1;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 현재 관리비 정보를 반영
-        /// </summary>
-        /// <returns></returns>
-        public static int UpdateAdmExpCost(string yyyymm)
-        {
-            string sql;
-            SQLiteCommand cmd;
-            int result = 0;
-
-            try
-            {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    sql = string.Format(" UPDATE admexp "
-                                        + " SET admexpcost = (SELECT comcode.comvalue FROM comcode WHERE comcode.comgroup = 1 AND comcode.comcode = 1) "
-                                        + "    , totalcost = usecost + (SELECT comcode.comvalue FROM comcode WHERE comcode.comgroup = 1 AND comcode.comcode = 1)"
-                                        + " WHERE yyyymm = '{0}' "
-                                        , yyyymm);
-                    cmd = new SQLiteCommand(sql, conn);
-                    result = cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                // 저장 실패
-                return -1;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 전월 사용량 정보를 반영
-        /// </summary>
-        /// <returns></returns>
-        public static int UpdateAdmExpPreMonth(string yyyymm)
-        {
-            string sql;
-            SQLiteCommand cmd;
-            int result = 0;
-
-            // Convert Datetime Format for get -1 Month in SQLite
-            // 2016-10-01 00:00:00
-            string preDate = string.Format("{0}-{1}-01 {2}", yyyymm.Substring(0, 4), yyyymm.Substring(4, 2), "00:00:00");
-
-            try
-            {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    sql = string.Format(" UPDATE admexp "
-                                        + " SET premonth = IFNULL((SELECT nowmonth from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{0}', '-1 month') AND c.home = admexp.home), 0) "
-                                        + " WHERE yyyymm = '{2}' "
-                                        , preDate
-                                        , preDate
-                                        , yyyymm);
-                    cmd = new SQLiteCommand(sql, conn);
-                    result = cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                // 저장 실패
-                return -1;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 공통코드 정보 조회
-        /// </summary>
-        /// <returns>세대주 목록</returns>
-        public static DataTable GetComCode()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("comgroup");
-            dt.Columns.Add("comcode");
-            dt.Columns.Add("comname");
-            dt.Columns.Add("comvalue");
-            dt.Columns.Add("comremark");
-
-            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-            {
-                conn.Open();
-                string sql = "SELECT comgroup"
-                                + ", comcode"
-                                + ", comname"
-                                + ", comvalue"
-                                + ", comremark"
-                                + " FROM comcode ORDER BY comgroup, comcode";
-
-                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    dt.Rows.Add(new object[] { reader["comgroup"], reader["comcode"], reader["comname"], reader["comvalue"], reader["comremark"] });
-                }
-
-                reader.Close();
-            }
-
-            Global.comcodeDT = dt.Copy();
-            Global.comcodeDT.AcceptChanges();
-
-            return Global.comcodeDT;
-        }
-
-        /// <summary>
-        /// 공통코드 저장
-        /// </summary>
-        /// <param name="pDT"></param>
-        /// <returns></returns>
-        public static int SaveComCode(DataTable pDT)
-        {
-            string sql;
-            SQLiteCommand cmd;
-            int result = 0;
-
-            try
-            {
-                using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-                {
-                    conn.Open();
-
-                    // 저장 대상만큼 반복 수행
-                    for (int i = 0; i < pDT.Rows.Count; i++)
-                    {
-                        sql = string.Format("UPDATE comcode "
-                                            + "  SET comvalue  = '{0}' "
-                                            + "    , comremark = '{1}' "
-                                            + " WHERE comgroup = '{2}' "
-                                            + "   AND comcode  = '{3}' "
-                                            , pDT.Rows[i][(int)Common.ComCode.comvalue].ToString()
-                                            , pDT.Rows[i][(int)Common.ComCode.comremark].ToString()
-                                            , pDT.Rows[i][(int)Common.ComCode.comgroup].ToString()
-                                            , pDT.Rows[i][(int)Common.ComCode.comcode].ToString());
-                        cmd = new SQLiteCommand(sql, conn);
-                        result = cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // 저장 실패
-                return -1;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 공통코드 그룹 조회
-        /// </summary>
-        /// <returns>세대주 목록</returns>
-        public static DataTable GetComCodeGroup()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("comname");
-            dt.Columns.Add("comcount");
-
-            using (SQLiteConnection conn = new SQLiteConnection(dbConn))
-            {
-                conn.Open();
-                string sql = "SELECT comname"
-                                + ", count(*) as comcount"
-                                + " FROM comcode GROUP BY comname";
-
-                SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    dt.Rows.Add(new object[] { reader["comname"], reader["comcount"] });
-                }
-
-                reader.Close();
+                throw new Exception(ex.ToString());
             }
 
             return dt;

@@ -8,6 +8,7 @@ namespace APTManager
         public static DataTable     homeInfoDT  = null;     // 세대 기본정보 데이터
         public static DataTable     admExpDT    = null;     // 관리비(Administration Expenses) 데이터
         public static DataTable     comcodeDT   = null;     // 공통코드 데이터
+        public static DataTable     PaymentDT   = null;     // 납입금 데이터
 
         public static string        YYYYMM      = null;     //  년월 데이터
 
