@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APTManager", "APTManager\AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBMessageBox", "HBMessageBox\HBMessageBox.csproj", "{A84410F9-A7DF-47FE-B530-CCFD5B07DCB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBDataGridView", "HBDataGridView\HBDataGridView.csproj", "{8A209F46-69CD-42A7-817E-4D21F77E83D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A84410F9-A7DF-47FE-B530-CCFD5B07DCB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A84410F9-A7DF-47FE-B530-CCFD5B07DCB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A84410F9-A7DF-47FE-B530-CCFD5B07DCB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A209F46-69CD-42A7-817E-4D21F77E83D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A209F46-69CD-42A7-817E-4D21F77E83D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A209F46-69CD-42A7-817E-4D21F77E83D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A209F46-69CD-42A7-817E-4D21F77E83D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

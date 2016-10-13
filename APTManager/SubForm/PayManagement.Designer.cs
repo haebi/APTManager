@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnApplyPreMonth = new System.Windows.Forms.Button();
             this.btnReApply = new System.Windows.Forms.Button();
             this.chkRowHighlight = new System.Windows.Forms.CheckBox();
-            this.gridPayment = new System.Windows.Forms.DataGridView();
+            this.gridPayment = new Haebi.Util.HBDataGridView(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -92,12 +93,13 @@
             // gridPayment
             // 
             this.gridPayment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPayment.DataSource = null;
             this.gridPayment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridPayment.Location = new System.Drawing.Point(0, 0);
             this.gridPayment.Name = "gridPayment";
             this.gridPayment.RowTemplate.Height = 23;
             this.gridPayment.Size = new System.Drawing.Size(1150, 695);
-            this.gridPayment.TabIndex = 7;
+            this.gridPayment.TabIndex = 0;
             // 
             // PayManagement
             // 
@@ -123,6 +125,6 @@
         private System.Windows.Forms.Button btnApplyPreMonth;
         private System.Windows.Forms.Button btnReApply;
         private System.Windows.Forms.CheckBox chkRowHighlight;
-        private System.Windows.Forms.DataGridView gridPayment;
+        private Haebi.Util.HBDataGridView gridPayment;
     }
 }

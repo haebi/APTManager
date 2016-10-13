@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
+
 using Haebi.Util;
+
 using APTManager.Query;
 
 namespace APTManager.SubForm
 {
     public partial class AdmExpManagement : UserControl
     {
-        private int gridPreviousRowIndex = 0;
 
         public AdmExpManagement()
         {
@@ -43,68 +37,50 @@ namespace APTManager.SubForm
         private void Init_GridAdmExp()
         {
             // 그리드 헤더, 컬럼 설정
-            gridAdmExp.AllowUserToAddRows = false;    // Row 자동생성 금지
-            gridAdmExp.RowHeadersVisible = false;    // 로우 헤더 숨김
-            gridAdmExp.Columns.Clear();
+            gridAdmExp.AllowUserToAddRows   = false;    // Row 자동생성 금지
+            gridAdmExp.RowHeadersVisible    = false;    // 로우 헤더 숨김
 
-            // 컬럼 설정 시 코드 길이 줄이기 위해 설정함.
-            Common.AdmExp yyyymm	 = Common.AdmExp.yyyymm;
-            Common.AdmExp home		 = Common.AdmExp.home;
-            Common.AdmExp name		 = Common.AdmExp.name;
-            Common.AdmExp premonth	 = Common.AdmExp.premonth;
-            Common.AdmExp nowmonth	 = Common.AdmExp.nowmonth;
-            Common.AdmExp useamount	 = Common.AdmExp.useamount;
-            Common.AdmExp usecost	 = Common.AdmExp.usecost;
-            Common.AdmExp admexpcost = Common.AdmExp.admexpcost;
-            Common.AdmExp totalcost	 = Common.AdmExp.totalcost;
-            Common.AdmExp remark	 = Common.AdmExp.remark;
-            Common.AdmExp ordernum	 = Common.AdmExp.ordernum;
-
-            Common.GridAlign Align_Center   = Common.GridAlign.Center;
-            Common.GridAlign Align_Right    = Common.GridAlign.Right;
+            gridAdmExp.Columns.Clear();     // 그리드 클리어
 
             // 그리드 컬럼 설정
-            // grid / index / colname / colheadertext / alignheader / aligncell / lock / hide
-            Util.SetGridColumn(gridAdmExp, (int)yyyymm	    , Common.GetName(yyyymm	   ), "년월"    , Align_Center, Align_Center, true , false);
-            Util.SetGridColumn(gridAdmExp, (int)home        , Common.GetName(home      ), "세대"    , Align_Center, Align_Center, true , false);
-            Util.SetGridColumn(gridAdmExp, (int)name        , Common.GetName(name      ), "세대주"  , Align_Center, Align_Center, true , false);
-            Util.SetGridColumn(gridAdmExp, (int)premonth    , Common.GetName(premonth  ), "전월지침", Align_Center, Align_Right , false, false);
-            Util.SetGridColumn(gridAdmExp, (int)nowmonth    , Common.GetName(nowmonth  ), "당월지침", Align_Center, Align_Right , false, false);
-            Util.SetGridColumn(gridAdmExp, (int)useamount   , Common.GetName(useamount ), "사용량"  , Align_Center, Align_Right , true , false);
-            Util.SetGridColumn(gridAdmExp, (int)usecost	    , Common.GetName(usecost   ), "사용금액", Align_Center, Align_Right , false, false);
-            Util.SetGridColumn(gridAdmExp, (int)admexpcost  , Common.GetName(admexpcost), "관리비"  , Align_Center, Align_Right , false, false);
-            Util.SetGridColumn(gridAdmExp, (int)totalcost   , Common.GetName(totalcost ), "합계"    , Align_Center, Align_Right , true , false);
-            Util.SetGridColumn(gridAdmExp, (int)remark	    , Common.GetName(remark    ), "비고"    , Align_Center, Align_Center, false, false);
-            Util.SetGridColumn(gridAdmExp, (int)ordernum    , Common.GetName(ordernum  ), "정렬순서", Align_Center, Align_Center, true , true );
-                       
+            // colname / colheadertext / alignheader / aligncell / lock / hide
+            gridAdmExp.SetColumn("yyyymm"    , "년월"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridAdmExp.SetColumn("home"      , "세대"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridAdmExp.SetColumn("name"      , "세대주"  , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridAdmExp.SetColumn("premonth"  , "전월지침", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridAdmExp.SetColumn("nowmonth"  , "당월지침", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridAdmExp.SetColumn("useamount" , "사용량"  , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridAdmExp.SetColumn("usecost"   , "사용금액", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridAdmExp.SetColumn("admexpcost", "관리비"  , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridAdmExp.SetColumn("totalcost" , "합계"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridAdmExp.SetColumn("remark"    , "비고"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridAdmExp.SetColumn("ordernum"  , "정렬순서", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , true );
+
             // 컬럼 정렬기능 비활성화
-            for (int i = 0; i < gridAdmExp.Columns.Count; i++)
-            {
-                Util.SortColumn(gridAdmExp, i, false);
-            }
+            gridAdmExp.SortColumn(false);
 
             // 그리드 선택 줄 표시강조 기능 ON/OFF
             // 이 기능 사용시 Enter 로 다음 줄 넘어가는데 시간이 조금 더 걸린다. (미 사용과 비교시)
+            gridAdmExp.RowHighlight = true;
             chkRowHighlight.Checked = true;
 
             // 더블 버퍼링 설정 (로우 하이라이트 표시하는데 너무 오래 걸리는 관계로 설정)
-            //DoubleBuffered = true; // 현재 폼 더블버퍼링 유뮤 설정인데... 폼 자체가 갱신되는게 아니기에 별 의미 없다.
-            Util.SetDoubleBuffer(gridAdmExp);
+            gridAdmExp.SetDoubleBuffer = true;
         }
 
         /// <summary>
         /// 콤마 추가
         /// </summary>
-        private void AddNumCommaAll()
+        private void NumCommaAll(bool flag)
         {
             for (int i = 0; i < Global.admExpDT.Rows.Count - 1; i++)
             {
-                Util.AddNumComma(Global.admExpDT, i, (int)Common.AdmExp.premonth  ); // 전월지침
-                Util.AddNumComma(Global.admExpDT, i, (int)Common.AdmExp.nowmonth  ); // 당월지침
-                Util.AddNumComma(Global.admExpDT, i, (int)Common.AdmExp.useamount ); // 사용량
-                Util.AddNumComma(Global.admExpDT, i, (int)Common.AdmExp.usecost   ); // 사용금액
-                Util.AddNumComma(Global.admExpDT, i, (int)Common.AdmExp.admexpcost); // 관리비
-                Util.AddNumComma(Global.admExpDT, i, (int)Common.AdmExp.totalcost ); // 합계
+                Util.NumComma(Global.admExpDT, i, (int)Common.AdmExp.premonth  , flag); // 전월지침
+                Util.NumComma(Global.admExpDT, i, (int)Common.AdmExp.nowmonth  , flag); // 당월지침
+                Util.NumComma(Global.admExpDT, i, (int)Common.AdmExp.useamount , flag); // 사용량
+                Util.NumComma(Global.admExpDT, i, (int)Common.AdmExp.usecost   , flag); // 사용금액
+                Util.NumComma(Global.admExpDT, i, (int)Common.AdmExp.admexpcost, flag); // 관리비
+                Util.NumComma(Global.admExpDT, i, (int)Common.AdmExp.totalcost , flag); // 합계
             }
 
             Global.admExpDT.AcceptChanges();
@@ -114,20 +90,20 @@ namespace APTManager.SubForm
         /// 콤마 추가 (싱글)
         /// </summary>
         /// <param name="iRow"></param>
-        private void AddNumComma(int iRow)
+        private void NumCommaRow(int iRow, bool flag)
         {
-            Util.AddNumComma(Global.admExpDT, iRow, (int)Common.AdmExp.premonth  ); // 전월지침
-            Util.AddNumComma(Global.admExpDT, iRow, (int)Common.AdmExp.nowmonth  ); // 당월지침
-            Util.AddNumComma(Global.admExpDT, iRow, (int)Common.AdmExp.useamount ); // 사용량
-            Util.AddNumComma(Global.admExpDT, iRow, (int)Common.AdmExp.usecost   ); // 사용금액
-            Util.AddNumComma(Global.admExpDT, iRow, (int)Common.AdmExp.admexpcost); // 관리비
-            Util.AddNumComma(Global.admExpDT, iRow, (int)Common.AdmExp.totalcost ); // 합계
+            Util.NumComma(Global.admExpDT, iRow, (int)Common.AdmExp.premonth  , flag); // 전월지침
+            Util.NumComma(Global.admExpDT, iRow, (int)Common.AdmExp.nowmonth  , flag); // 당월지침
+            Util.NumComma(Global.admExpDT, iRow, (int)Common.AdmExp.useamount , flag); // 사용량
+            Util.NumComma(Global.admExpDT, iRow, (int)Common.AdmExp.usecost   , flag); // 사용금액
+            Util.NumComma(Global.admExpDT, iRow, (int)Common.AdmExp.admexpcost, flag); // 관리비
+            Util.NumComma(Global.admExpDT, iRow, (int)Common.AdmExp.totalcost , flag); // 합계
         }
 
         /// <summary>
         /// 합계를 계산
         /// </summary>
-        private void CalcAdmExpSum()
+        private void _CalcAdmExpSum()
         {
             ulong[] sum = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -155,10 +131,10 @@ namespace APTManager.SubForm
             Global.admExpDT.Rows[Global.admExpDT.Rows.Count - 1][(int)Common.AdmExp.totalcost]  = sum[(int)Common.AdmExp.totalcost ];
 
             // 콤마 설정
-            AddNumComma(Global.admExpDT.Rows.Count - 1);
+            //NumCommaRow(Global.admExpDT.Rows.Count - 1, true);
 
             // 합계 셀 잠금 (조회 전 RowCount 를 확보 할 수 없어 여기에 둔다)
-            Util.LockRow(gridAdmExp, Global.admExpDT.Rows.Count - 1);
+            gridAdmExp.LockRow(Global.admExpDT.Rows.Count - 1, true);
         }
 
         /// <summary>
@@ -208,12 +184,12 @@ namespace APTManager.SubForm
             // 콤마 제거
             for (int i = 0; i < saveDT.Rows.Count; i++)
             {
-                Util.DelNumComma(saveDT, i, (int)Common.AdmExp.premonth  ); // 전월지침
-                Util.DelNumComma(saveDT, i, (int)Common.AdmExp.nowmonth  ); // 당월지침
-                Util.DelNumComma(saveDT, i, (int)Common.AdmExp.useamount ); // 사용량
-                Util.DelNumComma(saveDT, i, (int)Common.AdmExp.usecost   ); // 사용금액
-                Util.DelNumComma(saveDT, i, (int)Common.AdmExp.admexpcost); // 관리비
-                Util.DelNumComma(saveDT, i, (int)Common.AdmExp.totalcost ); // 합계
+                Util.NumComma(saveDT, i, (int)Common.AdmExp.premonth  , false); // 전월지침
+                Util.NumComma(saveDT, i, (int)Common.AdmExp.nowmonth  , false); // 당월지침
+                Util.NumComma(saveDT, i, (int)Common.AdmExp.useamount , false); // 사용량
+                Util.NumComma(saveDT, i, (int)Common.AdmExp.usecost   , false); // 사용금액
+                Util.NumComma(saveDT, i, (int)Common.AdmExp.admexpcost, false); // 관리비
+                Util.NumComma(saveDT, i, (int)Common.AdmExp.totalcost , false); // 합계
             }
 
             // 결과 메시지
@@ -247,7 +223,7 @@ namespace APTManager.SubForm
 
             // 현재년월 데이터 조회
             gridAdmExp.DataSource = AdmExpQuery.GetAdmExpInfo(Global.YYYYMM);
-
+            
             // 저장된 내용이 없으면 빈 셀 출력
             if (Global.admExpDT.Rows.Count == 0)
             {
@@ -270,61 +246,23 @@ namespace APTManager.SubForm
             Global.admExpDT.Rows.Add(new object[] { "", "합계", "", "", "", "", "", "", "", "", "9999" });
 
             // 합계 계산
-            CalcAdmExpSum();
+            _CalcAdmExpSum();
 
             // 콤마 추가
-            AddNumCommaAll();
+            NumCommaAll(true);
 
             // 당월 사용량 입력 가능하도록 준비
             gridAdmExp.Focus();
             gridAdmExp.CurrentCell = gridAdmExp.Rows[0].Cells[(int)Common.AdmExp.nowmonth];
 
-            // 조회 된 직후 이므로, 아직 이전 Row 값은 없음
-            gridPreviousRowIndex = -1;
+            // 색상 적용 리프레쉬
+            gridAdmExp.SetRefreshStyle();
 
-            // 첫 번째 데이터가 자동 선택 되도록 강제 이벤트 실행
-            gridAdmExp_SelectionChanged(null, null);
         }
 
         // ==================================================
         //  Events
         // ==================================================
-
-        /// <summary>
-        /// 그리드 로우 체인지 이벤트
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void gridAdmExp_SelectionChanged(object sender, EventArgs e)
-        {
-            int curRow = gridAdmExp.CurrentCell.RowIndex;
-
-            if (chkRowHighlight.Checked)
-            {
-                // 현재로우 = 이전로우 인 경우, 아무 작업도 하지 않는다. (옆 셀로 이동 한 경우 ?)
-                // 합계로우는 건들지 않는다.
-                if (curRow == gridPreviousRowIndex
-                    || curRow == gridAdmExp.Rows.Count - 1)
-                    return;
-
-                // 선택 라인 색상 표시
-                Util.SetHighlightStyle(this.gridAdmExp, curRow);
-
-                // 이전로우가 0 보다 작으면 조회된 직후 이므로 아직 이전 로우가 없다. 따라서 이전 로우를 현재로우로 설정하고, 이전 로우 처리는 하지 않는다.
-                // 처음 부터 0을 세팅 하면, 0번 로우의 색상 처리에 문제가 생긴다.
-                if (gridPreviousRowIndex < 0)
-                {
-                    gridPreviousRowIndex = curRow;
-                    return;
-                }
-
-                // 이전 라인 기본색상 표시
-                Util.SetDefaultStyle(this.gridAdmExp, gridPreviousRowIndex);
-            }
-
-            // 현재 줄 번호 기억
-            gridPreviousRowIndex = curRow;
-        }
 
         /// <summary>
         /// 자동계산 처리
@@ -333,43 +271,47 @@ namespace APTManager.SubForm
         /// <param name="e"></param>
         private void gridAdmExp_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+
             try
             {
                 // 현재 컬럼 인덱스
                 int curCol = gridAdmExp.CurrentCell.ColumnIndex;
                 int curRow = gridAdmExp.CurrentCell.RowIndex;
 
+                // 현재 행 콤마 제거
+                NumCommaRow(curRow, false);
+
                 switch ((Common.AdmExp)curCol)
                 {
                     case Common.AdmExp.premonth:
                     case Common.AdmExp.nowmonth:
                         // 현재지침 - 전월지침 = 사용량
-                        Util.CalcCell(gridAdmExp,
-                            (int)Common.AdmExp.nowmonth,
-                            (int)Common.AdmExp.premonth,
+                        gridAdmExp.CalcCell(
+                            HBDataGridView.CalcType.Sub,
                             (int)Common.AdmExp.useamount,
-                            Common.Calc.Sub);
+                            (int)Common.AdmExp.nowmonth,
+                            (int)Common.AdmExp.premonth);
 
                         // 사용량 자동반영
                         gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.usecost].Value
                             = Util.GetUseCost(Convert.ToInt32(gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.useamount].Value));
 
                         // 사용금액 + 관리비 = 합계
-                        Util.CalcCell(gridAdmExp,
+                        gridAdmExp.CalcCell(
+                            HBDataGridView.CalcType.Add, 
+                            (int)Common.AdmExp.totalcost, 
                             (int)Common.AdmExp.usecost,
-                            (int)Common.AdmExp.admexpcost,
-                            (int)Common.AdmExp.totalcost,
-                            Common.Calc.Add);
+                            (int)Common.AdmExp.admexpcost);
                         break;
 
                     case Common.AdmExp.usecost:
                     case Common.AdmExp.admexpcost:
                         // 사용금액 + 관리비 = 합계
-                        Util.CalcCell(gridAdmExp,
+                        gridAdmExp.CalcCell(
+                            HBDataGridView.CalcType.Add, 
+                            (int)Common.AdmExp.totalcost, 
                             (int)Common.AdmExp.usecost,
-                            (int)Common.AdmExp.admexpcost,
-                            (int)Common.AdmExp.totalcost,
-                            Common.Calc.Add);
+                            (int)Common.AdmExp.admexpcost);
                         break;
 
                     default:
@@ -377,16 +319,17 @@ namespace APTManager.SubForm
                 }
 
                 // 합계 계산
-                CalcAdmExpSum();
+                _CalcAdmExpSum();
 
                 // 콤마 설정
-                AddNumComma(curRow);
+                NumCommaRow(curRow, true);
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+
         }
 
         /// <summary>
@@ -440,21 +383,19 @@ namespace APTManager.SubForm
         /// <param name="e"></param>
         private void chkRowHighlight_CheckedChanged(object sender, EventArgs e)
         {
+            // 그리드 행 표시 설정
+            gridAdmExp.RowHighlight = chkRowHighlight.Checked;
+                            
             // 조회 전 이면 실행하지 않는다.
             if (gridAdmExp.Rows.Count == 0) return;
 
-            int curRow = gridAdmExp.CurrentCell.RowIndex;
-
-            if (!chkRowHighlight.Checked)
-            {
-                Util.SetDefaultStyle(this.gridAdmExp, curRow);
-            }
-            else
-            {
-                Util.SetHighlightStyle(this.gridAdmExp, gridPreviousRowIndex);
-            }
+            // 그리드 색상 설정 재적용
+            gridAdmExp.SetRefreshStyle();
 
             // 당월 사용량 입력 가능하도록 준비
+            int curRow = gridAdmExp.CurrentCell.RowIndex;
+            
+            // 그리드 포커스 설정
             gridAdmExp.Focus();
             gridAdmExp.CurrentCell = gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.nowmonth];
         }

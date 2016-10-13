@@ -28,20 +28,18 @@ namespace APTManager
 
             // 그리드 헤더, 컬럼 설정
             gridHomeInfo.AllowUserToAddRows = false;    // Row 자동생성 금지
-            gridHomeInfo.RowHeadersVisible = false;     // 로우 헤더 숨김
+            gridHomeInfo.RowHeadersVisible  = false;    // 로우 헤더 숨김
 
-            gridHomeInfo.Columns.Clear();
+            gridHomeInfo.Columns.Clear();   // 그리드 클리어
 
-            Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.home    ), "세대"    );
-            Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.name    ), "세대주"  );
-            Util.SetColumnHeader(gridHomeInfo, Common.GetName(Common.HomeInfo.ordernum), "정렬순서");
+            // 그리드 컬럼 설정
+            // colname / colheadertext / alignheader / aligncell / lock / hide
+            gridHomeInfo.SetColumn("home"    , "세대"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridHomeInfo.SetColumn("name"    , "세대주"  , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridHomeInfo.SetColumn("ordernum", "정렬순서", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , true );
 
             // 세대정보 조회
             gridHomeInfo.DataSource = HomeInfoQuery.GetHomeInfo();
-            
-            Util.LockColumn(gridHomeInfo, 0);           // 컬럼 잠금 설정
-
-            Util.HideColumn(gridHomeInfo, 2);           // 컬럼 숨김
         }
 
         /// <summary>

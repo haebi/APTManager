@@ -217,6 +217,10 @@
     <Content Include="sample_db.sql" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HBDataGridView\HBDataGridView.csproj">
+      <Project>{8a209f46-69cd-42a7-817e-4d21f77e83d1}</Project>
+      <Name>HBDataGridView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HBMessageBox\HBMessageBox.csproj">
       <Project>{a84410f9-a7df-47fe-b530-ccfd5b07dcb1}</Project>
       <Name>HBMessageBox</Name>

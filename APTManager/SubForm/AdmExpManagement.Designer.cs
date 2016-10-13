@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnApplyPreMonth = new System.Windows.Forms.Button();
             this.btnApplyAdmExp = new System.Windows.Forms.Button();
             this.chkRowHighlight = new System.Windows.Forms.CheckBox();
-            this.gridAdmExp = new System.Windows.Forms.DataGridView();
+            this.gridAdmExp = new Haebi.Util.HBDataGridView(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -100,16 +101,15 @@
             this.gridAdmExp.Name = "gridAdmExp";
             this.gridAdmExp.RowTemplate.Height = 23;
             this.gridAdmExp.Size = new System.Drawing.Size(1150, 695);
-            this.gridAdmExp.TabIndex = 7;
+            this.gridAdmExp.TabIndex = 0;
             this.gridAdmExp.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAdmExp_CellEndEdit);
-            this.gridAdmExp.SelectionChanged += new System.EventHandler(this.gridAdmExp_SelectionChanged);
             // 
-            // APTManager_AdmExp
+            // AdmExpManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
-            this.Name = "APTManager_AdmExp";
+            this.Name = "AdmExpManagement";
             this.Size = new System.Drawing.Size(1150, 744);
             this.Load += new System.EventHandler(this.APTManager_AdmExp_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -125,9 +125,9 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView gridAdmExp;
         private System.Windows.Forms.CheckBox chkRowHighlight;
         private System.Windows.Forms.Button btnApplyPreMonth;
         private System.Windows.Forms.Button btnApplyAdmExp;
+        private Haebi.Util.HBDataGridView gridAdmExp;
     }
 }

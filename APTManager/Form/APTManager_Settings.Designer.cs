@@ -28,27 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridCommonCode = new System.Windows.Forms.DataGridView();
+            this.components = new System.ComponentModel.Container();
             this.grpCommonCode = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.grpCommonCodeGroup = new System.Windows.Forms.GroupBox();
-            this.gridCommonCodeGroup = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).BeginInit();
+            this.gridCommonCodeGroup = new Haebi.Util.HBDataGridView(this.components);
+            this.gridCommonCode = new Haebi.Util.HBDataGridView(this.components);
             this.grpCommonCode.SuspendLayout();
             this.grpCommonCodeGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridCommonCodeGroup)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).BeginInit();
             this.SuspendLayout();
-            // 
-            // gridCommonCode
-            // 
-            this.gridCommonCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridCommonCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridCommonCode.Location = new System.Drawing.Point(3, 17);
-            this.gridCommonCode.Name = "gridCommonCode";
-            this.gridCommonCode.RowHeadersVisible = false;
-            this.gridCommonCode.RowTemplate.Height = 23;
-            this.gridCommonCode.Size = new System.Drawing.Size(562, 466);
-            this.gridCommonCode.TabIndex = 0;
             // 
             // grpCommonCode
             // 
@@ -83,13 +73,24 @@
             // gridCommonCodeGroup
             // 
             this.gridCommonCodeGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCommonCodeGroup.DataSource = null;
             this.gridCommonCodeGroup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridCommonCodeGroup.Location = new System.Drawing.Point(3, 17);
             this.gridCommonCodeGroup.Name = "gridCommonCodeGroup";
             this.gridCommonCodeGroup.RowTemplate.Height = 23;
             this.gridCommonCodeGroup.Size = new System.Drawing.Size(194, 463);
-            this.gridCommonCodeGroup.TabIndex = 4;
-            this.gridCommonCodeGroup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridCommonCodeGroup_MouseUp);
+            this.gridCommonCodeGroup.TabIndex = 0;
+            // 
+            // gridCommonCode
+            // 
+            this.gridCommonCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCommonCode.DataSource = null;
+            this.gridCommonCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridCommonCode.Location = new System.Drawing.Point(3, 17);
+            this.gridCommonCode.Name = "gridCommonCode";
+            this.gridCommonCode.RowTemplate.Height = 23;
+            this.gridCommonCode.Size = new System.Drawing.Size(562, 466);
+            this.gridCommonCode.TabIndex = 0;
             // 
             // APTManager_Settings
             // 
@@ -102,20 +103,19 @@
             this.Name = "APTManager_Settings";
             this.Text = "환경설정";
             this.Load += new System.EventHandler(this.APTManager_Settings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).EndInit();
             this.grpCommonCode.ResumeLayout(false);
             this.grpCommonCodeGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridCommonCodeGroup)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView gridCommonCode;
         private System.Windows.Forms.GroupBox grpCommonCode;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox grpCommonCodeGroup;
-        private System.Windows.Forms.DataGridView gridCommonCodeGroup;
+        private Haebi.Util.HBDataGridView gridCommonCodeGroup;
+        private Haebi.Util.HBDataGridView gridCommonCode;
     }
 }

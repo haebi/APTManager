@@ -19,18 +19,22 @@ namespace APTManager
             // 그리드 헤더, 컬럼 설정
             gridCommonCodeGroup.Columns.Clear();
             gridCommonCode.Columns.Clear();
-            
-            Util.SetColumnHeader(gridCommonCodeGroup, Common.GetName(Common.ComCode.comname), "코드명칭");
-            Util.SetColumnHeader(gridCommonCodeGroup, "comcount", "코드갯수");
+
+            // 그리드 컬럼 설정
+            // colname / colheadertext / alignheader / aligncell / lock / hide
+            gridCommonCodeGroup.SetColumn("comname" , "코드명칭", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true, false);
+            gridCommonCodeGroup.SetColumn("comcount", "코드갯수", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleRight , true, false);
+
             gridCommonCodeGroup.Columns[0].Width = 110;
             gridCommonCodeGroup.Columns[1].Width = 80;
 
-            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comgroup ), "코드그룹");
-            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comcode  ), "코드"    );
-            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comname  ), "코드명칭");
-            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comvalue ), "값"      );
-            Util.SetColumnHeader(gridCommonCode, Common.GetName(Common.ComCode.comremark), "비고"    );
-
+            // 그리드 컬럼 설정
+            // colname / colheadertext / alignheader / aligncell / lock / hide
+            gridCommonCode.SetColumn("comgroup ", "코드그룹", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridCommonCode.SetColumn("comcode  ", "코드"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridCommonCode.SetColumn("comname  ", "코드명칭", DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, true , false);
+            gridCommonCode.SetColumn("comvalue ", "값"      , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
+            gridCommonCode.SetColumn("comremark", "비고"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
             
             gridCommonCode.DataSource       = ComCodeQuery.GetComCode();      // 공통코드 조회
             gridCommonCodeGroup.DataSource  = ComCodeQuery.GetComCodeGroup(); // 코드 그룹 조회
@@ -38,14 +42,6 @@ namespace APTManager
             // Row 자동생성 금지
             gridCommonCodeGroup.AllowUserToAddRows  = false;
             gridCommonCode.AllowUserToAddRows       = false;
-
-            // 컬럼 잠금 설정
-            Util.LockColumn(gridCommonCodeGroup, 0);
-            Util.LockColumn(gridCommonCodeGroup, 1);
-
-            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comgroup);
-            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comcode );
-            Util.LockColumn(gridCommonCode, (int)Common.ComCode.comname );
 
             // 로우 헤더 숨김 설정
             gridCommonCode.RowHeadersVisible        = false;
