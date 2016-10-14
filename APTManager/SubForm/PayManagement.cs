@@ -53,11 +53,11 @@ namespace APTManager.SubForm
             gridPayment.SetColumn("remark"      , "비고"    , DataGridViewContentAlignment.MiddleCenter, DataGridViewContentAlignment.MiddleCenter, false, false);
 
             // 컬럼 정렬기능 비활성화
-            gridPayment.SortColumn(false);
+            gridPayment.AllowColumnSort(false);
 
             // 그리드 선택 줄 표시강조 기능 ON/OFF
             // 이 기능 사용시 Enter 로 다음 줄 넘어가는데 시간이 조금 더 걸린다. (미 사용과 비교시)
-            gridPayment.RowHighlight = true;
+            gridPayment.AllowRowHighlight = true;
             chkRowHighlight.Checked = true;
 
             // 더블 버퍼링 설정 (로우 하이라이트 표시하는데 너무 오래 걸리는 관계로 설정)
