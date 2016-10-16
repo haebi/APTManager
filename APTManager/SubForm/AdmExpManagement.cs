@@ -11,19 +11,36 @@ namespace APTManager.SubForm
     public partial class AdmExpManagement : UserControl
     {
 
+        #region Constructor
+
         public AdmExpManagement()
         {
             InitializeComponent();
+        }
+
+        #endregion
+                
+        #region Private
+
+        private enum AdmExp
+        {
+            yyyymm     =  0,   // "년월"
+            home       =  1,   // "세대"
+            name       =  2,   // "세대주"
+            premonth   =  3,   // "전월지침"
+            nowmonth   =  4,   // "당월지침"
+            useamount  =  5,   // "사용량"
+            usecost    =  6,   // "사용금액"
+            admexpcost =  7,   // "관리비"
+            totalcost  =  8,   // "합계"
+            remark     =  9,   // "비고"
+            ordernum   = 10,   // "정렬순서"
         }
 
         private void APTManager_AdmExp_Load(object sender, EventArgs e)
         {
             Init();
         }
-
-        // ==================================================
-        //  Methods
-        // ==================================================
 
         private void Init()
         {
@@ -68,11 +85,10 @@ namespace APTManager.SubForm
             gridAdmExp.SetDoubleBuffer = true;
 
             // 자동계산 규칙 등록
-            gridAdmExp.AddAutoCalcRules(HBDataGridView.CalcType.Sub, 5, 4, 3);
-
-            // 2nd 계산적용이 안된다 - 컨트롤에서 사용량 계산 -> 여기에서 공통찾아서 값 입력 -> 다시 컨트롤로...? (쓰레드 써서 백그라운드 처리를 고려 중 ...)
-            // 작업 큐, 작업 처리할 워커스레드 필요 할 것 같다. [고려중...]
-            gridAdmExp.AddAutoCalcRules(HBDataGridView.CalcType.Add, 8, 6, 7);
+            gridAdmExp.AddAutoProcRule(HBDataGridView.ProcType.Sub, (int)AdmExp.useamount, (int)AdmExp.nowmonth, (int)AdmExp.premonth);
+            gridAdmExp.AddAutoProcRule(HBDataGridView.ProcType.Func, CalcTotalCost, (int)AdmExp.premonth);
+            gridAdmExp.AddAutoProcRule(HBDataGridView.ProcType.Func, CalcTotalCost, (int)AdmExp.nowmonth);
+            gridAdmExp.AddAutoProcRule(HBDataGridView.ProcType.Add, (int)AdmExp.totalcost, (int)AdmExp.usecost, (int)AdmExp.admexpcost);
         }
 
         /// <summary>
@@ -120,7 +136,7 @@ namespace APTManager.SubForm
         /// </summary>
         private void _CalcAdmExpSum()
         {
-            ulong[] sum = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            long[] sum = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             for (int i = 0; i < Global.admExpDT.Rows.Count; i++)
             {
@@ -129,12 +145,12 @@ namespace APTManager.SubForm
                     continue;
 
                 // 각 항목별로 합계를 구한다
-                sum[(int)Common.AdmExp.premonth  ]  += Convert.ToUInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.premonth  ].ToString().Replace(",", "")); // 전월지침
-                sum[(int)Common.AdmExp.nowmonth  ]  += Convert.ToUInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.nowmonth  ].ToString().Replace(",", "")); // 당월지침
-                sum[(int)Common.AdmExp.useamount ]  += Convert.ToUInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.useamount ].ToString().Replace(",", "")); // 사용량
-                sum[(int)Common.AdmExp.usecost   ]  += Convert.ToUInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.usecost   ].ToString().Replace(",", "")); // 사용금액
-                sum[(int)Common.AdmExp.admexpcost]  += Convert.ToUInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.admexpcost].ToString().Replace(",", "")); // 관리비
-                sum[(int)Common.AdmExp.totalcost ]  += Convert.ToUInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.totalcost ].ToString().Replace(",", "")); // 합계
+                sum[(int)Common.AdmExp.premonth  ]  += Convert.ToInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.premonth  ].ToString().Replace(",", "")); // 전월지침
+                sum[(int)Common.AdmExp.nowmonth  ]  += Convert.ToInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.nowmonth  ].ToString().Replace(",", "")); // 당월지침
+                sum[(int)Common.AdmExp.useamount ]  += Convert.ToInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.useamount ].ToString().Replace(",", "")); // 사용량
+                sum[(int)Common.AdmExp.usecost   ]  += Convert.ToInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.usecost   ].ToString().Replace(",", "")); // 사용금액
+                sum[(int)Common.AdmExp.admexpcost]  += Convert.ToInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.admexpcost].ToString().Replace(",", "")); // 관리비
+                sum[(int)Common.AdmExp.totalcost ]  += Convert.ToInt64(Global.admExpDT.Rows[i][(int)Common.AdmExp.totalcost ].ToString().Replace(",", "")); // 합계
             }
 
             // 구한 합계를 테이블에 반영
@@ -177,9 +193,38 @@ namespace APTManager.SubForm
             }
         }
 
-        // ==================================================
-        //  Public
-        // ==================================================
+        /// <summary>
+        /// 합계 금액을 계산합니다. 각 행별 합계와 열 전체 합계를 계산합니다.
+        /// </summary>
+        /// <returns></returns>
+        private bool CalcTotalCost()
+        {
+            /* HBGridView 내부에서 자체적으로 수행 할 수 없는 내용을 여기에 정의 합니다.
+             * OnCellEndEdit 메서드에서 수행하기 위해 AddProcRule() 을 통해 본 메서드를 등록 합니다.
+             */
+
+            // 현재 컬럼 인덱스
+            int curCol = gridAdmExp.CurrentCell.ColumnIndex;
+            int curRow = gridAdmExp.CurrentCell.RowIndex;
+
+            // 현재 행 콤마 제거
+            NumCommaRow(curRow, false);
+
+            gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.usecost].Value
+                = Util.GetUseCost(Convert.ToInt32(gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.useamount].Value));
+
+            gridAdmExp.Rows[curRow].Cells[8].Value
+                = Convert.ToInt32(gridAdmExp.Rows[curRow].Cells[6].Value) + Convert.ToInt32(gridAdmExp.Rows[curRow].Cells[7].Value);
+
+            _CalcAdmExpSum();
+
+            // 함수 포인터 형식으로 넘기려면 리턴타입 void 가 안되므로 설정된 값이다. 리턴 값에 특별한 의미는 없다.
+            return true;
+        }
+
+        #endregion
+
+        #region Public
 
         /// <summary>
         /// 관리비 저장
@@ -272,77 +317,9 @@ namespace APTManager.SubForm
 
         }
 
-        // ==================================================
-        //  Events
-        // ==================================================
+        #endregion
 
-        /// <summary>
-        /// 자동계산 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void gridAdmExp_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-
-            try
-            {
-                // 현재 컬럼 인덱스
-                int curCol = gridAdmExp.CurrentCell.ColumnIndex;
-                int curRow = gridAdmExp.CurrentCell.RowIndex;
-
-                // 현재 행 콤마 제거
-                NumCommaRow(curRow, false);
-
-                switch ((Common.AdmExp)curCol)
-                {
-                    case Common.AdmExp.premonth:
-                    case Common.AdmExp.nowmonth:
-                        // 현재지침 - 전월지침 = 사용량
-                        //gridAdmExp.CalcCell(
-                        //    HBDataGridView.CalcType.Sub,
-                        //    (int)Common.AdmExp.useamount,
-                        //    (int)Common.AdmExp.nowmonth,
-                        //    (int)Common.AdmExp.premonth);
-
-                        // 사용량 자동반영
-                        gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.usecost].Value
-                            = Util.GetUseCost(Convert.ToInt32(gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.useamount].Value));
-
-                        // 사용금액 + 관리비 = 합계
-                        //gridAdmExp.CalcCell(
-                        //    HBDataGridView.CalcType.Add, 
-                        //    (int)Common.AdmExp.totalcost, 
-                        //    (int)Common.AdmExp.usecost,
-                        //    (int)Common.AdmExp.admexpcost);
-                        break;
-
-                    case Common.AdmExp.usecost:
-                    case Common.AdmExp.admexpcost:
-                        // 사용금액 + 관리비 = 합계
-                        //gridAdmExp.CalcCell(
-                        //    HBDataGridView.CalcType.Add, 
-                        //    (int)Common.AdmExp.totalcost, 
-                        //    (int)Common.AdmExp.usecost,
-                        //    (int)Common.AdmExp.admexpcost);
-                        break;
-
-                    default:
-                        break;
-                }
-
-                // 합계 계산
-                _CalcAdmExpSum();
-
-                // 콤마 설정
-                //NumCommaRow(curRow, true);
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-        }
+        #region EVENTS
 
         /// <summary>
         /// 현재 조회된 항목의 관리비 갱신
@@ -411,6 +388,8 @@ namespace APTManager.SubForm
             gridAdmExp.Focus();
             gridAdmExp.CurrentCell = gridAdmExp.Rows[curRow].Cells[(int)Common.AdmExp.nowmonth];
         }
+
+        #endregion
 
     }
 }

@@ -32,7 +32,7 @@ namespace Haebi.Util
 
             PrevRowIndex = 0;
 
-            CalcRules = new List<CalcRule>();
+            ProcRules = new List<ProcRule>();
         }
 
         #endregion
@@ -42,19 +42,20 @@ namespace Haebi.Util
         /// <summary>
         /// 셀 자동계산 모델
         /// </summary>
-        public class CalcRule
+        public class ProcRule
         {
-            private int _Type;
-            private int _Dest;
-            private int _Col1;
-            private int _Col2;
+            private ProcType   _Type;
+            private Func<bool> _Func;
+            private int        _Dest;
+            private int        _Col1;
+            private int        _Col2;
 
-            public CalcRule()
+            public ProcRule()
             {
 
             }
 
-            public CalcRule(int Type, int Dest, int Col1, int Col2)
+            public ProcRule(ProcType Type, int Dest, int Col1, int Col2)
             {
                 _Type = Type;
                 _Dest = Dest;
@@ -62,10 +63,25 @@ namespace Haebi.Util
                 _Col2 = Col2;
             }
 
-            public int Type
+            public ProcRule(ProcType Type, Func<bool> Func, int Col1)
+            {
+                _Type = Type;
+                _Func = Func;
+                _Dest = 0;
+                _Col1 = Col1;
+                _Col2 = 0;
+            }
+
+            public ProcType Type
             {
                 get { return _Type; }
                 set { _Type = value; }
+            }
+
+            public Func<bool> Func
+            {
+                get { return _Func; }
+                set { _Func = value; }
             }
 
             public int Dest
@@ -95,7 +111,7 @@ namespace Haebi.Util
         private DataGridViewCellStyle LockStyle;        // 잠금 색상
         private DataGridViewCellStyle HighlightStyle;   // 선택 색상
 
-        private List<CalcRule> CalcRules;    // 셀 자동계산 규칙 목록
+        private List<ProcRule> ProcRules;    // 셀 자동계산 규칙 목록
 
         private int PrevRowIndex;   // 이전 행 위치 (RowHighlight 기능, 이전 행의 색상 복원을 위해 필요하다)
         
@@ -106,10 +122,14 @@ namespace Haebi.Util
         /// <summary>
         /// 계산 종류
         /// </summary>
-        public enum CalcType
+        public enum ProcType
         {
-            Add = 0x1,
-            Sub = 0x2,
+            Add  = 0x01,
+            Sub  = 0x02,
+            Mul  = 0x04,
+            Div  = 0x08,
+            Mod  = 0x10,
+            Func = 0x20,
         }
 
         /// <summary>
@@ -195,7 +215,7 @@ namespace Haebi.Util
                 int CurRow = base.CurrentCell.RowIndex;
                 int CurCol = base.CurrentCell.ColumnIndex;
 
-                foreach (CalcRule rule in CalcRules)
+                foreach (ProcRule rule in ProcRules)
                 {
                     // 계산 대상 셀1, 셀2 중 하나가 현재 열인 경우 계산을 진행한다.
                     if (CurCol == rule.Col1 || CurCol == rule.Col2)
@@ -206,12 +226,16 @@ namespace Haebi.Util
                         // 계산 타입을 검사
                         switch (rule.Type)
                         {
-                            case (int)CalcType.Add:
+                            case ProcType.Add:
                                 base.Rows[CurRow].Cells[rule.Dest].Value = Col1Value + Col2Value;
                                 break;
 
-                            case (int)CalcType.Sub:
+                            case ProcType.Sub:
                                 base.Rows[CurRow].Cells[rule.Dest].Value = Col1Value - Col2Value;
+                                break;
+
+                            case ProcType.Func:
+                                rule.Func();
                                 break;
 
                             default:
@@ -493,7 +517,8 @@ namespace Haebi.Util
         /// <param name="AlignColumn">본문 열 정렬</param>
         /// <param name="Lock">셀 잠금</param>
         /// <param name="Hide">셀 숨김</param>
-        public void SetColumn(string ColumnName, string HeaderText, DataGridViewContentAlignment AlignHeader, DataGridViewContentAlignment AlignColumn, bool Lock, bool Hide)
+        public void SetColumn(string ColumnName, string HeaderText, DataGridViewContentAlignment AlignHeader, 
+            DataGridViewContentAlignment AlignColumn, bool Lock, bool Hide)
         {
             try
             {
@@ -558,26 +583,24 @@ namespace Haebi.Util
         }
 
         /// <summary>
-        /// 셀 자동계산 규칙을 설정합니다.
+        /// 셀 자동처리 규칙을 설정합니다.
         /// </summary>
-        /// <param name="calc">계산 종류</param>
-        /// <param name="Dest">결과 셀 인덱스</param>
-        /// <param name="Col1">셀1 인덱스</param>
-        /// <param name="Col2">셀2 인덱스</param>
-        public void AddAutoCalcRules(CalcType Calc, int Dest, int Col1, int Col2)
+        /// <param name="Proc">처리 종류</param>
+        /// <param name="Dest">결과 열 인덱스</param>
+        /// <param name="Col1">열 인덱스1</param>
+        /// <param name="Col2">열 인덱스2</param>
+        public void AddAutoProcRule(ProcType Proc, int Dest, int Col1, int Col2)
         {
-            switch(Calc)
+            switch(Proc)
             {
                 // 덧셈 규칙
-                case CalcType.Add:
-                    CalcRule AddRule = new CalcRule((int)CalcType.Add, Dest, Col1, Col2);
-                    CalcRules.Add(AddRule);
+                case ProcType.Add:
+                    ProcRules.Add(new ProcRule(ProcType.Add, Dest, Col1, Col2));
                     break;
 
                 // 뺄셈 규칙
-                case CalcType.Sub:
-                    CalcRule SubRule = new CalcRule((int)CalcType.Sub, Dest, Col1, Col2);
-                    CalcRules.Add(SubRule);
+                case ProcType.Sub:
+                    ProcRules.Add(new ProcRule(ProcType.Sub, Dest, Col1, Col2));
                     break;
 
                 // 곱셈, 나눗셈, 나머지... 일단은 필요없으므로 패스... -_-;;
@@ -588,11 +611,30 @@ namespace Haebi.Util
         }
 
         /// <summary>
+        /// 셀 자동처리 규칙을 설정합니다.
+        /// </summary>
+        /// <param name="Proc">처리 종류</param>
+        /// <param name="Func">함수 명</param>
+        /// <param name="Col1">열 인덱스1</param>
+        public void AddAutoProcRule(ProcType Proc, Func<bool> Func, int Col1)
+        {
+            switch(Proc)
+            {
+                case ProcType.Func:
+                    ProcRules.Add(new ProcRule(ProcType.Func, Func, Col1));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        
+        /// <summary>
         /// 셀 자동계산 규칙을 지웁니다.
         /// </summary>
-        public void ClearAutoCalcRules()
+        public void ClearAutoProcRules()
         {
-            CalcRules.Clear();
+            ProcRules.Clear();
         }
 
         #endregion

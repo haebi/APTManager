@@ -96,13 +96,13 @@
             // gridAdmExp
             // 
             this.gridAdmExp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridAdmExp.DataSource = null;
             this.gridAdmExp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridAdmExp.Location = new System.Drawing.Point(0, 0);
             this.gridAdmExp.Name = "gridAdmExp";
             this.gridAdmExp.RowTemplate.Height = 23;
             this.gridAdmExp.Size = new System.Drawing.Size(1150, 695);
             this.gridAdmExp.TabIndex = 0;
-            this.gridAdmExp.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAdmExp_CellEndEdit);
             // 
             // AdmExpManagement
             // 

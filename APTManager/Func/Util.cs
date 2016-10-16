@@ -84,7 +84,7 @@ namespace APTManager
             //Global.admExpDT.Rows[i][7] = string.Format("{0:n0}", Convert.ToUInt64(Global.admExpDT.Rows[i][7]));
 
             if(flag)
-                dt.Rows[iRow][iCol] = string.Format("{0:n0}", Convert.ToUInt64(dt.Rows[iRow][iCol].ToString().Replace(",", "")));
+                dt.Rows[iRow][iCol] = string.Format("{0:n0}", Convert.ToInt64(dt.Rows[iRow][iCol].ToString().Replace(",", "")));
             else
                 dt.Rows[iRow][iCol] = dt.Rows[iRow][iCol].ToString().Replace(",", "");
         }
