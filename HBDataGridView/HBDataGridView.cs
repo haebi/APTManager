@@ -180,7 +180,8 @@ namespace Haebi.Util
         /// <summary>
         /// 컨트롤 그릴 때 더블 버퍼링 사용
         /// </summary>
-        [DefaultValue(false), Category("동작"), Description("이 컨트롤에서 깜빡임을 줄이거나 방지하기 위해 보조 버퍼를 사용하여 화면을 다시 그려야 하는지 여부를 나타내는 값을 가져오거나 설정합니다.")]
+        [DefaultValue(false), Category("동작")]
+        [Description("이 컨트롤에서 깜빡임을 줄이거나 방지하기 위해 보조 버퍼를 사용하여 화면을 다시 그려야 하는지 여부를 나타내는 값을 가져오거나 설정합니다.")]
         public bool SetDoubleBuffer
         {
             get { return DoubleBuffered;  }
@@ -232,6 +233,18 @@ namespace Haebi.Util
 
                             case ProcType.Sub:
                                 base.Rows[CurRow].Cells[rule.Dest].Value = Col1Value - Col2Value;
+                                break;
+
+                            case ProcType.Mul:
+                                base.Rows[CurRow].Cells[rule.Dest].Value = Col1Value * Col2Value;
+                                break;
+
+                            case ProcType.Div:
+                                base.Rows[CurRow].Cells[rule.Dest].Value = Col1Value / Col2Value;
+                                break;
+
+                            case ProcType.Mod:
+                                base.Rows[CurRow].Cells[rule.Dest].Value = Col1Value % Col2Value;
                                 break;
 
                             case ProcType.Func:
@@ -393,7 +406,7 @@ namespace Haebi.Util
         }
         
         /// <summary>
-        /// 컬럼 정렬
+        /// 컬럼 설정
         /// </summary>
         /// <param name="index"></param>
         /// <param name="align"></param>
@@ -403,7 +416,7 @@ namespace Haebi.Util
         }
 
         /// <summary>
-        /// 컬럼헤더 정렬
+        /// 컬럼헤더 설정
         /// </summary>
         /// <param name="index"></param>
         /// <param name="align"></param>
@@ -593,17 +606,30 @@ namespace Haebi.Util
         {
             switch(Proc)
             {
-                // 덧셈 규칙
+                // 덧셈
                 case ProcType.Add:
                     ProcRules.Add(new ProcRule(ProcType.Add, Dest, Col1, Col2));
                     break;
 
-                // 뺄셈 규칙
+                // 뺄셈
                 case ProcType.Sub:
                     ProcRules.Add(new ProcRule(ProcType.Sub, Dest, Col1, Col2));
                     break;
 
-                // 곱셈, 나눗셈, 나머지... 일단은 필요없으므로 패스... -_-;;
+                // 곱셉
+                case ProcType.Mul:
+                    ProcRules.Add(new ProcRule(ProcType.Mul, Dest, Col1, Col2));
+                    break;
+
+                // 나눗셈
+                case ProcType.Div:
+                    ProcRules.Add(new ProcRule(ProcType.Div, Dest, Col1, Col2));
+                    break;
+
+                // 나머지
+                case ProcType.Mod:
+                    ProcRules.Add(new ProcRule(ProcType.Mod, Dest, Col1, Col2));
+                    break;
 
                 default:
                     break;

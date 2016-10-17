@@ -125,8 +125,17 @@ namespace APTManager
         {
             if (Global.admExpDT != null)
             {
+                // 변경점 검사
                 DataTable chkDT = Global.admExpDT.GetChanges();
 
+                // 합계 는 제외
+                for (int i = 0; i < chkDT.Rows.Count; i++)
+                {
+                    if("합계".Equals(chkDT.Rows[i]["home"].ToString()))
+                    chkDT.Rows.RemoveAt(i);
+                }
+
+                // 합계 제외가 1건 이상 시 저장유무를 묻는다
                 if (chkDT != null && chkDT.Rows.Count > 0)
                 {
                     string message = "저장 되지 않은 내역이 존재합니다."
