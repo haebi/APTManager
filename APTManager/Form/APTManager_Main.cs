@@ -5,6 +5,8 @@ using System.Drawing;
 
 using Haebi.Util;
 using APTManager.Query;
+using System.IO;
+using APTManager.SubForm;
 
 namespace APTManager
 {
@@ -26,8 +28,23 @@ namespace APTManager
         /// <param name="e"></param>
         private void APTManager_Load(object sender, EventArgs e)
         {
+            checkDB();
+
             Init();
         }
+        
+        /// <summary>
+        /// DB파일 존재유무 체크
+        /// </summary>
+        private void checkDB()
+        {
+            string dbFile = @"aptmanager.db";
+
+            if (!File.Exists(dbFile))
+            {
+                MessageBox.Show("DB 파일이 존재하지 않습니다");
+            }
+        }     
 
         /// <summary>
         /// 초기화
@@ -119,40 +136,6 @@ namespace APTManager
         }
 
         /// <summary>
-        /// 데이터 변경 사항 체크 및 저장 확인
-        /// </summary>
-        private void CheckUnsavedData()
-        {
-            if (Global.admExpDT != null)
-            {
-                // 변경점 검사
-                DataTable chkDT = Global.admExpDT.GetChanges();
-
-                // 합계 는 제외
-                for (int i = 0; i < chkDT.Rows.Count; i++)
-                {
-                    if("합계".Equals(chkDT.Rows[i]["home"].ToString()))
-                    chkDT.Rows.RemoveAt(i);
-                }
-
-                // 합계 제외가 1건 이상 시 저장유무를 묻는다
-                if (chkDT != null && chkDT.Rows.Count > 0)
-                {
-                    string message = "저장 되지 않은 내역이 존재합니다."
-                        + Environment.NewLine
-                        + Environment.NewLine
-                        + "저장 하시겠습니까?";
-
-                    DialogResult result = HBMessageBox.Show(message, "", MessageBoxButtons.YesNo);
-
-                    // 예 를 선택한 경우 저장.
-                    if (result == DialogResult.Yes)
-                        btnSaveAdmExp.PerformClick();
-                }
-            }
-        }
-
-        /// <summary>
         /// 관리비 조회
         /// </summary>
         /// <param name="yyyymm"></param>
@@ -179,7 +162,7 @@ namespace APTManager
 
                 case 1:
                     //HBMessageBox.Show("개발 중...");
-                    payManagement1.SelectPayment(true);
+                    //payManagement1.SelectPayment(true);
                     break;
 
                 default:
@@ -240,7 +223,7 @@ namespace APTManager
         /// <param name="e"></param>
         private void btnSaveAdmExp_Click(object sender, EventArgs e)
         {
-            aptManager_AdmExp1.SaveAdmExp();
+            aptManager_AdmExp1.SaveAdmExp(true);    // true : 저장 후 조회
         }
 
         /// <summary>
@@ -303,7 +286,7 @@ namespace APTManager
         private void APTManager_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             // 변경 된 데이터 저장 여부 확인
-            CheckUnsavedData();
+            aptManager_AdmExp1.CheckUnsavedData();
         }
 
     }

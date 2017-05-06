@@ -133,18 +133,11 @@
     <Compile Include="Query\AdmExp_Query.cs" />
     <Compile Include="Query\ComCode_Query.cs" />
     <Compile Include="Query\HomeInfo_Query.cs" />
-    <Compile Include="Query\Payment_Query.cs" />
     <Compile Include="SubForm\AdmExpManagement.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SubForm\AdmExpManagement.Designer.cs">
       <DependentUpon>AdmExpManagement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\PayManagement.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SubForm\PayManagement.Designer.cs">
-      <DependentUpon>PayManagement.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form\APTManager_Main.resx">
       <DependentUpon>APTManager_Main.cs</DependentUpon>
@@ -170,9 +163,6 @@
     <EmbeddedResource Include="Report\rptAdmExp.rdlc" />
     <EmbeddedResource Include="SubForm\AdmExpManagement.resx">
       <DependentUpon>AdmExpManagement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\PayManagement.resx">
-      <DependentUpon>PayManagement.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="aptmanager.db" />
     <None Include="DataSet\APTManagerDS.xsc">
@@ -235,7 +225,8 @@
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>xcopy /Y $(ProjectDir)aptmanager.db $(TargetDir)</PreBuildEvent>
+    <PreBuildEvent>xcopy /Y $(ProjectDir)sample_db.sql $(TargetDir)
+xcopy /Y $(ProjectDir)aptmanager.db $(TargetDir)</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

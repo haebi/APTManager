@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.grpCommonCode = new System.Windows.Forms.GroupBox();
+            this.gridCommonCode = new Haebi.Util.HBDataGridView(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.grpCommonCodeGroup = new System.Windows.Forms.GroupBox();
             this.gridCommonCodeGroup = new Haebi.Util.HBDataGridView(this.components);
-            this.gridCommonCode = new Haebi.Util.HBDataGridView(this.components);
             this.grpCommonCode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).BeginInit();
             this.grpCommonCodeGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridCommonCodeGroup)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).BeginInit();
             this.SuspendLayout();
             // 
             // grpCommonCode
@@ -49,6 +49,17 @@
             this.grpCommonCode.TabIndex = 1;
             this.grpCommonCode.TabStop = false;
             this.grpCommonCode.Text = "공통코드 변경";
+            // 
+            // gridCommonCode
+            // 
+            this.gridCommonCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCommonCode.DataSource = null;
+            this.gridCommonCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridCommonCode.Location = new System.Drawing.Point(3, 17);
+            this.gridCommonCode.Name = "gridCommonCode";
+            this.gridCommonCode.RowTemplate.Height = 23;
+            this.gridCommonCode.Size = new System.Drawing.Size(562, 466);
+            this.gridCommonCode.TabIndex = 0;
             // 
             // button1
             // 
@@ -80,17 +91,7 @@
             this.gridCommonCodeGroup.RowTemplate.Height = 23;
             this.gridCommonCodeGroup.Size = new System.Drawing.Size(194, 463);
             this.gridCommonCodeGroup.TabIndex = 0;
-            // 
-            // gridCommonCode
-            // 
-            this.gridCommonCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridCommonCode.DataSource = null;
-            this.gridCommonCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridCommonCode.Location = new System.Drawing.Point(3, 17);
-            this.gridCommonCode.Name = "gridCommonCode";
-            this.gridCommonCode.RowTemplate.Height = 23;
-            this.gridCommonCode.Size = new System.Drawing.Size(562, 466);
-            this.gridCommonCode.TabIndex = 0;
+            this.gridCommonCodeGroup.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridCommonCodeGroup_MouseUp);
             // 
             // APTManager_Settings
             // 
@@ -104,9 +105,9 @@
             this.Text = "환경설정";
             this.Load += new System.EventHandler(this.APTManager_Settings_Load);
             this.grpCommonCode.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).EndInit();
             this.grpCommonCodeGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridCommonCodeGroup)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridCommonCode)).EndInit();
             this.ResumeLayout(false);
 
         }

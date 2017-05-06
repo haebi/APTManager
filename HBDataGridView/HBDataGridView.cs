@@ -10,6 +10,9 @@ namespace Haebi.Util
     {
         #region 생성자
 
+        // 계산오류 -> 0 세팅 후 재계산을 위한 이벤트 변수
+        private DataGridViewCellEventArgs recent_cell_event;
+
         /// <summary>
         /// 생성자
         /// </summary>
@@ -155,14 +158,14 @@ namespace Haebi.Util
             get { return base.DataSource; }
             set
             {
-                if (AllowRowHighlight)
+                if (ShowRowHighlight)
                 {
                     /* 열 표시가 OnSelectionChanged 에서 수행되는데, 데이터 바인딩 시 행 갯수반큼 반복하면서 오류나는 경우가 있다.
                      * 그래서, 조회 직전에 잠깐 끄고, 조회 완료 후 다시 켜는 것으로 한다. 
                      */
-                    AllowRowHighlight = false;
+                    ShowRowHighlight = false;
                     base.DataSource   = value;
-                    AllowRowHighlight = true;
+                    ShowRowHighlight = true;
                 }
                 else
                 {
@@ -175,7 +178,7 @@ namespace Haebi.Util
         /// 현재 행 표시
         /// </summary>
         [DefaultValue(false), Category("동작"), Description("현재 행 표시를 가능하게 할 것인지 여부를 나타내는 값을 가져오거나 설정합니다.")]
-        public bool AllowRowHighlight { get; set; }
+        public bool ShowRowHighlight { get; set; }
 
         /// <summary>
         /// 컨트롤 그릴 때 더블 버퍼링 사용
@@ -210,6 +213,9 @@ namespace Haebi.Util
         /// <param name="e"></param>
         protected override void OnCellEndEdit(DataGridViewCellEventArgs e)
         {
+            // 오류 -> 재계산 위해 현재 이벤트 저장
+            recent_cell_event = e;
+
             try
             {
                 // 셀 자동계산 구현 예정 [미구현]
@@ -261,7 +267,14 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                // 오류 메시지 출력
+                MessageBox.Show(ex.ToString(), "Error !!!");
+
+                // 0 으로 설정
+                base.CurrentCell.Value = 0;
+
+                // 오류 시 입력값 초기화로 재계산
+                OnCellEndEdit(recent_cell_event);
             }
         }
 
@@ -287,7 +300,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -299,7 +312,7 @@ namespace Haebi.Util
         {
             try
             {
-                if (!AllowRowHighlight) return;
+                if (!ShowRowHighlight) return;
 
                 switch (state)
                 {
@@ -334,7 +347,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -366,7 +379,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
         
@@ -401,7 +414,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
         
@@ -438,7 +451,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -458,7 +471,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -477,7 +490,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -496,7 +509,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -517,7 +530,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -551,7 +564,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -572,7 +585,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 
@@ -591,7 +604,7 @@ namespace Haebi.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw ex;
             }
         }
 

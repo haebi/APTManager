@@ -43,15 +43,12 @@ namespace APTManager
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.aptManager_AdmExp1 = new APTManager.SubForm.AdmExpManagement();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.payManagement1 = new APTManager.SubForm.PayManagement();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -76,13 +73,13 @@ namespace APTManager
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1121, 781);
-            this.splitContainer1.SplitterDistance = 84;
+            this.splitContainer1.Size = new System.Drawing.Size(1354, 833);
+            this.splitContainer1.SplitterDistance = 87;
             this.splitContainer1.TabIndex = 9;
             // 
             // grpQuick
             // 
-            this.grpQuick.Location = new System.Drawing.Point(671, 3);
+            this.grpQuick.Location = new System.Drawing.Point(904, 12);
             this.grpQuick.Name = "grpQuick";
             this.grpQuick.Size = new System.Drawing.Size(438, 54);
             this.grpQuick.TabIndex = 15;
@@ -168,12 +165,11 @@ namespace APTManager
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1121, 693);
+            this.tabControl1.Size = new System.Drawing.Size(1354, 742);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -182,7 +178,7 @@ namespace APTManager
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1113, 667);
+            this.tabPage1.Size = new System.Drawing.Size(1346, 716);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "관리비";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -192,36 +188,17 @@ namespace APTManager
             this.aptManager_AdmExp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aptManager_AdmExp1.Location = new System.Drawing.Point(3, 3);
             this.aptManager_AdmExp1.Name = "aptManager_AdmExp1";
-            this.aptManager_AdmExp1.Size = new System.Drawing.Size(1107, 661);
+            this.aptManager_AdmExp1.Size = new System.Drawing.Size(1340, 710);
             this.aptManager_AdmExp1.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.payManagement1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1113, 667);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "납입금";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // payManagement1
-            // 
-            this.payManagement1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.payManagement1.Location = new System.Drawing.Point(3, 3);
-            this.payManagement1.Name = "payManagement1";
-            this.payManagement1.Size = new System.Drawing.Size(1107, 661);
-            this.payManagement1.TabIndex = 0;
             // 
             // APTManager_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 781);
+            this.ClientSize = new System.Drawing.Size(1354, 833);
             this.Controls.Add(this.splitContainer1);
             this.Name = "APTManager_Main";
-            this.Text = "APTManager (by haebi) ver. 20161002";
+            this.Text = "APTManager (by haebi) ver. 20170506.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.APTManager_Main_FormClosing);
             this.Load += new System.EventHandler(this.APTManager_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -230,7 +207,6 @@ namespace APTManager
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -250,8 +226,6 @@ namespace APTManager
         private TabControl tabControl1;
         private TabPage tabPage1;
         private SubForm.AdmExpManagement aptManager_AdmExp1;
-        private TabPage tabPage2;
-        private SubForm.PayManagement payManagement1;
     }
 }
 

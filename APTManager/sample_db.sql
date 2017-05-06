@@ -2,6 +2,8 @@
 -- sqlite3.exe
 -- sqlite> .open aptmanager.db
 -- sqlite> .read sample_db.sql
+-- sqlite> .quit
+
 CREATE TABLE homeinfo (
   home string PRIMARY KEY
 , name string NOT NULL
@@ -91,6 +93,9 @@ CREATE TABLE admexp (
 , totalcost int NOT NULL
 , remark string
 , ordernum int NOT NULL
+, cost_pay int NOT NULL
+, cost_diff int NOT NULL
+, cost_diff_pre int NOT NULL
 , PRIMARY KEY (yyyymm, home));
 
 CREATE TABLE comcode (
@@ -104,6 +109,7 @@ CREATE TABLE comcode (
 
 INSERT INTO comcode VALUES
 (1, 1 ,'관리비'  ,'25000','관리비'  ),
+(2, 0 ,'수도요금','5000' ,'수도요금'),
 (2, 1 ,'수도요금','5000' ,'수도요금'),
 (2, 2 ,'수도요금','5000' ,'수도요금'),
 (2, 3 ,'수도요금','5000' ,'수도요금'),
@@ -172,16 +178,3 @@ INSERT INTO comcode VALUES
 (2, 66,'수도요금','57000','수도요금'),
 (2, 67,'수도요금','58000','수도요금'),
 (3, 1 ,'아파트명칭','XX','아파트명칭');
-
-CREATE TABLE payment (
-  yyyymm string NOT NULL
-, home string
-, name string NOT NULL
-, ordernum int NOT NULL
-, pay int
-, admexpcost int NOT NULL
-, prepay int
-, nonpay int
-, totalcost int NOT NULL
-, remark string
-);

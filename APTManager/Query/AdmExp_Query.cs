@@ -26,6 +26,9 @@ namespace APTManager.Query
                                             + " , totalcost"
                                             + " , remark"
                                             + " , ordernum"
+                                            + " , cost_pay"
+                                            + " , cost_diff"
+                                            + " , cost_diff_pre"
                                             + " FROM admexp where yyyymm = '{0}'"
                                             + " ORDER BY ordernum"
                                             , yyyymm);
@@ -55,14 +58,18 @@ namespace APTManager.Query
                                             + " , IFNULL((SELECT nowmonth from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{1}', '-1 month') AND c.home = b.home), 0)"
                                             + " , ''"
                                             + " , ''"
-                                            + " , ''"
+                                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 2 AND comcode = 0)"
                                             + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1)"
-                                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1)"
+                                            + " , (SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1) + (SELECT comvalue FROM comcode WHERE comgroup = 2 AND comcode = 0)"
                                             + " , ''"
                                             + " , b.ordernum"
+                                            + " , ''"
+                                            + " , IFNULL((SELECT cost_diff from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{2}', '-1 month') AND c.home = b.home), 0) - ((SELECT comvalue FROM comcode WHERE comgroup = 1 AND comcode = 1) + (SELECT comvalue FROM comcode WHERE comgroup = 2 AND comcode = 0))"
+                                            + " , IFNULL((SELECT cost_diff from admexp c WHERE c.yyyymm = strftime(\"%Y%m\", '{2}', '-1 month') AND c.home = b.home), 0)"
                                             + " from homeinfo b"
-                                            + " LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '{2}'"
+                                            + " LEFT OUTER JOIN admexp a ON a.home = b.home AND a.yyyymm = '{3}'"
                                             , yyyymm
+                                            , preDate
                                             , preDate
                                             , yyyymm);
 
@@ -87,17 +94,20 @@ namespace APTManager.Query
                     continue;
 
                 sql = string.Format("UPDATE admexp SET"
-                                       + "  name        = '{0}'"
-                                       + ", premonth    = '{1}'"
-                                       + ", nowmonth    = '{2}'"
-                                       + ", useamount   = '{3}'"
-                                       + ", usecost     = '{4}'"
-                                       + ", admexpcost  = '{5}'"
-                                       + ", totalcost   = '{6}'"
-                                       + ", remark      = '{7}'"
-                                       + ", ordernum    = '{8}'"
-                                       + " WHERE yyyymm = '{9}'"
-                                       + " AND home = '{10}'"
+                                       + "  name          = '{0}'"
+                                       + ", premonth      = '{1}'"
+                                       + ", nowmonth      = '{2}'"
+                                       + ", useamount     = '{3}'"
+                                       + ", usecost       = '{4}'"
+                                       + ", admexpcost    = '{5}'"
+                                       + ", totalcost     = '{6}'"
+                                       + ", remark        = '{7}'"
+                                       + ", ordernum      = '{8}'"
+                                       + ", cost_pay      = '{9}'"
+                                       + ", cost_diff     = '{10}'"
+                                       + ", cost_diff_pre = '{11}'"
+                                       + " WHERE yyyymm   = '{12}'"
+                                       + " AND home       = '{13}'"
                                        , pDT.Rows[i][(int)Common.AdmExp.name].ToString()
                                        , pDT.Rows[i][(int)Common.AdmExp.premonth].ToString()
                                        , pDT.Rows[i][(int)Common.AdmExp.nowmonth].ToString()
@@ -107,6 +117,9 @@ namespace APTManager.Query
                                        , pDT.Rows[i][(int)Common.AdmExp.totalcost].ToString()
                                        , pDT.Rows[i][(int)Common.AdmExp.remark].ToString()
                                        , pDT.Rows[i][(int)Common.AdmExp.ordernum].ToString()
+                                       , pDT.Rows[i][(int)Common.AdmExp.cost_pay].ToString()
+                                       , pDT.Rows[i][(int)Common.AdmExp.cost_diff].ToString()
+                                       , pDT.Rows[i][(int)Common.AdmExp.cost_diff_pre].ToString()
                                        , pDT.Rows[i][(int)Common.AdmExp.yyyymm].ToString()
                                        , pDT.Rows[i][(int)Common.AdmExp.home].ToString());
 

@@ -16,17 +16,20 @@ namespace APTManager
         // 관리비(Administrative expenses) 컬럼 인덱스
         public enum AdmExp
         {
-            [ColumnInfo(0 , "yyyymm"    )] yyyymm,       // "년월"
-            [ColumnInfo(1 , "home"      )] home,         // "세대"
-            [ColumnInfo(2 , "name"      )] name,         // "세대주"
-            [ColumnInfo(3 , "premonth"  )] premonth,     // "전월지침"
-            [ColumnInfo(4 , "nowmonth"  )] nowmonth,     // "당월지침"
-            [ColumnInfo(5 , "useamount" )] useamount,    // "사용량"
-            [ColumnInfo(6 , "usecost"   )] usecost,      // "사용금액"
-            [ColumnInfo(7 , "admexpcost")] admexpcost,   // "관리비"
-            [ColumnInfo(8 , "totalcost" )] totalcost,    // "합계"
-            [ColumnInfo(9 , "remark"    )] remark,       // "비고"
-            [ColumnInfo(10, "ordernum"  )] ordernum      // "정렬순서"
+            [ColumnInfo(0 , "yyyymm"       )] yyyymm,       // "년월"
+            [ColumnInfo(1 , "home"         )] home,         // "세대"
+            [ColumnInfo(2 , "name"         )] name,         // "세대주"
+            [ColumnInfo(3 , "premonth"     )] premonth,     // "전월지침"
+            [ColumnInfo(4 , "nowmonth"     )] nowmonth,     // "당월지침"
+            [ColumnInfo(5 , "useamount"    )] useamount,    // "사용량"
+            [ColumnInfo(6 , "usecost"      )] usecost,      // "사용금액"
+            [ColumnInfo(7 , "admexpcost"   )] admexpcost,   // "관리비"
+            [ColumnInfo(8 , "totalcost"    )] totalcost,    // "합계"
+            [ColumnInfo(9 , "remark"       )] remark,       // "비고"
+            [ColumnInfo(10, "ordernum"     )] ordernum,     // "정렬순서"
+            [ColumnInfo(11, "cost_pay"     )] cost_pay,     // "납입금"
+            [ColumnInfo(12, "cost_diff"    )] cost_diff,    // "차액"
+            [ColumnInfo(13, "cost_diff_pre")] cost_diff_pre // "전월차액"
         }
 
         // 공통코드 컬럼 인덱스

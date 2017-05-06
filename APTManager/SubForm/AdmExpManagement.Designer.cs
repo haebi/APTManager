@@ -58,7 +58,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gridAdmExp);
-            this.splitContainer1.Size = new System.Drawing.Size(1150, 744);
+            this.splitContainer1.Size = new System.Drawing.Size(1298, 744);
             this.splitContainer1.SplitterDistance = 45;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -85,11 +85,11 @@
             // chkRowHighlight
             // 
             this.chkRowHighlight.AutoSize = true;
-            this.chkRowHighlight.Location = new System.Drawing.Point(937, 17);
+            this.chkRowHighlight.Location = new System.Drawing.Point(1189, 17);
             this.chkRowHighlight.Name = "chkRowHighlight";
-            this.chkRowHighlight.Size = new System.Drawing.Size(170, 16);
+            this.chkRowHighlight.Size = new System.Drawing.Size(92, 16);
             this.chkRowHighlight.TabIndex = 14;
-            this.chkRowHighlight.Text = "선택 줄 표시 (약간 느려짐)";
+            this.chkRowHighlight.Text = "선택 줄 표시";
             this.chkRowHighlight.UseVisualStyleBackColor = true;
             this.chkRowHighlight.CheckedChanged += new System.EventHandler(this.chkRowHighlight_CheckedChanged);
             // 
@@ -101,7 +101,7 @@
             this.gridAdmExp.Location = new System.Drawing.Point(0, 0);
             this.gridAdmExp.Name = "gridAdmExp";
             this.gridAdmExp.RowTemplate.Height = 23;
-            this.gridAdmExp.Size = new System.Drawing.Size(1150, 695);
+            this.gridAdmExp.Size = new System.Drawing.Size(1298, 695);
             this.gridAdmExp.TabIndex = 0;
             // 
             // AdmExpManagement
@@ -110,7 +110,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Name = "AdmExpManagement";
-            this.Size = new System.Drawing.Size(1150, 744);
+            this.Size = new System.Drawing.Size(1298, 744);
             this.Load += new System.EventHandler(this.APTManager_AdmExp_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
