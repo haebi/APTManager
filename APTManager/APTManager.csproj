@@ -139,6 +139,12 @@
     <Compile Include="SubForm\AdmExpManagement.Designer.cs">
       <DependentUpon>AdmExpManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubForm\DataMgmt.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubForm\DataMgmt.Designer.cs">
+      <DependentUpon>DataMgmt.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form\APTManager_Main.resx">
       <DependentUpon>APTManager_Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,6 +169,9 @@
     <EmbeddedResource Include="Report\rptAdmExp.rdlc" />
     <EmbeddedResource Include="SubForm\AdmExpManagement.resx">
       <DependentUpon>AdmExpManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\DataMgmt.resx">
+      <DependentUpon>DataMgmt.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="aptmanager.db" />
     <None Include="DataSet\APTManagerDS.xsc">

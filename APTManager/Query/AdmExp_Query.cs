@@ -41,6 +41,40 @@ namespace APTManager.Query
         }
 
         /// <summary>
+        /// 관리비 조회(전체)
+        /// </summary>
+        /// <param name="yyyymm"></param>
+        /// <returns></returns>
+        public static DataTable GetAdmExp()
+        {
+            Global.admExpDT = null;
+
+            string sql = string.Format("SELECT yyyymm"
+                                            + " , home"
+                                            + " , name"
+                                            + " , premonth"
+                                            + " , nowmonth"
+                                            + " , useamount"
+                                            + " , usecost"
+                                            + " , admexpcost"
+                                            + " , totalcost"
+                                            + " , remark"
+                                            + " , ordernum"
+                                            + " , cost_pay"
+                                            + " , cost_diff"
+                                            + " , cost_diff_pre"
+                                            + " FROM admexp"
+                                            + " ORDER BY yyyymm, ordernum"
+                                            );
+
+            Global.admExpDT = DB.ExecuteQuery(new SQLiteConnection(DB.dbConn), sql);
+
+            Global.admExpDT.AcceptChanges();
+
+            return Global.admExpDT;
+        }
+
+        /// <summary>
         /// 관리비 양식 생성(신규)
         /// </summary>
         /// <param name="yyyymm"></param>
